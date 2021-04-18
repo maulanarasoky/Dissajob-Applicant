@@ -1,0 +1,106 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "org.d3ifcool.dissajobapplicant"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$coreVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+
+    //ui
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //api
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+
+    //paging
+    implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
+
+    // Firebase
+    implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx:19.2.1'
+    implementation 'com.firebaseui:firebase-ui-storage:3.3.0'
+
+    //room
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    //Sweet alert dialog
+    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Carousel
+    implementation 'com.synnapps:carouselview:0.1.5'
+
+    //Swipe Refresh Layout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    //testing
+    androidTestImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test:runner:$androidTestVersion"
+    androidTestImplementation "androidx.test:rules:$androidTestVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "androidx.arch.core:core-testing:$archLifecycleVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+    implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
+    implementation "androidx.room:room-runtime:$roomRuntimeVersion"
+
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$junitExtversion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+}

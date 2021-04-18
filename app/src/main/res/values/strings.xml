@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">DissajobApplicant</string>
+    <string name="txt_sign_in">Masuk</string>
+    <string name="txt_sign_up">Daftar</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_lupa_password">Lupa password ?</string>
 </resources>

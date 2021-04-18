@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#2867b2</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#2867b2</color>
+    <color name="softBlack">#353839</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#868E96</color>
+    <color name="red">#fc4747</color>
+    <color name="colorStroke">#DFE5ED</color>
+    <color name="text_color">@android:color/black</color>
+    <color name="preview_text_color">#1BA4EB</color>
+    <color name="sign_out_text_color">#FD2121</color>
+    <color name="preview_bg_btn">#E5F7FF</color>
+    <color name="sign_out_bg_btn">#FFE5E5</color>
 </resources>

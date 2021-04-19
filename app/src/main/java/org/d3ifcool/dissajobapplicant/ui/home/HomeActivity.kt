@@ -1,11 +1,12 @@
-package org.d3ifcool.dissajobapplicant
+package org.d3ifcool.dissajobapplicant.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import org.d3ifcool.dissajobapplicant.R
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home)
     }
 }

@@ -17,7 +17,7 @@
         tools:replace="android:icon">
         <activity android:name=".ui.signup.SignUpActivity"></activity>
         <activity android:name=".ui.signin.SignInActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

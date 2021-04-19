@@ -3,6 +3,7 @@ package org.d3ifcool.dissajobapplicant.ui.di
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import org.d3ifcool.dissajobapplicant.data.source.local.room.DissajobApplicantDatabase
 import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalApplicantSource
 import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalApplicationSource
 import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalJobSource
@@ -19,7 +20,7 @@ import org.d3ifcool.dissajobapplicant.utils.*
 
 object Injection {
     fun provideJobRepository(context: Context): JobRepository {
-        val database = DissajobRecruiterDatabase.getInstance(context)
+        val database = DissajobApplicantDatabase.getInstance(context)
 
         val remoteDataSource = RemoteJobSource.getInstance(JobHelper)
         val localDataSource = LocalJobSource.getInstance(database.jobDao())
@@ -39,10 +40,10 @@ object Injection {
 
     fun provideApplicationRepository(context: Context): ApplicationRepository {
 
-        val database = DissajobRecruiterDatabase.getInstance(context)
+        val database = DissajobApplicantDatabase.getInstance(context)
 
         val remoteDataSource = RemoteApplicationSource.getInstance(ApplicationHelper)
-        val localDataSource = LocalApplicationSource.getInstance(database.applicantDao())
+        val localDataSource = LocalApplicationSource.getInstance(database.applicationDao())
         val appExecutors = AppExecutors()
 
         val callback = object : NetworkStateCallback {
@@ -64,7 +65,7 @@ object Injection {
 
     fun provideApplicantRepository(context: Context): ApplicantRepository {
 
-        val database = DissajobRecruiterDatabase.getInstance(context)
+        val database = DissajobApplicantDatabase.getInstance(context)
 
         val remoteDataSource = RemoteApplicantSource.getInstance(ApplicantHelper)
         val localDataSource = LocalApplicantSource.getInstance(database.applicantDao())
@@ -89,10 +90,10 @@ object Injection {
 
     fun provideRecruiterRepository(context: Context): RecruiterRepository {
 
-        val database = DissajobRecruiterDatabase.getInstance(context)
+        val database = DissajobApplicantDatabase.getInstance(context)
 
         val remoteDataSource = RemoteRecruiterSource.getInstance(RecruiterHelper)
-        val localDataSource = LocalRecruiterSource.getInstance(database.applicantDao())
+        val localDataSource = LocalRecruiterSource.getInstance(database.recruiterDao())
         val appExecutors = AppExecutors()
 
         val callback = object : NetworkStateCallback {

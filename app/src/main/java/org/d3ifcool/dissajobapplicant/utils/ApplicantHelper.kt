@@ -3,9 +3,10 @@ package org.d3ifcool.dissajobapplicant.utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
+import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
-import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.recruiter.RecruiterResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.applicant.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 
@@ -56,7 +57,7 @@ object ApplicantHelper {
         }
     }
 
-    fun getApplicantDetails(
+    fun getApplicantData(
         applicantId: String,
         callback: LoadApplicantDetailsCallback
     ) {
@@ -74,5 +75,13 @@ object ApplicantHelper {
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
+    }
+
+    fun updateApplicantData(applicant: ApplicantResponseEntity, callback: UpdateProfileCallback) {
+        database.child(applicant.id.toString()).setValue(applicant).addOnSuccessListener {
+            callback.onSuccess()
+        }.addOnFailureListener {
+            callback.onFailure(R.string.txt_failure_update)
+        }
     }
 }

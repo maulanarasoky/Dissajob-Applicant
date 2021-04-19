@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.applicant.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.utils.ApplicantHelper
@@ -69,7 +70,7 @@ class RemoteApplicantSource private constructor(
     ): LiveData<ApiResponse<ApplicantResponseEntity>> {
         EspressoIdlingResource.increment()
         val resultApplicantData = MutableLiveData<ApiResponse<ApplicantResponseEntity>>()
-        applicantHelper.getApplicantDetails(applicantId, object : LoadApplicantDetailsCallback {
+        applicantHelper.getApplicantData(applicantId, object : LoadApplicantDetailsCallback {
             override fun onApplicantDetailsReceived(applicantResponse: ApplicantResponseEntity): ApplicantResponseEntity {
                 resultApplicantData.value =
                     ApiResponse.success(callback.onApplicantDetailsReceived(applicantResponse))
@@ -80,5 +81,20 @@ class RemoteApplicantSource private constructor(
             }
         })
         return resultApplicantData
+    }
+
+    fun updateApplicantData(applicantProfile: ApplicantResponseEntity, callback: UpdateProfileCallback) {
+        EspressoIdlingResource.increment()
+        applicantHelper.updateApplicantData(applicantProfile, object : UpdateProfileCallback {
+            override fun onSuccess() {
+                callback.onSuccess()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailure(messageId: Int) {
+                callback.onFailure(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
     }
 }

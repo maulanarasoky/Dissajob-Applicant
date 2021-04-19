@@ -7,7 +7,8 @@ import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalApplicantSou
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicantSource
-import org.d3ifcool.dissajobapplicant.ui.applicant.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
@@ -89,4 +90,9 @@ class ApplicantRepository private constructor(
             }
         }.asLiveData()
     }
+
+    override fun updateApplicantData(
+        applicantProfile: ApplicantResponseEntity,
+        callback: UpdateProfileCallback
+    ) = appExecutors.diskIO().execute { remoteApplicantSource.updateApplicantData(applicantProfile, callback) }
 }

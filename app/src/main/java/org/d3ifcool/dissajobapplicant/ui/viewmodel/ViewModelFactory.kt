@@ -7,7 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.Applicant
 import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.RecruiterRepository
-import org.d3ifcool.dissajobapplicant.ui.applicant.ApplicantViewModel
+import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.application.ApplicationViewModel
 import org.d3ifcool.dissajobapplicant.ui.di.Injection
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel

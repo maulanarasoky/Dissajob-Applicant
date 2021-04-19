@@ -10,4 +10,8 @@
     <string name="txt_last_name">Nama belakang (opsional)</string>
     <string name="role">Role</string>
     <string name="txt_confirm_password">Confirm password</string>
+
+    <!-- Update profile alert -->
+    <string name="txt_success_update">%1$s berhasil di update</string>
+    <string name="txt_failure_update">%1$s gagal di update</string>
 </resources>

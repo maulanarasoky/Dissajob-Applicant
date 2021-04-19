@@ -6,6 +6,7 @@ import com.google.firebase.database.ktx.getValue
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.recruiter.RecruiterResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.applicant.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 
 object ApplicantHelper {

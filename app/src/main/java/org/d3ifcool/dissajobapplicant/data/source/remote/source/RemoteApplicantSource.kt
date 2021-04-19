@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.applicant.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.utils.ApplicantHelper
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
@@ -37,6 +38,26 @@ class RemoteApplicantSource private constructor(
 
             override fun onFailure(message: String) {
                 callback.onFailure(message)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun signIn(email: String, password: String, callback: SignInCallback) {
+        EspressoIdlingResource.increment()
+        applicantHelper.signIn(email, password, object : SignInCallback {
+            override fun onSuccess() {
+                callback.onSuccess()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onNotVerified() {
+                callback.onNotVerified()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailure() {
+                callback.onFailure()
                 EspressoIdlingResource.decrement()
             }
         })

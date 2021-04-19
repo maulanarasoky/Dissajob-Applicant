@@ -12,6 +12,7 @@ import org.d3ifcool.dissajobapplicant.ui.application.ApplicationViewModel
 import org.d3ifcool.dissajobapplicant.ui.di.Injection
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
+import org.d3ifcool.dissajobapplicant.ui.signin.SignInViewModel
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpViewModel
 
 class ViewModelFactory private constructor(
@@ -45,7 +46,7 @@ class ViewModelFactory private constructor(
                 SignUpViewModel(applicantRepository) as T
             }
             modelClass.isAssignableFrom(SignInViewModel::class.java) -> {
-                SignInViewModel(recruiterRepository) as T
+                SignInViewModel(applicantRepository) as T
             }
             modelClass.isAssignableFrom(ApplicationViewModel::class.java) -> {
                 ApplicationViewModel(applicationRepository) as T

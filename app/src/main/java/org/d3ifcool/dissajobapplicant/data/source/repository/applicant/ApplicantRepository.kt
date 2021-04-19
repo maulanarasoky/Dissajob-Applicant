@@ -8,6 +8,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicantSource
 import org.d3ifcool.dissajobapplicant.ui.applicant.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
@@ -49,6 +50,10 @@ class ApplicantRepository private constructor(
     ) = appExecutors.diskIO()
         .execute { remoteApplicantSource.signUp(email, password, applicant, callback) }
 
+    override fun signIn(email: String, password: String, callback: SignInCallback) =
+        appExecutors.diskIO()
+            .execute { remoteApplicantSource.signIn(email, password, callback) }
+
     override fun getApplicantData(applicantId: String): LiveData<Resource<ApplicantEntity>> {
         return object :
             NetworkBoundResource<ApplicantEntity, ApplicantResponseEntity>(
@@ -61,11 +66,13 @@ class ApplicantRepository private constructor(
                 networkCallback.hasConnectivity() && loadFromDB() != createCall()
 
             public override fun createCall(): LiveData<ApiResponse<ApplicantResponseEntity>> =
-                remoteApplicantSource.getApplicantData(applicantId, object : LoadApplicantDetailsCallback {
-                    override fun onApplicantDetailsReceived(applicantResponse: ApplicantResponseEntity): ApplicantResponseEntity {
-                        return applicantResponse
-                    }
-                })
+                remoteApplicantSource.getApplicantData(
+                    applicantId,
+                    object : LoadApplicantDetailsCallback {
+                        override fun onApplicantDetailsReceived(applicantResponse: ApplicantResponseEntity): ApplicantResponseEntity {
+                            return applicantResponse
+                        }
+                    })
 
             public override fun saveCallResult(data: ApplicantResponseEntity) {
                 val applicant = ApplicantEntity(

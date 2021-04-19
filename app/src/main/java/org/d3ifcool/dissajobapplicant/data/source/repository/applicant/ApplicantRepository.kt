@@ -8,6 +8,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicantSource
 import org.d3ifcool.dissajobapplicant.ui.applicant.callback.LoadApplicantDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -39,6 +40,14 @@ class ApplicantRepository private constructor(
                 )
             }
     }
+
+    override fun signUp(
+        email: String,
+        password: String,
+        applicant: ApplicantResponseEntity,
+        callback: SignUpCallback
+    ) = appExecutors.diskIO()
+        .execute { remoteApplicantSource.signUp(email, password, applicant, callback) }
 
     override fun getApplicantData(applicantId: String): LiveData<Resource<ApplicantEntity>> {
         return object :

@@ -1,6 +1,5 @@
 package org.d3ifcool.dissajobapplicant.utils
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -10,11 +9,10 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteRecruiterS
 
 object RecruiterHelper {
 
-    private val auth = FirebaseAuth.getInstance()
     private val database = FirebaseDatabase.getInstance().getReference("users").child("recruiters")
 
-    fun getRecruiterData(userId: String, callback: RemoteRecruiterSource.LoadRecruiterDataCallback) {
-        database.child(userId).addValueEventListener(object : ValueEventListener {
+    fun getRecruiterData(recruiterData: String, callback: RemoteRecruiterSource.LoadRecruiterDataCallback) {
+        database.child(recruiterData).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
 

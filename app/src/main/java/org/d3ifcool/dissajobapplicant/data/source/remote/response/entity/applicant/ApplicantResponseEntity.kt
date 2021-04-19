@@ -7,6 +7,8 @@ data class ApplicantResponseEntity(
     var id: String? = "-",
     var firstName: String? = "-",
     var lastName: String? = "-",
+    var fullName: String? = "-",
+    var email: String? = "-",
     var aboutMe: String? = "-",
     var phoneNumber: String? = "-",
     var imagePath: String? = "-"

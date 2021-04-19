@@ -6,12 +6,15 @@ import android.net.NetworkInfo
 import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalApplicantSource
 import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalApplicationSource
 import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalJobSource
+import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalRecruiterSource
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicantSource
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicationSource
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteJobSource
+import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteRecruiterSource
 import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.ApplicantRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
+import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.RecruiterRepository
 import org.d3ifcool.dissajobapplicant.utils.*
 
 object Injection {
@@ -77,6 +80,31 @@ object Injection {
         }
 
         return ApplicantRepository.getInstance(
+            remoteDataSource,
+            localDataSource,
+            appExecutors,
+            callback
+        )
+    }
+
+    fun provideRecruiterRepository(context: Context): RecruiterRepository {
+
+        val database = DissajobRecruiterDatabase.getInstance(context)
+
+        val remoteDataSource = RemoteRecruiterSource.getInstance(RecruiterHelper)
+        val localDataSource = LocalRecruiterSource.getInstance(database.applicantDao())
+        val appExecutors = AppExecutors()
+
+        val callback = object : NetworkStateCallback {
+            override fun hasConnectivity(): Boolean {
+                val cm =
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+                return activeNetwork?.isConnectedOrConnecting == true
+            }
+        }
+
+        return RecruiterRepository.getInstance(
             remoteDataSource,
             localDataSource,
             appExecutors,

@@ -1,11 +1,13 @@
 package org.d3ifcool.dissajobapplicant.data.source.remote.source
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.utils.ApplicantHelper
@@ -93,6 +95,21 @@ class RemoteApplicantSource private constructor(
 
             override fun onFailure(messageId: Int) {
                 callback.onFailure(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun uploadApplicantProfilePicture(image: Uri, callback: UploadProfilePictureCallback) {
+        EspressoIdlingResource.increment()
+        applicantHelper.uploadApplicantProfilePicture(image, object : UploadProfilePictureCallback {
+            override fun onSuccessUpload(imageId: String) {
+                callback.onSuccessUpload(imageId)
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailureUpload(messageId: Int) {
+                callback.onFailureUpload(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

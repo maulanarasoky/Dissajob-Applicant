@@ -1,5 +1,6 @@
 package org.d3ifcool.dissajobapplicant.data.source.repository.applicant
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import org.d3ifcool.dissajobapplicant.data.NetworkBoundResource
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
@@ -9,6 +10,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applica
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicantSource
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
@@ -95,4 +97,7 @@ class ApplicantRepository private constructor(
         applicantProfile: ApplicantResponseEntity,
         callback: UpdateProfileCallback
     ) = appExecutors.diskIO().execute { remoteApplicantSource.updateApplicantData(applicantProfile, callback) }
+
+    override fun uploadApplicantProfilePicture(image: Uri, callback: UploadProfilePictureCallback) =
+        appExecutors.diskIO().execute { remoteApplicantSource.uploadApplicantProfilePicture(image, callback) }
 }

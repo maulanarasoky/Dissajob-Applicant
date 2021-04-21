@@ -1,12 +1,16 @@
 package org.d3ifcool.dissajobapplicant.utils
 
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 
@@ -82,6 +86,17 @@ object ApplicantHelper {
             callback.onSuccess()
         }.addOnFailureListener {
             callback.onFailure(R.string.txt_failure_update)
+        }
+    }
+
+    fun uploadApplicantProfilePicture(image: Uri, callback: UploadProfilePictureCallback) {
+        val storageRef = Firebase.storage.reference
+        val imageId = database.push().key
+        val uploadImage = storageRef.child("applicant/profile/images/${imageId}").putFile(image)
+        uploadImage.addOnSuccessListener {
+            callback.onSuccessUpload(imageId.toString())
+        }.addOnFailureListener {
+            callback.onFailureUpload(R.string.txt_failure_upload_profile_picture)
         }
     }
 }

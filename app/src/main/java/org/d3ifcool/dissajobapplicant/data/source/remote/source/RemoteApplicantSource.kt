@@ -134,4 +134,28 @@ class RemoteApplicantSource private constructor(
             }
         })
     }
+
+    fun updateApplicantPhoneNumber(
+        userId: String,
+        newPhoneNumber: String,
+        password: String,
+        callback: UpdateProfileCallback
+    ) {
+        EspressoIdlingResource.increment()
+        applicantHelper.updateApplicantPhoneNumber(
+            userId,
+            newPhoneNumber,
+            password,
+            object : UpdateProfileCallback {
+                override fun onSuccess() {
+                    callback.onSuccess()
+                    EspressoIdlingResource.decrement()
+                }
+
+                override fun onFailure(messageId: Int) {
+                    callback.onFailure(messageId)
+                    EspressoIdlingResource.decrement()
+                }
+            })
+    }
 }

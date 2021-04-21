@@ -17,4 +17,5 @@ interface ApplicantDataSource {
     fun uploadApplicantProfilePicture(image: Uri, callback: UploadProfilePictureCallback)
     fun updateApplicantData(applicantProfile: ApplicantResponseEntity, callback: UpdateProfileCallback)
     fun updateApplicantEmail(recruiterId: String, newEmail: String, password: String, callback: UpdateProfileCallback)
+    fun updateApplicantPhoneNumber(recruiterId: String, newPhoneNumber: String, password: String, callback: UpdateProfileCallback)
 }

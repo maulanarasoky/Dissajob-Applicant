@@ -117,4 +117,19 @@ class ApplicantRepository private constructor(
                 callback
             )
         }
+
+    override fun updateApplicantPhoneNumber(
+        recruiterId: String,
+        newPhoneNumber: String,
+        password: String,
+        callback: UpdateProfileCallback
+    ) = appExecutors.diskIO()
+        .execute {
+            remoteApplicantSource.updateApplicantPhoneNumber(
+                recruiterId,
+                newPhoneNumber,
+                password,
+                callback
+            )
+        }
 }

@@ -132,4 +132,19 @@ class ApplicantRepository private constructor(
                 callback
             )
         }
+
+    override fun updateApplicantPassword(
+        email: String,
+        oldPassword: String,
+        newPassword: String,
+        callback: UpdateProfileCallback
+    ) = appExecutors.diskIO()
+        .execute {
+            remoteApplicantSource.updateApplicantPassword(
+                email,
+                oldPassword,
+                newPassword,
+                callback
+            )
+        }
 }

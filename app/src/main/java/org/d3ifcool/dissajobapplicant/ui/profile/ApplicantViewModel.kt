@@ -37,4 +37,11 @@ class ApplicantViewModel(private val applicantRepository: ApplicantRepository) :
         password: String,
         callback: UpdateProfileCallback
     ) = applicantRepository.updateApplicantPhoneNumber(userId, newPhoneNumber, password, callback)
+
+    fun updateApplicantPassword(
+        email: String,
+        oldPassword: String,
+        newPassword: String,
+        callback: UpdateProfileCallback
+    ) = applicantRepository.updateApplicantPassword(email, oldPassword, newPassword, callback)
 }

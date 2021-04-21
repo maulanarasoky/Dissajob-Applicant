@@ -170,4 +170,38 @@ object ApplicantHelper {
             callback.onFailure(R.string.txt_failure_update)
         }
     }
+
+    fun updateApplicantPassword(
+        email: String,
+        oldPassword: String,
+        newPassword: String,
+        callback: UpdateProfileCallback
+    ) {
+        auth.signInWithEmailAndPassword(email, oldPassword)
+            .addOnSuccessListener {
+                storeNewPassword(email, oldPassword, newPassword, callback)
+            }
+            .addOnFailureListener {
+                callback.onFailure(R.string.txt_wrong_password)
+            }
+    }
+
+    private fun storeNewPassword(
+        email: String,
+        oldPassword: String,
+        newPassword: String,
+        callback: UpdateProfileCallback
+    ) {
+        val credential = EmailAuthProvider.getCredential(email, oldPassword)
+        auth.currentUser?.reauthenticate(credential)
+            ?.addOnCompleteListener {
+                auth.currentUser?.updatePassword(newPassword)!!
+                    .addOnSuccessListener {
+                        callback.onSuccess()
+                    }
+                    .addOnFailureListener {
+                        callback.onFailure(R.string.txt_failure_update)
+                    }
+            }
+    }
 }

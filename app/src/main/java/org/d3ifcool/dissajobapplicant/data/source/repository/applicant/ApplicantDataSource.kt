@@ -14,6 +14,7 @@ interface ApplicantDataSource {
     fun signUp(email: String, password: String, applicant: ApplicantResponseEntity, callback: SignUpCallback)
     fun signIn(email: String, password: String, callback: SignInCallback)
     fun getApplicantData(applicantId: String): LiveData<Resource<ApplicantEntity>>
-    fun updateApplicantData(applicantProfile: ApplicantResponseEntity, callback: UpdateProfileCallback)
     fun uploadApplicantProfilePicture(image: Uri, callback: UploadProfilePictureCallback)
+    fun updateApplicantData(applicantProfile: ApplicantResponseEntity, callback: UpdateProfileCallback)
+    fun updateApplicantEmail(recruiterId: String, newEmail: String, password: String, callback: UpdateProfileCallback)
 }

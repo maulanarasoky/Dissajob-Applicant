@@ -93,11 +93,28 @@ class ApplicantRepository private constructor(
         }.asLiveData()
     }
 
+    override fun uploadApplicantProfilePicture(image: Uri, callback: UploadProfilePictureCallback) =
+        appExecutors.diskIO()
+            .execute { remoteApplicantSource.uploadApplicantProfilePicture(image, callback) }
+
     override fun updateApplicantData(
         applicantProfile: ApplicantResponseEntity,
         callback: UpdateProfileCallback
-    ) = appExecutors.diskIO().execute { remoteApplicantSource.updateApplicantData(applicantProfile, callback) }
+    ) = appExecutors.diskIO()
+        .execute { remoteApplicantSource.updateApplicantData(applicantProfile, callback) }
 
-    override fun uploadApplicantProfilePicture(image: Uri, callback: UploadProfilePictureCallback) =
-        appExecutors.diskIO().execute { remoteApplicantSource.uploadApplicantProfilePicture(image, callback) }
+    override fun updateApplicantEmail(
+        recruiterId: String,
+        newEmail: String,
+        password: String,
+        callback: UpdateProfileCallback
+    ) = appExecutors.diskIO()
+        .execute {
+            remoteApplicantSource.updateApplicantEmail(
+                recruiterId,
+                newEmail,
+                password,
+                callback
+            )
+        }
 }

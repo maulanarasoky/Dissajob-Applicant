@@ -23,4 +23,11 @@ class ApplicantViewModel(private val applicantRepository: ApplicantRepository) :
         image: Uri,
         callback: UploadProfilePictureCallback
     ) = applicantRepository.uploadApplicantProfilePicture(image, callback)
+
+    fun updateApplicantEmail(
+        userId: String,
+        newEmail: String,
+        password: String,
+        callback: UpdateProfileCallback
+    ) = applicantRepository.updateApplicantEmail(userId, newEmail, password, callback)
 }

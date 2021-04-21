@@ -1,6 +1,7 @@
 package org.d3ifcool.dissajobapplicant.utils
 
 import android.net.Uri
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
@@ -97,6 +98,49 @@ object ApplicantHelper {
             callback.onSuccessUpload(imageId.toString())
         }.addOnFailureListener {
             callback.onFailureUpload(R.string.txt_failure_upload_profile_picture)
+        }
+    }
+
+    fun updateApplicantEmail(
+        userId: String,
+        newEmail: String,
+        password: String,
+        callback: UpdateProfileCallback
+    ) {
+        auth.signInWithEmailAndPassword(auth.currentUser?.email.toString(), password)
+            .addOnSuccessListener {
+                updateEmailAuthentication(userId, newEmail, password, callback)
+            }
+            .addOnFailureListener {
+                callback.onFailure(R.string.txt_wrong_password)
+            }
+    }
+
+    private fun updateEmailAuthentication(
+        userId: String,
+        newEmail: String,
+        password: String,
+        callback: UpdateProfileCallback
+    ) {
+        val credential =
+            EmailAuthProvider.getCredential(auth.currentUser?.email.toString(), password)
+        auth.currentUser?.reauthenticate(credential)
+            ?.addOnCompleteListener {
+                auth.currentUser!!.updateEmail(newEmail)
+                    .addOnSuccessListener {
+                        storeNewEmail(userId, newEmail, callback)
+                    }
+                    .addOnFailureListener {
+                        callback.onFailure(R.string.txt_failure_update)
+                    }
+            }
+    }
+
+    private fun storeNewEmail(userId: String, newEmail: String, callback: UpdateProfileCallback) {
+        database.child(userId).child("email").setValue(newEmail).addOnSuccessListener {
+            callback.onSuccess()
+        }.addOnFailureListener {
+            callback.onFailure(R.string.txt_failure_update)
         }
     }
 }

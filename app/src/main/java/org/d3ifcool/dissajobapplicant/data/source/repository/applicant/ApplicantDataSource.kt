@@ -6,6 +6,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.Applica
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
+import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -19,4 +20,5 @@ interface ApplicantDataSource {
     fun updateApplicantEmail(recruiterId: String, newEmail: String, password: String, callback: UpdateProfileCallback)
     fun updateApplicantPhoneNumber(recruiterId: String, newPhoneNumber: String, password: String, callback: UpdateProfileCallback)
     fun updateApplicantPassword(email: String, oldPassword: String, newPassword: String, callback: UpdateProfileCallback)
+    fun resetPassword(email: String, callback: ResetPasswordCallback)
 }

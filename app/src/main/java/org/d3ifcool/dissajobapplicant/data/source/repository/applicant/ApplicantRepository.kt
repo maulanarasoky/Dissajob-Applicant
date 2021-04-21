@@ -11,6 +11,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicantS
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
+import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
@@ -147,4 +148,13 @@ class ApplicantRepository private constructor(
                 callback
             )
         }
+
+    override fun resetPassword(email: String, callback: ResetPasswordCallback) =
+        appExecutors.diskIO()
+            .execute {
+                remoteApplicantSource.resetPassword(
+                    email,
+                    callback
+                )
+            }
 }

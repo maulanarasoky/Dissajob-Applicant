@@ -16,4 +16,7 @@
     <string name="txt_failure_update">%1$s gagal di update</string>
     <string name="txt_failure_upload_profile_picture">Gagal upload foto profil</string>
     <string name="txt_wrong_password">Password salah</string>
+
+    <!-- Reset password alert -->
+    <string name="txt_email_not_found">Email tidak ditemukan</string>
 </resources>

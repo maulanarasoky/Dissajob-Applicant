@@ -8,6 +8,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applica
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
+import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 import org.d3ifcool.dissajobapplicant.utils.ApplicantHelper
@@ -181,5 +182,23 @@ class RemoteApplicantSource private constructor(
                     EspressoIdlingResource.decrement()
                 }
             })
+    }
+
+    fun resetPassword(
+        email: String,
+        callback: ResetPasswordCallback
+    ) {
+        EspressoIdlingResource.increment()
+        applicantHelper.resetPassword(email, object : ResetPasswordCallback {
+            override fun onSuccess() {
+                callback.onSuccess()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailure(messageId: Int) {
+                callback.onFailure(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
     }
 }

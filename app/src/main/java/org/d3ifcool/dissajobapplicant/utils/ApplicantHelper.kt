@@ -12,6 +12,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applica
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
+import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
 
@@ -202,6 +203,16 @@ object ApplicantHelper {
                     .addOnFailureListener {
                         callback.onFailure(R.string.txt_failure_update)
                     }
+            }
+    }
+
+    fun resetPassword(email: String, callback: ResetPasswordCallback) {
+        auth.sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+                callback.onSuccess()
+            }
+            .addOnFailureListener {
+                callback.onFailure(R.string.txt_email_not_found)
             }
     }
 }

@@ -13,4 +13,6 @@
     <color name="sign_out_text_color">#FD2121</color>
     <color name="preview_bg_btn">#E5F7FF</color>
     <color name="sign_out_bg_btn">#FFE5E5</color>
+    <color name="search_bar_color">#F7F7FF</color>
+    <color name="search_bar_text_color">#342E2E</color>
 </resources>

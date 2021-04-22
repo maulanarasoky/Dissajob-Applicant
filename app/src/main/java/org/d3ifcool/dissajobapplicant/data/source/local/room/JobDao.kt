@@ -2,12 +2,14 @@ package org.d3ifcool.dissajobapplicant.data.source.local.room
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 
+@Dao
 interface JobDao {
     @Query("SELECT * FROM jobs")
     fun getJobs(): DataSource.Factory<Int, JobEntity>

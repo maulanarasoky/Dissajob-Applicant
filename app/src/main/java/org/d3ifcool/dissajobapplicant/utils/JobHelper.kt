@@ -12,7 +12,7 @@ object JobHelper {
     private val arrJob: MutableList<JobResponseEntity> = mutableListOf()
 
     fun getJobs(callback: LoadJobsCallback) {
-        database.orderByChild("postedBy").equalTo(AuthHelper.currentUser?.uid.toString())
+        database.orderByChild("open").equalTo(true)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
                 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.FragmentHomeBinding
 import org.d3ifcool.dissajobapplicant.ui.job.JobAdapter
+import org.d3ifcool.dissajobapplicant.ui.job.JobDetailsActivity
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
@@ -89,18 +90,18 @@ class HomeFragment : Fragment(), JobAdapter.ItemClickListener, JobAdapter.LoadRe
     }
 
     override fun onItemClicked(jobId: String) {
-//        val intent = Intent(activity, JobDetailsActivity::class.java)
-//        intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
-//        startActivity(intent)
+        val intent = Intent(activity, JobDetailsActivity::class.java)
+        intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
+        startActivity(intent)
     }
 
     override fun onLoadRecruiterData(
         recruiterId: String,
         callback: JobAdapter.LoadRecruiterDataCallback
     ) {
-        recruiterViewModel.getRecruiterData(recruiterId).observe(this) { applicantDetails ->
-            if (applicantDetails != null) {
-                applicantDetails.data?.let { callback.onRecruiterDataReceived(it) }
+        recruiterViewModel.getRecruiterData(recruiterId).observe(this) { recruiterDetails ->
+            if (recruiterDetails != null) {
+                recruiterDetails.data?.let { callback.onRecruiterDataReceived(it) }
             }
         }
     }

@@ -23,7 +23,25 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_search_job">Cari pekerjaan</string>
     <string name="txt_no_job">Tidak ada pekerjaan</string>
+
+    <!-- Menu -->
     <string name="home">Home</string>
     <string name="notification">Notifikasi</string>
     <string name="profile">Profil</string>
+
+    <!-- Job details -->
+    <string name="txt_job_details_toolbar_title">Detail Pekerjaan</string>
+
+    <!-- Job details title section -->
+    <string name="txt_job_type">%1$s \u2022 %2$s</string>
+    <string name="txt_job_description">Deskripsi Pekerjaan</string>
+
+    <!-- Job details details section -->
+    <string name="txt_job_details_title">Detail</string>
+    <string name="txt_job_qualification_title">Kualifikasi</string>
+    <string name="txt_job_industry_title">Industri</string>
+    <string name="txt_job_salary_title">Gaji</string>
+
+    <!-- Utils -->
+    <string name="txt_lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
 </resources>

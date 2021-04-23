@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/margin_16dp">
+
+    <TextView
+        android:id="@+id/tvJobDetailsTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_job_details_title"
+        android:textColor="@color/text_color"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvJobQualificationTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_job_qualification_title"
+        android:textColor="@color/gray"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJobDetailsTitle" />
+
+    <TextView
+        android:id="@+id/tvJobQualification"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/text_color"
+        android:textSize="13.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJobQualificationTitle"
+        tools:text="Qualification" />
+
+    <TextView
+        android:id="@+id/tvJobIndustryTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_job_industry_title"
+        android:textColor="@color/gray"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJobQualification" />
+
+    <TextView
+        android:id="@+id/tvJobIndustry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/text_color"
+        android:textSize="13.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJobIndustryTitle"
+        tools:text="Information Technology &amp; Services" />
+
+    <TextView
+        android:id="@+id/tvJobSalaryTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_job_salary_title"
+        android:textColor="@color/gray"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJobIndustry" />
+
+    <TextView
+        android:id="@+id/tvJobSalary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/text_color"
+        android:textSize="13.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJobSalaryTitle"
+        tools:text="Rp. 5.000.000" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

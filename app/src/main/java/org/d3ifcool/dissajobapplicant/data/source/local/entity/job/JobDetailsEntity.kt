@@ -21,17 +21,23 @@ data class JobDetailsEntity(
     @ColumnInfo(name = "description")
     val description: String? = "-",
 
+    @ColumnInfo(name = "address")
+    val address: String? = "-",
+
     @ColumnInfo(name = "qualification")
     val qualification: String? = "-",
 
     @ColumnInfo(name = "employment")
     val employment: String? = "-",
 
+    @ColumnInfo(name = "type")
+    val type: String? = "-",
+
     @ColumnInfo(name = "industry")
     val industry: String? = "-",
 
     @ColumnInfo(name = "salary")
-    val salary: Int? = 0,
+    val salary: String? = "-",
 
     @ColumnInfo(name = "posted_by")
     var postedBy: String? = "-",

@@ -65,4 +65,7 @@
     <string name="txt_sub_heading_reset_password">Masukkan email yang terkait dengan akun anda dan kami akan mengirimkan email dengan instruksi untuk mengatur ulang kata sandi anda.</string>
     <string name="txt_send">Kirim</string>
     <string name="txt_success_alert_reset_password">Email reset password telah dikirimkan</string>
+
+    <!-- Home fragment -->
+    <string name="txt_home_fragment_heading">Direkomendasikan untuk Anda</string>
 </resources>

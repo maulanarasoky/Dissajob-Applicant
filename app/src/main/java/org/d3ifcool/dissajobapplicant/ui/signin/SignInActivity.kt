@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySignInBinding
 import org.d3ifcool.dissajobapplicant.ui.home.HomeActivity
+import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordActivity
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 
@@ -42,7 +43,8 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, SignInCallback
 
     private fun formValidation() {
         if (TextUtils.isEmpty(activitySignInBinding.etEmail.text.toString().trim())) {
-            activitySignInBinding.etEmail.error = resources.getString(R.string.edit_text_error_alert, "Email")
+            activitySignInBinding.etEmail.error =
+                resources.getString(R.string.edit_text_error_alert, "Email")
             return
         }
 
@@ -82,7 +84,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener, SignInCallback
                 formValidation()
             }
             R.id.tvResetPassword -> {
-//                startActivity(Intent(this, ResetPasswordActivity::class.java))
+                startActivity(Intent(this, ResetPasswordActivity::class.java))
             }
         }
     }

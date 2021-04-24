@@ -58,4 +58,11 @@
     <string name="txt_alert_success_sign_up">Silahkan lakukan verifikasi email</string>
     <string name="edit_text_alert_phone_number_invalid">Nomor telepon tidak valid</string>
     <string name="alert_email_not_available">Email sudah digunakan</string>
+
+    <!-- Reset password -->
+    <string name="txt_back">Kembali</string>
+    <string name="txt_reset_password">Reset Password</string>
+    <string name="txt_sub_heading_reset_password">Masukkan email yang terkait dengan akun anda dan kami akan mengirimkan email dengan instruksi untuk mengatur ulang kata sandi anda.</string>
+    <string name="txt_send">Kirim</string>
+    <string name="txt_success_alert_reset_password">Email reset password telah dikirimkan</string>
 </resources>

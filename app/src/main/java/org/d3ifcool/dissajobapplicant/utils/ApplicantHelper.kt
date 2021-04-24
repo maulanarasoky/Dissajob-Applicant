@@ -225,6 +225,22 @@ object ApplicantHelper {
     }
 
     fun resetPassword(email: String, callback: ResetPasswordCallback) {
+        database.orderByChild("email").equalTo(email).limitToFirst(1)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        sendResetPasswordEmail(email, callback)
+                    } else {
+                        callback.onFailure(R.string.txt_email_not_found)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+    }
+
+    private fun sendResetPasswordEmail(email: String, callback: ResetPasswordCallback) {
         auth.sendPasswordResetEmail(email)
             .addOnSuccessListener {
                 callback.onSuccess()

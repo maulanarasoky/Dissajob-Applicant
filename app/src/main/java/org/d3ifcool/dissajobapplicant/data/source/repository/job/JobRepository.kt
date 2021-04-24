@@ -16,6 +16,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteJobSource
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -85,7 +86,9 @@ class JobRepository private constructor(
 
     override fun getSavedJobs(): LiveData<Resource<PagedList<SavedJobEntity>>> {
         return object :
-            NetworkBoundResource<PagedList<SavedJobEntity>, List<SavedJobResponseEntity>>(appExecutors) {
+            NetworkBoundResource<PagedList<SavedJobEntity>, List<SavedJobResponseEntity>>(
+                appExecutors
+            ) {
             public override fun loadFromDB(): LiveData<PagedList<SavedJobEntity>> {
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
@@ -162,4 +165,8 @@ class JobRepository private constructor(
             }
         }.asLiveData()
     }
+
+    override fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback) =
+        appExecutors.diskIO()
+            .execute { remoteJobSource.saveJob(savedJob, callback) }
 }

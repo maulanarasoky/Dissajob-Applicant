@@ -1,20 +1,25 @@
 package org.d3ifcool.dissajobapplicant.utils
 
 import com.google.firebase.database.*
+import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobDetailsResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
 
 object JobHelper {
 
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("jobs")
+    private val jobDatabase: DatabaseReference = FirebaseDatabase.getInstance().getReference("jobs")
     private val arrJob: MutableList<JobResponseEntity> = mutableListOf()
 
+    private val savedJobDatabase = FirebaseDatabase.getInstance().getReference("saved_job")
+    private val arrSavedJob: MutableList<SavedJobResponseEntity> = mutableListOf()
+
     fun getJobs(callback: LoadJobsCallback) {
-        database.orderByChild("open").equalTo(true)
+        jobDatabase.orderByChild("open").equalTo(true)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
                 }
@@ -41,8 +46,6 @@ object JobHelper {
     }
 
     fun getSavedJobs(callback: LoadSavedJobsCallback) {
-        val arrSavedJob: MutableList<SavedJobResponseEntity> = mutableListOf()
-        val savedJobDatabase = FirebaseDatabase.getInstance().getReference("saved_job")
         savedJobDatabase.child(AuthHelper.currentUser?.uid.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
@@ -66,7 +69,7 @@ object JobHelper {
     }
 
     fun getJobDetails(jobId: String, callback: LoadJobDetailsCallback) {
-        database.child(jobId).addValueEventListener(object : ValueEventListener {
+        jobDatabase.child(jobId).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
 
@@ -93,6 +96,15 @@ object JobHelper {
             }
 
         })
+    }
+
+    fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback) {
+        savedJobDatabase.child(AuthHelper.currentUser?.uid.toString()).child(savedJob.id)
+            .setValue(savedJob).addOnSuccessListener {
+            callback.onSuccess()
+        }.addOnFailureListener {
+            callback.onFailure(R.string.txt_failure_update)
+        }
     }
 
 }

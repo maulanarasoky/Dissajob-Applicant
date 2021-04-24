@@ -9,6 +9,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.Sav
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.JobHelper
 
@@ -72,6 +73,24 @@ class RemoteJobSource private constructor(
             }
         })
         return resultJob
+    }
+
+    fun saveJob(
+        savedJob: SavedJobResponseEntity,
+        callback: SaveJobCallback
+    ) {
+        EspressoIdlingResource.increment()
+        jobHelper.saveJob(savedJob, object : SaveJobCallback {
+            override fun onSuccess() {
+                callback.onSuccess()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailure(messageId: Int) {
+                callback.onFailure(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
     }
 
 }

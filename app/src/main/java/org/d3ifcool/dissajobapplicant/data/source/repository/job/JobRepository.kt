@@ -69,7 +69,7 @@ class JobRepository private constructor(
                 val jobList = ArrayList<JobEntity>()
                 for (response in data) {
                     val job = JobEntity(
-                        response.id,
+                        response.id.toString(),
                         response.title,
                         response.address,
                         response.postedBy,
@@ -113,7 +113,7 @@ class JobRepository private constructor(
                 val jobList = ArrayList<SavedJobEntity>()
                 for (response in data) {
                     val job = SavedJobEntity(
-                        response.id,
+                        response.id.toString(),
                         response.jobId
                     )
                     jobList.add(job)

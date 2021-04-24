@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.application.ApplicationResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.application.callback.LoadAllApplicationsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.ApplyJobCallback
 import org.d3ifcool.dissajobapplicant.utils.ApplicationHelper
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 
@@ -40,32 +41,36 @@ class RemoteApplicationSource private constructor(
     fun getAcceptedApplications(callback: LoadAllApplicationsCallback): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultApplicant = MutableLiveData<ApiResponse<List<ApplicationResponseEntity>>>()
-        applicationHelper.getAllApplicationsByStatus("accepted", object : LoadAllApplicationsCallback {
-            override fun onAllApplicationsReceived(applicationsResponse: List<ApplicationResponseEntity>): List<ApplicationResponseEntity> {
-                resultApplicant.value =
-                    ApiResponse.success(callback.onAllApplicationsReceived(applicationsResponse))
-                if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
-                    EspressoIdlingResource.decrement()
+        applicationHelper.getAllApplicationsByStatus(
+            "accepted",
+            object : LoadAllApplicationsCallback {
+                override fun onAllApplicationsReceived(applicationsResponse: List<ApplicationResponseEntity>): List<ApplicationResponseEntity> {
+                    resultApplicant.value =
+                        ApiResponse.success(callback.onAllApplicationsReceived(applicationsResponse))
+                    if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
+                        EspressoIdlingResource.decrement()
+                    }
+                    return applicationsResponse
                 }
-                return applicationsResponse
-            }
-        })
+            })
         return resultApplicant
     }
 
     fun getRejectedApplications(callback: LoadAllApplicationsCallback): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultApplicant = MutableLiveData<ApiResponse<List<ApplicationResponseEntity>>>()
-        applicationHelper.getAllApplicationsByStatus("rejected", object : LoadAllApplicationsCallback {
-            override fun onAllApplicationsReceived(applicationsResponse: List<ApplicationResponseEntity>): List<ApplicationResponseEntity> {
-                resultApplicant.value =
-                    ApiResponse.success(callback.onAllApplicationsReceived(applicationsResponse))
-                if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
-                    EspressoIdlingResource.decrement()
+        applicationHelper.getAllApplicationsByStatus(
+            "rejected",
+            object : LoadAllApplicationsCallback {
+                override fun onAllApplicationsReceived(applicationsResponse: List<ApplicationResponseEntity>): List<ApplicationResponseEntity> {
+                    resultApplicant.value =
+                        ApiResponse.success(callback.onAllApplicationsReceived(applicationsResponse))
+                    if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
+                        EspressoIdlingResource.decrement()
+                    }
+                    return applicationsResponse
                 }
-                return applicationsResponse
-            }
-        })
+            })
         return resultApplicant
     }
 
@@ -85,22 +90,21 @@ class RemoteApplicationSource private constructor(
         return resultApplicant
     }
 
-//    fun getApplicantDetails(
-//        applicantId: String,
-//        callback: LoadApplicantDetailsCallback
-//    ): LiveData<ApiResponse<ApplicantResponseEntity>> {
-//        EspressoIdlingResource.increment()
-//        val resultApplicantDetails = MutableLiveData<ApiResponse<ApplicantResponseEntity>>()
-//        applicantHelper.getApplicantDetails(applicantId, object : LoadApplicantDetailsCallback {
-//            override fun onApplicantDetailsReceived(applicantResponse: ApplicantResponseEntity): ApplicantResponseEntity {
-//                resultApplicantDetails.value =
-//                    ApiResponse.success(callback.onApplicantDetailsReceived(applicantResponse))
-//                if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
-//                    EspressoIdlingResource.decrement()
-//                }
-//                return applicantResponse
-//            }
-//        })
-//        return resultApplicantDetails
-//    }
+    fun insertApplication(
+        application: ApplicationResponseEntity,
+        callback: ApplyJobCallback
+    ) {
+        EspressoIdlingResource.increment()
+        applicationHelper.insertApplication(application, object : ApplyJobCallback {
+            override fun onSuccess() {
+                callback.onSuccess()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailure(messageId: Int) {
+                callback.onFailure(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
 }

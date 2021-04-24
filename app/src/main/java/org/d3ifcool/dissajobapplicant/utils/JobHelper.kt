@@ -99,12 +99,11 @@ object JobHelper {
     }
 
     fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback) {
-        savedJobDatabase.child(AuthHelper.currentUser?.uid.toString()).child(savedJob.id)
+        savedJobDatabase.child(AuthHelper.currentUser?.uid.toString()).child(savedJob.id.toString())
             .setValue(savedJob).addOnSuccessListener {
             callback.onSuccess()
         }.addOnFailureListener {
             callback.onFailure(R.string.txt_failure_update)
         }
     }
-
 }

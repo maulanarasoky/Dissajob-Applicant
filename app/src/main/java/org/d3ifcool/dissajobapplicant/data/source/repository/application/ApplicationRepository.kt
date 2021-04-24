@@ -10,6 +10,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.application.ApplicationResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicationSource
 import org.d3ifcool.dissajobapplicant.ui.application.callback.LoadAllApplicationsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.ApplyJobCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -227,4 +228,10 @@ class ApplicationRepository private constructor(
             }
         }.asLiveData()
     }
+
+    override fun insertApplication(
+        application: ApplicationResponseEntity,
+        callback: ApplyJobCallback
+    ) = appExecutors.diskIO()
+        .execute { remoteApplicationSource.insertApplication(application, callback) }
 }

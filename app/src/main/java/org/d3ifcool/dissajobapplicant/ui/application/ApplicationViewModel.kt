@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
+import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.application.ApplicationResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
+import org.d3ifcool.dissajobapplicant.ui.job.callback.ApplyJobCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 class ApplicationViewModel(private val applicationRepository: ApplicationRepository) : ViewModel() {
@@ -19,4 +21,7 @@ class ApplicationViewModel(private val applicationRepository: ApplicationReposit
 
     fun getMarkedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>> =
         applicationRepository.getMarkedApplications()
+
+    fun insertApplication(application: ApplicationResponseEntity, callback: ApplyJobCallback) =
+        applicationRepository.insertApplication(application, callback)
 }

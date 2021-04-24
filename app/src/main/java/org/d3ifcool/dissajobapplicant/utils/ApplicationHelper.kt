@@ -1,8 +1,12 @@
 package org.d3ifcool.dissajobapplicant.utils
 
 import com.google.firebase.database.*
+import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.application.ApplicationResponseEntity
+import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.application.callback.LoadAllApplicationsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.ApplyJobCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
 
 object ApplicationHelper {
 
@@ -89,5 +93,14 @@ object ApplicationHelper {
                 }
 
             })
+    }
+
+    fun insertApplication(application: ApplicationResponseEntity, callback: ApplyJobCallback) {
+        database.child(application.id.toString())
+            .setValue(application).addOnSuccessListener {
+                callback.onSuccess()
+            }.addOnFailureListener {
+                callback.onFailure(R.string.txt_failure_update)
+            }
     }
 }

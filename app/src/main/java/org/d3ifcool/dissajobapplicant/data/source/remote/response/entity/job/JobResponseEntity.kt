@@ -4,7 +4,7 @@ import com.google.firebase.database.Exclude
 
 data class JobResponseEntity(
     @get:Exclude
-    var id: String,
+    var id: String? = "-",
     val title: String? = "-",
     val address: String? = "-",
     val postedBy: String? = "-",

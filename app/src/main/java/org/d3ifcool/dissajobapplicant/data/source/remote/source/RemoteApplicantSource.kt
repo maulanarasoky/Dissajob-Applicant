@@ -40,8 +40,8 @@ class RemoteApplicantSource private constructor(
                 EspressoIdlingResource.decrement()
             }
 
-            override fun onFailure(message: String) {
-                callback.onFailure(message)
+            override fun onFailure(messageId: Int) {
+                callback.onFailure(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

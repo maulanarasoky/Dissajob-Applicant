@@ -38,6 +38,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginEnd="@dimen/margin_16dp"
             android:backgroundTint="@color/text_color"
+            android:drawableStart="@drawable/ic_person_brown_24dp"
             android:fontFamily="@font/roboto"
             android:inputType="textCapWords"
             android:textColor="@color/text_color"
@@ -67,6 +68,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginEnd="@dimen/margin_16dp"
             android:backgroundTint="@color/text_color"
+            android:drawableStart="@drawable/ic_person_brown_24dp"
             android:fontFamily="@font/roboto"
             android:inputType="textCapWords"
             android:textColor="@color/text_color"
@@ -75,35 +77,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvLastName" />
-
-        <TextView
-            android:id="@+id/tvRole"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16dp"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/role"
-            android:textColor="@color/text_color"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etLastName" />
-
-        <EditText
-            android:id="@+id/etRole"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16dp"
-            android:layout_marginEnd="@dimen/margin_16dp"
-            android:backgroundTint="@color/text_color"
-            android:fontFamily="@font/roboto"
-            android:inputType="textCapWords"
-            android:textColor="@color/text_color"
-            android:textCursorDrawable="@drawable/cursor_color"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvRole" />
 
         <TextView
             android:id="@+id/tvEmail"
@@ -116,7 +89,7 @@
             android:textColor="@color/text_color"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etRole" />
+            app:layout_constraintTop_toBottomOf="@id/etLastName" />
 
         <EditText
             android:id="@+id/etEmail"
@@ -125,6 +98,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginEnd="@dimen/margin_16dp"
             android:backgroundTint="@color/text_color"
+            android:drawableStart="@drawable/ic_email_brown_24dp"
             android:fontFamily="@font/roboto"
             android:inputType="textEmailAddress"
             android:textColor="@color/text_color"
@@ -133,6 +107,36 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+
+        <TextView
+            android:id="@+id/tvPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/txt_phone_number"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etEmail" />
+
+        <EditText
+            android:id="@+id/etPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:backgroundTint="@color/text_color"
+            android:drawableStart="@drawable/ic_phone_brown_24dp"
+            android:fontFamily="@font/roboto"
+            android:inputType="phone"
+            android:textColor="@color/text_color"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPhoneNumber" />
 
         <TextView
             android:id="@+id/tvPassword"
@@ -145,7 +149,7 @@
             android:textColor="@color/text_color"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etEmail" />
+            app:layout_constraintTop_toBottomOf="@id/etPhoneNumber" />
 
         <EditText
             android:id="@+id/etPassword"
@@ -154,6 +158,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginEnd="@dimen/margin_16dp"
             android:backgroundTint="@color/text_color"
+            android:drawableStart="@drawable/ic_lock_brown_24dp"
             android:fontFamily="@font/roboto"
             android:inputType="textPassword"
             android:textColor="@color/text_color"
@@ -183,6 +188,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginEnd="@dimen/margin_16dp"
             android:backgroundTint="@color/text_color"
+            android:drawableStart="@drawable/ic_lock_brown_24dp"
             android:fontFamily="@font/roboto"
             android:inputType="textPassword"
             android:textColor="@color/text_color"
@@ -220,7 +226,7 @@
 
         <include
             android:id="@+id/footer"
-            layout="@layout/sign_in_footer"
+            layout="@layout/sign_up_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_16dp"

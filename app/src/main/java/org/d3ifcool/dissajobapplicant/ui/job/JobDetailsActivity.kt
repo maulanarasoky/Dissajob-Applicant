@@ -127,7 +127,7 @@ class JobDetailsActivity : AppCompatActivity() {
                             .load(storageRef.child("recruiter/profile/images/${recruiterData.imagePath}"))
                             .transform(RoundedCorners(20))
                             .apply(RequestOptions.placeholderOf(circularProgressDrawable))
-                            .error(R.drawable.ic_error_image_gray_24dp)
+                            .error(R.drawable.ic_image_gray_24dp)
                             .into(activityJobDetailsBinding.jobDetailsTitleSection.imgRecruiterPicture)
                     }
                 }

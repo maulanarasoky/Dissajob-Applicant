@@ -12,7 +12,7 @@
         android:layout_height="75dp"
         android:scaleType="centerCrop"
         android:layout_marginEnd="@dimen/margin_16dp"
-        android:src="@color/colorPrimary"
+        android:src="@drawable/ic_image_gray_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

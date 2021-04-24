@@ -67,7 +67,7 @@ class JobRepository private constructor(
                     val job = JobEntity(
                         response.id,
                         response.title,
-                        response.description,
+                        response.address,
                         response.postedBy,
                         response.postedDate,
                         response.isOpen

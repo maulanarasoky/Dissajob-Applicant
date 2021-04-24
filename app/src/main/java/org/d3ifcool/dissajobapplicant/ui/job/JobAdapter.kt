@@ -64,7 +64,7 @@ class JobAdapter(private val clickCallback: ItemClickListener, private val loadC
                     override fun onRecruiterDataReceived(recruiterData: RecruiterEntity) {
                         tvJobTitle.text = items.title.toString()
                         tvJobRecruiterName.text = recruiterData.fullName.toString()
-                        tvJobAddress.text = recruiterData.address.toString()
+                        tvJobAddress.text = items.address.toString()
                         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
                         sdf.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
                         try {
@@ -87,7 +87,7 @@ class JobAdapter(private val clickCallback: ItemClickListener, private val loadC
                                 .load(storageRef.child("recruiter/profile/images/${recruiterData.imagePath}"))
                                 .transform(RoundedCorners(20))
                                 .apply(RequestOptions.placeholderOf(circularProgressDrawable))
-                                .error(R.drawable.ic_error_image_gray_24dp)
+                                .error(R.drawable.ic_image_gray_24dp)
                                 .into(imgRecruiterPicture)
                         }
 

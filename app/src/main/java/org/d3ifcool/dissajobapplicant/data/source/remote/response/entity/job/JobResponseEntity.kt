@@ -6,7 +6,7 @@ data class JobResponseEntity(
     @get:Exclude
     var id: String,
     val title: String? = "-",
-    val description: String? = "-",
+    val address: String? = "-",
     val postedBy: String? = "-",
     val postedDate: String? = "-",
     val isOpen: Boolean? = true

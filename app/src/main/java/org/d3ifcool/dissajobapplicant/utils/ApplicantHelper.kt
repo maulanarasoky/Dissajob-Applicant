@@ -37,6 +37,8 @@ object ApplicantHelper {
                         auth.signOut()
                     }
                 }
+            } else {
+                callback.onFailure(R.string.alert_email_not_available)
             }
         }
     }
@@ -75,7 +77,7 @@ object ApplicantHelper {
         database.child(applicant.id.toString()).setValue(applicant).addOnSuccessListener {
             callback.onSuccess()
         }.addOnFailureListener {
-            callback.onFailure(it.message.toString())
+            callback.onFailure(R.string.alert_email_not_available)
         }
     }
 

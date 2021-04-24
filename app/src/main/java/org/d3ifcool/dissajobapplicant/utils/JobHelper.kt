@@ -24,7 +24,7 @@ object JobHelper {
                             val job = JobResponseEntity(
                                 data.key.toString(),
                                 data.child("title").value.toString(),
-                                data.child("description").value.toString(),
+                                data.child("address").value.toString(),
                                 data.child("postedBy").value.toString(),
                                 data.child("postedDate").value.toString(),
                                 data.child("open").value.toString().toBoolean()

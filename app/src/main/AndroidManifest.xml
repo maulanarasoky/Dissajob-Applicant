@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DissajobApplicant"
         tools:replace="android:icon">
-        <activity android:name=".ui.job.JobDetailsActivity"></activity>
+        <activity android:name=".ui.job.JobDetailsActivity" />
         <activity android:name=".ui.signup.SignUpActivity" />
         <activity android:name=".ui.signin.SignInActivity" />
         <activity android:name=".ui.home.HomeActivity">

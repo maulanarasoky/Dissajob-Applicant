@@ -25,11 +25,11 @@ class HomeActivity : AppCompatActivity() {
         activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(activityHomeBinding.root)
 
-//        if (FirebaseAuth.getInstance().currentUser == null) {
-//            startActivity(Intent(this, SignInActivity::class.java))
-//            this.finish()
-//            return
-//        }
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            startActivity(Intent(this, SignInActivity::class.java))
+            this.finish()
+            return
+        }
 
         val viewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
         mUserObserver = Observer { updateUI(savedInstanceState) }

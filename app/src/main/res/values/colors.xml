@@ -15,4 +15,5 @@
     <color name="sign_out_bg_btn">#FFE5E5</color>
     <color name="search_bar_color">#F7F7FF</color>
     <color name="search_bar_text_color">#342E2E</color>
+    <color name="header_color">#4E81E9</color>
 </resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:elevation="@dimen/elevation_header">
+
+    <View
+        android:id="@+id/footer"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:background="@drawable/sign_in_footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_32dp"
+        android:layout_marginBottom="@dimen/margin_32dp"
+        android:background="@drawable/bg_outline_color_primary"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_sign_up"
+        android:textAllCaps="false"
+        android:textColor="@color/header_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/footer"
+        app:layout_constraintStart_toStartOf="@id/footer" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

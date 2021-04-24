@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">DissajobApplicant</string>
+    <string name="txt_sign_in_header">Selamat Datang Dissajob</string>
     <string name="txt_sign_in">Masuk</string>
+    <string name="txt_sign_up_headline">Bergabung Sekarang di Dissajob</string>
     <string name="txt_sign_up">Daftar</string>
     <string name="txt_email">Email</string>
     <string name="txt_password">Password</string>
     <string name="txt_lupa_password">Lupa password ?</string>
-    <string name="txt_sign_up_headline">Bergabung Sekarang di Dissajob</string>
     <string name="txt_first_name">Nama depan</string>
     <string name="txt_last_name">Nama belakang (opsional)</string>
     <string name="role">Role</string>
@@ -44,4 +45,9 @@
 
     <!-- Utils -->
     <string name="txt_lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+
+    <!-- Sign in -->
+    <string name="edit_text_error_alert">%1$s tidak boleh kosong</string>
+    <string name="email_is_not_verified">Silahkan lakukan verifikasi email terlebih dahulu</string>
+    <string name="error_login">Email/Password anda salah</string>
 </resources>

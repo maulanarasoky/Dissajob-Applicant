@@ -42,6 +42,22 @@ object ApplicantHelper {
     }
 
     fun signIn(email: String, password: String, callback: SignInCallback) {
+        database.orderByChild("email").equalTo(email).limitToFirst(1)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        checkSignIn(email, password, callback)
+                    } else {
+                        callback.onFailure()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+    }
+
+    private fun checkSignIn(email: String, password: String, callback: SignInCallback) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { check ->
             if (check.isSuccessful) {
                 if (auth.currentUser?.isEmailVerified!!) {

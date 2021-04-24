@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobDetailsResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
+import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.JobHelper
 
@@ -29,6 +31,21 @@ class RemoteJobSource private constructor(
         val resultJob = MutableLiveData<ApiResponse<List<JobResponseEntity>>>()
         jobHelper.getJobs(object : LoadJobsCallback {
             override fun onAllJobsReceived(jobResponse: List<JobResponseEntity>): List<JobResponseEntity> {
+                resultJob.value = ApiResponse.success(callback.onAllJobsReceived(jobResponse))
+                if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
+                    EspressoIdlingResource.decrement()
+                }
+                return jobResponse
+            }
+        })
+        return resultJob
+    }
+
+    fun getSavedJobs(callback: LoadSavedJobsCallback): LiveData<ApiResponse<List<SavedJobResponseEntity>>> {
+        EspressoIdlingResource.increment()
+        val resultJob = MutableLiveData<ApiResponse<List<SavedJobResponseEntity>>>()
+        jobHelper.getSavedJobs(object : LoadSavedJobsCallback {
+            override fun onAllJobsReceived(jobResponse: List<SavedJobResponseEntity>): List<SavedJobResponseEntity> {
                 resultJob.value = ApiResponse.success(callback.onAllJobsReceived(jobResponse))
                 if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
                     EspressoIdlingResource.decrement()

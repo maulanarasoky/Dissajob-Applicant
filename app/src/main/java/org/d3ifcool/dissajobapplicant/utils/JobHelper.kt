@@ -3,8 +3,10 @@ package org.d3ifcool.dissajobapplicant.utils
 import com.google.firebase.database.*
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobDetailsResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
+import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
 
 object JobHelper {
 
@@ -33,6 +35,31 @@ object JobHelper {
                         }
                     }
                     callback.onAllJobsReceived(arrJob)
+                }
+
+            })
+    }
+
+    fun getSavedJobs(callback: LoadSavedJobsCallback) {
+        val arrSavedJob: MutableList<SavedJobResponseEntity> = mutableListOf()
+        val savedJobDatabase = FirebaseDatabase.getInstance().getReference("saved_job")
+        savedJobDatabase.child(AuthHelper.currentUser?.uid.toString())
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(dataSnapshot: DatabaseError) {
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    arrSavedJob.clear()
+                    if (dataSnapshot.exists()) {
+                        for (data in dataSnapshot.children.reversed()) {
+                            val job = SavedJobResponseEntity(
+                                data.key.toString(),
+                                data.child("jobId").value.toString()
+                            )
+                            arrSavedJob.add(job)
+                        }
+                    }
+                    callback.onAllJobsReceived(arrSavedJob)
                 }
 
             })

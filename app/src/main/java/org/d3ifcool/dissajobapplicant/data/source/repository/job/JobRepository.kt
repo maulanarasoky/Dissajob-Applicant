@@ -6,13 +6,16 @@ import androidx.paging.PagedList
 import org.d3ifcool.dissajobapplicant.data.NetworkBoundResource
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalJobSource
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobDetailsResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
+import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteJobSource
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -76,6 +79,44 @@ class JobRepository private constructor(
                 }
 
                 localJobSource.insertJob(jobList)
+            }
+        }.asLiveData()
+    }
+
+    override fun getSavedJobs(): LiveData<Resource<PagedList<SavedJobEntity>>> {
+        return object :
+            NetworkBoundResource<PagedList<SavedJobEntity>, List<SavedJobResponseEntity>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<SavedJobEntity>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(localJobSource.getSavedJobs(), config).build()
+            }
+
+            override fun shouldFetch(data: PagedList<SavedJobEntity>?): Boolean =
+                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+//                data == null || data.isEmpty()
+
+            public override fun createCall(): LiveData<ApiResponse<List<SavedJobResponseEntity>>> =
+                remoteJobSource.getSavedJobs(object : LoadSavedJobsCallback {
+                    override fun onAllJobsReceived(jobResponse: List<SavedJobResponseEntity>): List<SavedJobResponseEntity> {
+                        return jobResponse
+                    }
+                })
+
+            public override fun saveCallResult(data: List<SavedJobResponseEntity>) {
+                val jobList = ArrayList<SavedJobEntity>()
+                for (response in data) {
+                    val job = SavedJobEntity(
+                        response.id,
+                        response.jobId
+                    )
+                    jobList.add(job)
+                }
+
+                localJobSource.insertSavedJob(jobList)
             }
         }.asLiveData()
     }

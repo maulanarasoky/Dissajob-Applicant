@@ -47,6 +47,7 @@
     <!-- Utils -->
     <string name="txt_lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="txt_loading">Loading</string>
+    <string name="txt_update">Update</string>
 
     <!-- Sign in -->
     <string name="edit_text_error_alert">%1$s tidak boleh kosong</string>
@@ -74,6 +75,12 @@
     <string name="txt_change_email_title">Ganti Email</string>
     <string name="txt_change_email_description">Masukkan alamat email aktif</string>
     <string name="txt_same_email">Email tidak boleh sama dengan yang sebelumnya</string>
-    <string name="txt_save">Simpan</string>
-    <string name="txt_update">Update</string>
+    <string name="txt_current_email">Email saat ini</string>
+    <string name="txt_new_email">Email baru</string>
+
+    <!-- Change phone number -->
+    <string name="txt_change_phone_number_title">Ganti Nomor Telepon</string>
+    <string name="txt_change_phone_number_description">Masukkan nomor telepon aktif</string>
+    <string name="txt_current_phone_number">Nomor saat ini</string>
+    <string name="txt_new_phone_number">Nomor telepon baru</string>
 </resources>

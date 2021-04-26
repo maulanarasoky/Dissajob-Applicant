@@ -150,7 +150,7 @@ object ApplicantHelper {
                         storeNewEmail(userId, newEmail, callback)
                     }
                     .addOnFailureListener {
-                        callback.onFailure(R.string.txt_failure_update)
+                        callback.onFailure(R.string.alert_email_not_available)
                     }
             }
     }

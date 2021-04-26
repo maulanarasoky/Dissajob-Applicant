@@ -32,31 +32,37 @@ class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnC
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        showCurrentEmail()
+
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[ApplicantViewModel::class.java]
 
         activityChangeEmailBinding.btnUpdate.setOnClickListener(this)
     }
 
+    private fun showCurrentEmail() {
+        activityChangeEmailBinding.etOldEmail.setText(AuthHelper.currentUser?.email.toString())
+    }
+
     private fun formValidation() {
-        val newEmail = activityChangeEmailBinding.etEmail.text.toString().trim()
+        val newEmail = activityChangeEmailBinding.etNewEmail.text.toString().trim()
         val password = activityChangeEmailBinding.etPassword.text.toString().trim()
 
         if (TextUtils.isEmpty(newEmail)) {
-            activityChangeEmailBinding.etEmail.error =
+            activityChangeEmailBinding.etNewEmail.error =
                 getString(R.string.edit_text_error_alert, "Email")
             return
         }
 
         if (!TextUtils.isEmpty(newEmail)) {
             if (!isValidMail(newEmail)) {
-                activityChangeEmailBinding.etEmail.error =
+                activityChangeEmailBinding.etNewEmail.error =
                     getString(R.string.edit_text_alert_email_invalid)
                 return
             }
 
             if (newEmail == AuthHelper.currentUser?.email.toString()) {
-                activityChangeEmailBinding.etEmail.error =
+                activityChangeEmailBinding.etNewEmail.error =
                     getString(R.string.txt_same_email)
                 return
             }
@@ -118,7 +124,7 @@ class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnC
     }
 
     private fun isEnable(state: Boolean) {
-        activityChangeEmailBinding.etEmail.isEnabled = state
+        activityChangeEmailBinding.etNewEmail.isEnabled = state
         activityChangeEmailBinding.etPassword.isEnabled = state
         activityChangeEmailBinding.btnUpdate.isEnabled = state
     }

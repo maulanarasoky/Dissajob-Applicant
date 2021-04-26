@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.ChangeEmailActivity">
+    tools:context=".ui.settings.ChangePhoneNumberActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -18,13 +18,13 @@
         app:titleTextAppearance="@style/Toolbar.TitleText" />
 
     <TextView
-        android:id="@+id/tvChangeEmailTitle"
+        android:id="@+id/tvChangePhoneNumberTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/txt_change_email_description"
+        android:text="@string/txt_change_phone_number_description"
         android:textColor="@color/text_color"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -33,53 +33,54 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_old_email"
+        android:id="@+id/text_input_old_phone_number"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
-        android:hint="@string/txt_current_email"
+        android:hint="@string/txt_current_phone_number"
         app:boxStrokeColor="@color/colorPrimary"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvChangeEmailTitle">
+        app:layout_constraintTop_toBottomOf="@id/tvChangePhoneNumberTitle">
 
         <EditText
-            android:id="@+id/etOldEmail"
+            android:id="@+id/etOldPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:enabled="false"
             android:fontFamily="@font/roboto"
-            android:inputType="textEmailAddress"
+            android:inputType="phone"
             android:padding="@dimen/margin_16dp"
-            android:textColor="@color/sub_heading_color"
+            android:textColor="@color/text_color"
             android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_new_email"
+        android:id="@+id/text_input_new_phone_number"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
-        android:hint="@string/txt_new_email"
+        android:hint="@string/txt_new_phone_number"
         app:boxStrokeColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_input_old_email">
+        app:layout_constraintTop_toBottomOf="@id/text_input_old_phone_number">
 
         <EditText
-            android:id="@+id/etNewEmail"
+            android:id="@+id/etNewPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/roboto"
-            android:inputType="textEmailAddress"
+            android:inputType="phone"
             android:padding="@dimen/margin_16dp"
             android:textColor="@color/text_color"
             android:textCursorDrawable="@drawable/cursor_color"
@@ -99,7 +100,7 @@
         app:boxStrokeColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_input_new_email"
+        app:layout_constraintTop_toBottomOf="@id/text_input_new_phone_number"
         app:passwordToggleEnabled="true">
 
         <EditText

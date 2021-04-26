@@ -56,7 +56,7 @@
 
     <!-- Sign up -->
     <string name="edit_text_alert_email_invalid">Email tidak valid</string>
-    <string name="edit_text_alert_password_doesnt_match">%1$s tidak cocok</string>
+    <string name="edit_text_alert_password_not_match">%1$s tidak cocok</string>
     <string name="txt_alert_success_sign_up">Silahkan lakukan verifikasi email</string>
     <string name="edit_text_alert_phone_number_invalid">Nomor telepon tidak valid</string>
     <string name="alert_email_not_available">Email sudah digunakan</string>
@@ -83,4 +83,12 @@
     <string name="txt_change_phone_number_description">Masukkan nomor telepon aktif</string>
     <string name="txt_current_phone_number">Nomor saat ini</string>
     <string name="txt_new_phone_number">Nomor telepon baru</string>
+
+    <!-- Change password -->
+    <string name="txt_change_password_title">Ganti kata sandi</string>
+    <string name="txt_change_password_description">Buat kata sandi yang kuat</string>
+    <string name="txt_new_password">Password baru</string>
+    <string name="txt_change_password_note">*Mohon tidak menggunakan password yang lama</string>
+    <string name="txt_change_password_first_rule">8 karakter atau lebih</string>
+    <string name="txt_change_password_second_rule">Kombinasi huruf besar, kecil, angka dan simbol</string>
 </resources>

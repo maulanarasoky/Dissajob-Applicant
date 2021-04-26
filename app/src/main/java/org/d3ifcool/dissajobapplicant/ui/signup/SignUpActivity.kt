@@ -93,9 +93,9 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, SignUpCallback
 
         if (activitySignUpBinding.etPassword.text.toString() != activitySignUpBinding.etConfirmPassword.text.toString()) {
             activitySignUpBinding.etPassword.error =
-                resources.getString(R.string.edit_text_alert_password_doesnt_match, "Password dan confirm password")
+                resources.getString(R.string.edit_text_alert_password_not_match, "Password dan confirm password")
             activitySignUpBinding.etConfirmPassword.error =
-                resources.getString(R.string.edit_text_alert_password_doesnt_match, "Password dan confirm password")
+                resources.getString(R.string.edit_text_alert_password_not_match, "Password dan confirm password")
             return
         }
 

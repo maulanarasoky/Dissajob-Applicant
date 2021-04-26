@@ -39,7 +39,7 @@
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
-    <style name="JobDetailsToolbar" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="CustomToolbar" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_black_24dp</item>
     </style>
 

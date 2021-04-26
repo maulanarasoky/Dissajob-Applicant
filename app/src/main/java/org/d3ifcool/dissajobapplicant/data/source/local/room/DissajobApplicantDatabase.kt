@@ -8,11 +8,12 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.Applica
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 
 @Database(
-    entities = [JobEntity::class, JobDetailsEntity::class, ApplicationEntity::class, ApplicantEntity::class, RecruiterEntity::class],
-    version = 1,
+    entities = [JobEntity::class, JobDetailsEntity::class, SavedJobEntity::class, ApplicationEntity::class, ApplicantEntity::class, RecruiterEntity::class],
+    version = 2,
     exportSchema = false
 )
 abstract class DissajobApplicantDatabase : RoomDatabase() {

@@ -6,6 +6,7 @@
     <string name="txt_sign_up">Daftar</string>
     <string name="txt_email">Email</string>
     <string name="txt_password">Password</string>
+    <string name="txt_current_password">Password saat ini</string>
     <string name="txt_lupa_password">Lupa password ?</string>
     <string name="txt_first_name">Nama depan</string>
     <string name="txt_last_name">Nama belakang (opsional)</string>
@@ -68,4 +69,11 @@
 
     <!-- Home fragment -->
     <string name="txt_home_fragment_heading">Direkomendasikan untuk Anda</string>
+
+    <!-- Change email -->
+    <string name="txt_change_email_title">Ganti Email</string>
+    <string name="txt_change_email_description">Masukkan alamat email aktif</string>
+    <string name="txt_same_email">Email tidak boleh sama dengan yang sebelumnya</string>
+    <string name="txt_save">Simpan</string>
+    <string name="txt_update">Update</string>
 </resources>

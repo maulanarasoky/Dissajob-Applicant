@@ -8,19 +8,28 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySavedJobBinding
 import org.d3ifcool.dissajobapplicant.ui.job.JobDetailsActivity
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
+import org.d3ifcool.dissajobapplicant.ui.job.callback.ItemClickListener
+import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobByIdCallback
+import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
+import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class SavedJobActivity : AppCompatActivity() {
+class SavedJobActivity : AppCompatActivity(), ItemClickListener, LoadJobByIdCallback,
+    LoadRecruiterDataCallback {
 
     private lateinit var activitySavedJobBinding: ActivitySavedJobBinding
 
     private lateinit var jobAdapter: SavedJobAdapter
 
-    private lateinit var viewModel: JobViewModel
+    private lateinit var jobViewModel: JobViewModel
+
+    private lateinit var recruiterViewModel: RecruiterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +37,10 @@ class SavedJobActivity : AppCompatActivity() {
         setContentView(activitySavedJobBinding.root)
 
         val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(this, factory)[JobViewModel::class.java]
-        jobAdapter = SavedJobAdapter(this, this)
-        viewModel.getSavedJobs().observe(this) { jobs ->
+        jobViewModel = ViewModelProvider(this, factory)[JobViewModel::class.java]
+        recruiterViewModel = ViewModelProvider(this, factory)[RecruiterViewModel::class.java]
+        jobAdapter = SavedJobAdapter(this, this, this)
+        jobViewModel.getSavedJobs().observe(this) { jobs ->
             if (jobs.data != null) {
                 when (jobs.status) {
                     Status.LOADING -> showLoading(true)
@@ -75,5 +85,27 @@ class SavedJobActivity : AppCompatActivity() {
         val intent = Intent(this, JobDetailsActivity::class.java)
         intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
         startActivity(intent)
+    }
+
+    override fun onLoadJobData(jobId: String, callback: LoadJobByIdCallback) {
+        jobViewModel.getJobById(jobId).observe(this) { job ->
+            if (job.data != null) {
+                callback.onJobReceived(job.data)
+            }
+        }
+    }
+
+    override fun onJobReceived(jobEntity: JobEntity) {
+    }
+
+    override fun onLoadRecruiterData(recruiterId: String, callback: LoadRecruiterDataCallback) {
+        recruiterViewModel.getRecruiterData(recruiterId).observe(this) { recruiterDetails ->
+            if (recruiterDetails != null) {
+                recruiterDetails.data?.let { callback.onRecruiterDataReceived(it) }
+            }
+        }
+    }
+
+    override fun onRecruiterDataReceived(recruiterData: RecruiterEntity) {
     }
 }

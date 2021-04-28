@@ -16,6 +16,8 @@ import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.JobItemBinding
+import org.d3ifcool.dissajobapplicant.ui.job.callback.ItemClickListener
+import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -98,14 +100,5 @@ class JobAdapter(private val clickCallback: ItemClickListener, private val loadC
                 })
             }
         }
-    }
-
-    interface ItemClickListener {
-        fun onItemClicked(jobId: String)
-    }
-
-    interface LoadRecruiterDataCallback {
-        fun onLoadRecruiterData(recruiterId: String, callback: LoadRecruiterDataCallback)
-        fun onRecruiterDataReceived(recruiterData: RecruiterEntity)
     }
 }

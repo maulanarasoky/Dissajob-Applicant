@@ -5,10 +5,8 @@ import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobDetailsResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
+import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteJobSource
+import org.d3ifcool.dissajobapplicant.ui.job.callback.*
 
 object JobHelper {
 
@@ -68,27 +66,23 @@ object JobHelper {
             })
     }
 
-    fun getJobById(jobId: String, callback: LoadJobsCallback) {
+    fun getJobById(jobId: String, callback: RemoteJobSource.LoadJobDataCallback) {
         jobDatabase.child(jobId).addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    arrJob.clear()
                     if (dataSnapshot.exists()) {
-                        for (data in dataSnapshot.children.reversed()) {
-                            val job = JobResponseEntity(
-                                data.key.toString(),
-                                data.child("title").value.toString(),
-                                data.child("address").value.toString(),
-                                data.child("postedBy").value.toString(),
-                                data.child("postedDate").value.toString(),
-                                data.child("open").value.toString().toBoolean()
-                            )
-                            arrJob.add(job)
-                        }
+                        val job = JobResponseEntity(
+                            dataSnapshot.key.toString(),
+                            dataSnapshot.child("title").value.toString(),
+                            dataSnapshot.child("address").value.toString(),
+                            dataSnapshot.child("postedBy").value.toString(),
+                            dataSnapshot.child("postedDate").value.toString(),
+                            dataSnapshot.child("open").value.toString().toBoolean()
+                        )
+                        callback.onJobDataReceived(job)
                     }
-                    callback.onAllJobsReceived(arrJob)
                 }
 
             })

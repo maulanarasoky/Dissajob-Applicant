@@ -6,10 +6,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobDetailsResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.*
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.JobHelper
 
@@ -57,17 +54,18 @@ class RemoteJobSource private constructor(
         return resultJob
     }
 
-    fun getJobById(jobId: String, callback: LoadJobsCallback): LiveData<ApiResponse<List<JobResponseEntity>>> {
+    fun getJobById(jobId: String, callback: LoadJobDataCallback): LiveData<ApiResponse<JobResponseEntity>> {
         EspressoIdlingResource.increment()
-        val resultJob = MutableLiveData<ApiResponse<List<JobResponseEntity>>>()
-        jobHelper.getJobById(jobId, object : LoadJobsCallback {
-            override fun onAllJobsReceived(jobResponse: List<JobResponseEntity>): List<JobResponseEntity> {
-                resultJob.value = ApiResponse.success(callback.onAllJobsReceived(jobResponse))
+        val resultJob = MutableLiveData<ApiResponse<JobResponseEntity>>()
+        jobHelper.getJobById(jobId, object : LoadJobDataCallback {
+            override fun onJobDataReceived(jobResponse: JobResponseEntity): JobResponseEntity {
+                resultJob.value = ApiResponse.success(callback.onJobDataReceived(jobResponse))
                 if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
                     EspressoIdlingResource.decrement()
                 }
                 return jobResponse
             }
+
         })
         return resultJob
     }
@@ -108,4 +106,7 @@ class RemoteJobSource private constructor(
         })
     }
 
+    interface LoadJobDataCallback {
+        fun onJobDataReceived(jobResponse: JobResponseEntity): JobResponseEntity
+    }
 }

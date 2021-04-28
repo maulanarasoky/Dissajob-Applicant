@@ -15,11 +15,13 @@ import org.d3ifcool.dissajobapplicant.databinding.FragmentHomeBinding
 import org.d3ifcool.dissajobapplicant.ui.job.JobAdapter
 import org.d3ifcool.dissajobapplicant.ui.job.JobDetailsActivity
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
+import org.d3ifcool.dissajobapplicant.ui.job.callback.ItemClickListener
+import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class HomeFragment : Fragment(), JobAdapter.ItemClickListener, JobAdapter.LoadRecruiterDataCallback {
+class HomeFragment : Fragment(), ItemClickListener, LoadRecruiterDataCallback {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
 
@@ -97,7 +99,7 @@ class HomeFragment : Fragment(), JobAdapter.ItemClickListener, JobAdapter.LoadRe
 
     override fun onLoadRecruiterData(
         recruiterId: String,
-        callback: JobAdapter.LoadRecruiterDataCallback
+        callback: LoadRecruiterDataCallback
     ) {
         recruiterViewModel.getRecruiterData(recruiterId).observe(this) { recruiterDetails ->
             if (recruiterDetails != null) {

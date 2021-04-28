@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DissajobApplicant"
         tools:replace="android:icon">
+        <activity android:name=".ui.settings.SettingsActivity"></activity>
         <activity android:name=".ui.settings.ChangeProfileActivity" />
         <activity android:name=".ui.settings.ChangePasswordActivity" />
         <activity android:name=".ui.settings.ChangePhoneNumberActivity" />

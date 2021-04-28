@@ -95,4 +95,8 @@
     <!-- Change profile -->
     <string name="txt_change_profile_title">Edit profil</string>
     <string name="txt_about_me">Tentang saya</string>
+
+    <!-- Settings -->
+    <string name="txt_settings">Pengaturan</string>
+    <string name="txt_security">Keamanan</string>
 </resources>

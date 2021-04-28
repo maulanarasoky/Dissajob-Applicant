@@ -68,6 +68,32 @@ object JobHelper {
             })
     }
 
+    fun getJobById(jobId: String, callback: LoadJobsCallback) {
+        jobDatabase.child(jobId).addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(dataSnapshot: DatabaseError) {
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    arrJob.clear()
+                    if (dataSnapshot.exists()) {
+                        for (data in dataSnapshot.children.reversed()) {
+                            val job = JobResponseEntity(
+                                data.key.toString(),
+                                data.child("title").value.toString(),
+                                data.child("address").value.toString(),
+                                data.child("postedBy").value.toString(),
+                                data.child("postedDate").value.toString(),
+                                data.child("open").value.toString().toBoolean()
+                            )
+                            arrJob.add(job)
+                        }
+                    }
+                    callback.onAllJobsReceived(arrJob)
+                }
+
+            })
+    }
+
     fun getJobDetails(jobId: String, callback: LoadJobDetailsCallback) {
         jobDatabase.child(jobId).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {

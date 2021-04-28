@@ -99,4 +99,5 @@
     <!-- Settings -->
     <string name="txt_settings">Pengaturan</string>
     <string name="txt_security">Keamanan</string>
+    <string name="txt_saved_job">Pekerjaan Tersimpan</string>
 </resources>

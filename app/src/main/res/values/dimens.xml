@@ -9,5 +9,6 @@
     <dimen name="margin_32dp">32dp</dimen>
     <dimen name="margin_40dp">40dp</dimen>
     <dimen name="margin_48dp">48dp</dimen>
+    <dimen name="margin_56dp">56dp</dimen>
     <dimen name="elevation_header">1.8dp</dimen>
 </resources>

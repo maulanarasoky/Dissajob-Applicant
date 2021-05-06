@@ -122,4 +122,7 @@
     <string name="txt_logout_message">Apakah Anda ingin keluar?</string>
     <string name="confirm_logout_text">Keluar</string>
     <string name="confirm_cancel_text">Batal</string>
+    <string name="txt_first_question">Deskripsikan diri Anda secara singkat</string>
+    <string name="txt_second_question">Alasan Anda melamar di perusahaan kami</string>
+    <string name="txt_third_question">Mengapa kami harus menerima Anda</string>
 </resources>

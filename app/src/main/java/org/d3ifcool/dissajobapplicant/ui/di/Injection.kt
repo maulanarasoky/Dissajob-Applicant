@@ -4,16 +4,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import org.d3ifcool.dissajobapplicant.data.source.local.room.DissajobApplicantDatabase
-import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalApplicantSource
-import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalApplicationSource
-import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalJobSource
-import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalRecruiterSource
-import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicantSource
-import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicationSource
-import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteJobSource
-import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteRecruiterSource
+import org.d3ifcool.dissajobapplicant.data.source.local.source.*
+import org.d3ifcool.dissajobapplicant.data.source.remote.source.*
 import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.ApplicantRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
+import org.d3ifcool.dissajobapplicant.data.source.repository.interview.InterviewRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.RecruiterRepository
 import org.d3ifcool.dissajobapplicant.utils.*
@@ -56,6 +51,31 @@ object Injection {
         }
 
         return ApplicationRepository.getInstance(
+            remoteDataSource,
+            localDataSource,
+            appExecutors,
+            callback
+        )
+    }
+
+    fun provideInterviewRepository(context: Context): InterviewRepository {
+
+        val database = DissajobApplicantDatabase.getInstance(context)
+
+        val remoteDataSource = RemoteInterviewSource.getInstance(InterviewHelper)
+        val localDataSource = LocalInterviewSource.getInstance(database.interviewDao())
+        val appExecutors = AppExecutors()
+
+        val callback = object : NetworkStateCallback {
+            override fun hasConnectivity(): Boolean {
+                val cm =
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+                return activeNetwork?.isConnectedOrConnecting == true
+            }
+        }
+
+        return InterviewRepository.getInstance(
             remoteDataSource,
             localDataSource,
             appExecutors,

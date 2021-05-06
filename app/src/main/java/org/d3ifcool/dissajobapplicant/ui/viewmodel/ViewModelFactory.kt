@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.ApplicantRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
+import org.d3ifcool.dissajobapplicant.data.source.repository.interview.InterviewRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.RecruiterRepository
-import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.application.ApplicationViewModel
 import org.d3ifcool.dissajobapplicant.ui.di.Injection
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
+import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
+import org.d3ifcool.dissajobapplicant.ui.question.InterviewViewModel
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInViewModel
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpViewModel
@@ -18,6 +20,7 @@ import org.d3ifcool.dissajobapplicant.ui.signup.SignUpViewModel
 class ViewModelFactory private constructor(
     private val jobRepository: JobRepository,
     private val applicationRepository: ApplicationRepository,
+    private val interviewRepository: InterviewRepository,
     private val applicantRepository: ApplicantRepository,
     private val recruiterRepository: RecruiterRepository
 ) : ViewModelProvider.NewInstanceFactory() {
@@ -30,6 +33,7 @@ class ViewModelFactory private constructor(
             instance ?: ViewModelFactory(
                 Injection.provideJobRepository(context),
                 Injection.provideApplicationRepository(context),
+                Injection.provideInterviewRepository(context),
                 Injection.provideApplicantRepository(context),
                 Injection.provideRecruiterRepository(context)
             )
@@ -50,6 +54,9 @@ class ViewModelFactory private constructor(
             }
             modelClass.isAssignableFrom(ApplicationViewModel::class.java) -> {
                 ApplicationViewModel(applicationRepository) as T
+            }
+            modelClass.isAssignableFrom(InterviewViewModel::class.java) -> {
+                InterviewViewModel(interviewRepository) as T
             }
             modelClass.isAssignableFrom(ApplicantViewModel::class.java) -> {
                 ApplicantViewModel(applicantRepository) as T

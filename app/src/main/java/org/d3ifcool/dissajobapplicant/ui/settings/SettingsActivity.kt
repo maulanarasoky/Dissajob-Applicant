@@ -7,16 +7,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySettingsBinding
+import org.d3ifcool.dissajobapplicant.ui.application.ApplicationActivity
+import org.d3ifcool.dissajobapplicant.ui.job.savedjob.SavedJobActivity
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.AuthHelper
+import org.d3ifcool.dissajobapplicant.utils.SignOutDialog
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {
@@ -46,6 +44,11 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
 
         //Change password section
         activitySettingsBinding.securitySection.btnChangePassword.setOnClickListener(this)
+
+        //Advance section
+        activitySettingsBinding.advanceSection.btnShowSavedJob.setOnClickListener(this)
+        activitySettingsBinding.advanceSection.btnShowApplication.setOnClickListener(this)
+        activitySettingsBinding.advanceSection.btnSignOut.setOnClickListener(this)
     }
 
     private fun showCurrentProfileData() {
@@ -90,6 +93,15 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btnChangePassword -> {
                 startActivity(Intent(this, ChangePasswordActivity::class.java))
+            }
+            R.id.btnShowSavedJob -> {
+                startActivity(Intent(this, SavedJobActivity::class.java))
+            }
+            R.id.btnShowApplication -> {
+                startActivity(Intent(this, ApplicationActivity::class.java))
+            }
+            R.id.btnSignOut -> {
+                SignOutDialog().show(supportFragmentManager, SignOutDialog::class.java.simpleName)
             }
         }
     }

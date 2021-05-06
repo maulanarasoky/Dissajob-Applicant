@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DissajobApplicant</string>
+    <string name="app_name">Dissajob</string>
     <string name="txt_sign_in_header">Selamat Datang Dissajob</string>
     <string name="txt_sign_in">Masuk</string>
     <string name="txt_sign_up_headline">Bergabung Sekarang di Dissajob</string>
@@ -99,10 +99,27 @@
     <!-- Settings -->
     <string name="txt_settings">Pengaturan</string>
     <string name="txt_security">Keamanan</string>
+    <string name="txt_advance">Lanjutan</string>
+    <string name="txt_sign_out">Keluar</string>
 
     <!-- Saved job -->
     <string name="txt_saved_job">Pekerjaan Tersimpan</string>
 
     <!-- Application -->
     <string name="txt_list_application">Daftar lamaran</string>
+
+    <!-- Profile -->
+    <string name="txt_work_experience">Pengalaman Kerja</string>
+    <string name="txt_educational_background">Riwayat Pendidikan</string>
+    <string name="txt_curriculum_vitae">Curriculum Vitae</string>
+    <string name="txt_contact">Kontak</string>
+    <string name="txt_view_all">Lihat semua</string>
+    <string name="txt_upload_curriculum_vitae">Unggah Curriculum Vitae</string>
+
+
+    <!-- Logout dialog -->
+    <string name="txt_logout_title">Keluar dari Dissajob</string>
+    <string name="txt_logout_message">Apakah Anda ingin keluar?</string>
+    <string name="confirm_logout_text">Keluar</string>
+    <string name="confirm_cancel_text">Batal</string>
 </resources>

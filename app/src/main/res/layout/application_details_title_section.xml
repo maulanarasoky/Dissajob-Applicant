@@ -25,6 +25,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/half_circle" />
 
+    <TextView
+        android:id="@+id/tvRecruiterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/margin_16dp"
+        app:layout_constraintEnd_toEndOf="@id/imgRecruiterPicture"
+        app:layout_constraintStart_toStartOf="@id/imgRecruiterPicture"
+        app:layout_constraintTop_toBottomOf="@id/imgRecruiterPicture"
+        tools:text="Telkom University" />
+
     <View
         android:id="@+id/cloud"
         android:layout_width="250dp"

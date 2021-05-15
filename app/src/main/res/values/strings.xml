@@ -114,7 +114,6 @@
     <string name="txt_curriculum_vitae">Curriculum Vitae</string>
     <string name="txt_contact">Kontak</string>
     <string name="txt_view_all">Lihat semua</string>
-    <string name="txt_upload_curriculum_vitae">Unggah Curriculum Vitae</string>
 
 
     <!-- Logout dialog -->
@@ -125,4 +124,5 @@
     <string name="txt_first_question">Deskripsikan diri Anda secara singkat</string>
     <string name="txt_second_question">Alasan Anda melamar di perusahaan kami</string>
     <string name="txt_third_question">Mengapa kami harus menerima Anda</string>
+    <string name="txt_additional_information">Informasi Tambahan</string>
 </resources>

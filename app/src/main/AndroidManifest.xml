@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DissajobApplicant"
         tools:replace="android:icon">
-        <activity android:name=".ui.question.QuestionActivity"></activity>
+        <activity android:name=".ui.application.ApplicationDetailsActivity"></activity>
+        <activity android:name=".ui.question.QuestionActivity" />
         <activity android:name=".ui.application.ApplicationActivity" />
         <activity android:name=".ui.job.savedjob.SavedJobActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />

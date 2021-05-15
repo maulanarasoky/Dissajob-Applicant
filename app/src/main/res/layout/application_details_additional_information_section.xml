@@ -1,42 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.question.QuestionActivity">
+    android:padding="@dimen/margin_16dp">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        android:theme="@style/CustomToolbar"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/tvAdditionalInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_additional_information"
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextAppearance="@style/Toolbar.TitleText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvFirstQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_24dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_first_question"
         android:textColor="@color/text_color"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/tvAdditionalInformation" />
 
     <EditText
         android:id="@+id/etFirstQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_8dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
         android:backgroundTint="@color/text_color"
         android:fontFamily="@font/roboto"
         android:inputType="textCapSentences|textMultiLine"
@@ -51,7 +48,6 @@
         android:id="@+id/tvSecondQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_second_question"
@@ -64,9 +60,7 @@
         android:id="@+id/etSecondQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_8dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
         android:backgroundTint="@color/text_color"
         android:fontFamily="@font/roboto"
         android:inputType="textCapSentences|textMultiLine"
@@ -81,7 +75,6 @@
         android:id="@+id/tvThirdQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_third_question"
@@ -94,9 +87,7 @@
         android:id="@+id/etThirdQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_8dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
         android:backgroundTint="@color/text_color"
         android:fontFamily="@font/roboto"
         android:inputType="textCapSentences|textMultiLine"
@@ -107,23 +98,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvThirdQuestion" />
 
-    <Button
-        android:id="@+id/btnSendApplication"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
-        android:backgroundTint="@color/header_color"
-        android:fontFamily="@font/roboto"
-        android:paddingStart="@dimen/margin_40dp"
-        android:paddingTop="@dimen/margin_16dp"
-        android:paddingEnd="@dimen/margin_40dp"
-        android:paddingBottom="@dimen/margin_16dp"
-        android:text="@string/txt_send"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etThirdQuestion" />
 </androidx.constraintlayout.widget.ConstraintLayout>

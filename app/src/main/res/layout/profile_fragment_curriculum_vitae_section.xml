@@ -20,7 +20,7 @@
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/txt_upload_curriculum_vitae"
+        android:text="@string/txt_curriculum_vitae"
         android:textColor="@color/text_color"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/imgUploadCv"

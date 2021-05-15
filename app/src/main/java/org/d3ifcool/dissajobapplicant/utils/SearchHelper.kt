@@ -4,6 +4,7 @@ import com.google.firebase.database.*
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.search.AddSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.DeleteSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.LoadSearchHistoryCallback
 
 object SearchHelper {
@@ -83,5 +84,27 @@ object SearchHelper {
             }.addOnFailureListener {
                 callback.onFailure(R.string.txt_failure_insert)
             }
+    }
+
+    fun deleteAllSearchHistory(applicantId: String, callback: DeleteSearchHistoryCallback) {
+        database.orderByChild("applicantId").equalTo(applicantId)
+            .removeEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    callback.onSuccess()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback.onFailure(R.string.txt_failure_delete)
+                }
+
+            })
+    }
+
+    fun deleteSearchHistoryById(searchHistoryId: String, callback: DeleteSearchHistoryCallback) {
+        database.child(searchHistoryId).removeValue().addOnSuccessListener {
+            callback.onSuccess()
+        }.addOnFailureListener {
+            callback.onFailure(R.string.txt_failure_delete)
+        }
     }
 }

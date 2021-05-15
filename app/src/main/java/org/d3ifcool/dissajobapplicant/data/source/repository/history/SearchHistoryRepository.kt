@@ -10,6 +10,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteSearchHistorySource
 import org.d3ifcool.dissajobapplicant.ui.search.AddSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.DeleteSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.LoadSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
@@ -96,4 +97,18 @@ class SearchHistoryRepository private constructor(
     ) =
         appExecutors.diskIO()
             .execute { remoteSearchHistorySource.addSearchHistory(searchHistory, callback) }
+
+    override fun deleteAllSearchHistory(
+        applicantId: String,
+        callback: DeleteSearchHistoryCallback
+    ) =
+        appExecutors.diskIO()
+            .execute { remoteSearchHistorySource.deleteAllSearchHistory(applicantId, callback) }
+
+    override fun deleteSearchHistoryById(
+        searchHistoryId: String,
+        callback: DeleteSearchHistoryCallback
+    ) =
+        appExecutors.diskIO()
+            .execute { remoteSearchHistorySource.deleteSearchHistoryById(searchHistoryId, callback) }
 }

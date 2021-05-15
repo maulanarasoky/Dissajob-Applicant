@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.search.AddSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.DeleteSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.LoadSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.SearchHelper
@@ -48,6 +49,42 @@ class RemoteSearchHistorySource private constructor(
     ) {
         EspressoIdlingResource.increment()
         searchHelper.addSearchHistory(searchHistory, object : AddSearchHistoryCallback {
+            override fun onSuccess() {
+                callback.onSuccess()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailure(messageId: Int) {
+                callback.onFailure(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun deleteAllSearchHistory(
+        applicantId: String,
+        callback: DeleteSearchHistoryCallback
+    ) {
+        EspressoIdlingResource.increment()
+        searchHelper.deleteAllSearchHistory(applicantId, object : DeleteSearchHistoryCallback {
+            override fun onSuccess() {
+                callback.onSuccess()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailure(messageId: Int) {
+                callback.onFailure(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun deleteSearchHistoryById(
+        searchHistoryId: String,
+        callback: DeleteSearchHistoryCallback
+    ) {
+        EspressoIdlingResource.increment()
+        searchHelper.deleteSearchHistoryById(searchHistoryId, object : DeleteSearchHistoryCallback {
             override fun onSuccess() {
                 callback.onSuccess()
                 EspressoIdlingResource.decrement()

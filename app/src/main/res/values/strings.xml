@@ -131,4 +131,5 @@
     <string name="txt_delete_history">Hapus riwayat</string>
 
     <string name="txt_failure_insert">%1$s gagal ditambahkan</string>
+    <string name="txt_failure_delete">%1$s gagal dihapus</string>
 </resources>

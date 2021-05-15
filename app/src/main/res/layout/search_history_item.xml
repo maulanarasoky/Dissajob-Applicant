@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="@dimen/margin_16dp">
+
+    <ImageView
+        android:id="@+id/imgHistory"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_history_gray_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSearchedText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/text_color"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/imgHistory"
+        app:layout_constraintEnd_toStartOf="@id/imgDeleteHistory"
+        app:layout_constraintStart_toEndOf="@id/imgHistory"
+        app:layout_constraintTop_toTopOf="@id/imgHistory"
+        tools:text="History items" />
+
+    <ImageButton
+        android:id="@+id/imgDeleteHistory"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@null"
+        android:src="@drawable/ic_delete_gray_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvHistory" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

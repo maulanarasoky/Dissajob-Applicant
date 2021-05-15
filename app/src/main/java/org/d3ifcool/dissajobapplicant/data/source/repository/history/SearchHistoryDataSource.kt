@@ -5,6 +5,7 @@ import androidx.paging.PagedList
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.history.SearchHistoryEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.search.AddSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.DeleteSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 interface SearchHistoryDataSource {
@@ -12,5 +13,13 @@ interface SearchHistoryDataSource {
     fun addSearchHistory(
         searchHistory: SearchHistoryResponseEntity,
         callback: AddSearchHistoryCallback
+    )
+    fun deleteAllSearchHistory(
+        applicantId: String,
+        callback: DeleteSearchHistoryCallback
+    )
+    fun deleteSearchHistoryById(
+        searchHistoryId: String,
+        callback: DeleteSearchHistoryCallback
     )
 }

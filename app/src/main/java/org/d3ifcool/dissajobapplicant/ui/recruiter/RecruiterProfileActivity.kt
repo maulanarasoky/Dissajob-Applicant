@@ -2,6 +2,7 @@ package org.d3ifcool.dissajobapplicant.ui.recruiter
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -98,6 +99,12 @@ class RecruiterProfileActivity : AppCompatActivity(), ItemClickListener, LoadRec
     }
 
     private fun populateRecruiterData(recruiterProfile: RecruiterEntity) {
+        activityRecruiterProfileBinding.toolbar.title = recruiterProfile.fullName.toString()
+        setSupportActionBar(activityRecruiterProfileBinding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+
         activityRecruiterProfileBinding.recruiterProfileSection.tvRecruiterName.text =
             recruiterProfile.fullName.toString()
         activityRecruiterProfileBinding.recruiterProfileSection.tvEmail.text =
@@ -148,5 +155,15 @@ class RecruiterProfileActivity : AppCompatActivity(), ItemClickListener, LoadRec
 
     override fun onRecruiterDataReceived(recruiterData: RecruiterEntity) {
         TODO("Not yet implemented")
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

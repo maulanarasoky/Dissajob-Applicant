@@ -3,11 +3,13 @@ package org.d3ifcool.dissajobapplicant.ui.application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityApplicationBinding
@@ -38,8 +40,13 @@ class ApplicationActivity : AppCompatActivity(), ItemClickListener, LoadJobByIdC
         activityApplicationBinding = ActivityApplicationBinding.inflate(layoutInflater)
         setContentView(activityApplicationBinding.root)
 
-        val factory = ViewModelFactory.getInstance(this)
+        activityApplicationBinding.toolbar.title =
+            resources.getString(R.string.txt_application_details)
+        setSupportActionBar(activityApplicationBinding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        val factory = ViewModelFactory.getInstance(this)
         applicationViewModel = ViewModelProvider(this, factory)[ApplicationViewModel::class.java]
         jobViewModel = ViewModelProvider(this, factory)[JobViewModel::class.java]
         recruiterViewModel = ViewModelProvider(this, factory)[RecruiterViewModel::class.java]
@@ -113,5 +120,15 @@ class ApplicationActivity : AppCompatActivity(), ItemClickListener, LoadJobByIdC
     }
 
     override fun onRecruiterDataReceived(recruiterData: RecruiterEntity) {
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

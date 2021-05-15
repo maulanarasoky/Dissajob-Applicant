@@ -79,7 +79,7 @@ class JobRepository private constructor(
                     jobList.add(job)
                 }
 
-                localJobSource.insertJob(jobList)
+                localJobSource.insertJobs(jobList)
             }
         }.asLiveData()
     }
@@ -119,7 +119,7 @@ class JobRepository private constructor(
                     jobList.add(job)
                 }
 
-                localJobSource.insertSavedJob(jobList)
+                localJobSource.insertSavedJobs(jobList)
             }
         }.asLiveData()
     }
@@ -153,7 +153,7 @@ class JobRepository private constructor(
                     data.isOpen
                 )
                 jobList.add(job)
-                localJobSource.insertJob(jobList)
+                localJobSource.insertJobs(jobList)
             }
         }.asLiveData()
     }
@@ -195,7 +195,7 @@ class JobRepository private constructor(
                     jobList.add(job)
                 }
 
-                localJobSource.insertJob(jobList)
+                localJobSource.insertJobs(jobList)
             }
         }.asLiveData()
     }

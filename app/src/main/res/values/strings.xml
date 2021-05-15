@@ -126,4 +126,9 @@
     <string name="txt_third_question">Mengapa kami harus menerima Anda</string>
     <string name="txt_additional_information">Informasi Tambahan</string>
     <string name="txt_available_job">Pekerjaan yang tersedia</string>
+    <string name="txt_application_details">Detail Lamaran</string>
+    <string name="txt_search_history">Riwayat penelusuran</string>
+    <string name="txt_delete_history">Hapus riwayat</string>
+
+    <string name="txt_failure_insert">%1$s gagal ditambahkan</string>
 </resources>

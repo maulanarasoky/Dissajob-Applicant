@@ -29,9 +29,9 @@ class LocalJobSource private constructor(
 
     fun getJobDetails(jobId: String): LiveData<JobDetailsEntity> = mJobDao.getJobDetails(jobId)
 
-    fun insertJob(jobs: List<JobEntity>) = mJobDao.insertJobs(jobs)
+    fun insertJobs(jobs: List<JobEntity>) = mJobDao.insertJobs(jobs)
 
-    fun insertSavedJob(jobs: List<SavedJobEntity>) = mJobDao.insertSavedJobs(jobs)
+    fun insertSavedJobs(jobs: List<SavedJobEntity>) = mJobDao.insertSavedJobs(jobs)
 
     fun insertJobDetails(jobDetails: JobDetailsEntity) = mJobDao.insertJobDetails(jobDetails)
 

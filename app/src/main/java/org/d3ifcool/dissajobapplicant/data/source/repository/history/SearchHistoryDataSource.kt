@@ -14,7 +14,7 @@ interface SearchHistoryDataSource {
         searchHistory: SearchHistoryResponseEntity,
         callback: AddSearchHistoryCallback
     )
-    fun deleteAllSearchHistory(
+    fun deleteAllSearchHistories(
         applicantId: String,
         callback: DeleteSearchHistoryCallback
     )

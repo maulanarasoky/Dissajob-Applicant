@@ -98,12 +98,12 @@ class SearchHistoryRepository private constructor(
         appExecutors.diskIO()
             .execute { remoteSearchHistorySource.addSearchHistory(searchHistory, callback) }
 
-    override fun deleteAllSearchHistory(
+    override fun deleteAllSearchHistories(
         applicantId: String,
         callback: DeleteSearchHistoryCallback
     ) =
         appExecutors.diskIO()
-            .execute { remoteSearchHistorySource.deleteAllSearchHistory(applicantId, callback) }
+            .execute { remoteSearchHistorySource.deleteAllSearchHistories(applicantId, callback) }
 
     override fun deleteSearchHistoryById(
         searchHistoryId: String,

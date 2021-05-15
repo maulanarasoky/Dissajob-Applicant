@@ -16,4 +16,14 @@ class SearchViewModel(private val searchHistoryRepository: SearchHistoryReposito
         searchHistory: SearchHistoryResponseEntity,
         callback: AddSearchHistoryCallback
     ) = searchHistoryRepository.addSearchHistory(searchHistory, callback)
+
+    fun deleteAllSearchHistories(
+        applicantId: String,
+        callback: DeleteSearchHistoryCallback
+    ) = searchHistoryRepository.deleteAllSearchHistories(applicantId, callback)
+
+    fun deleteSearchHistoryById(
+        searchHistoryId: String,
+        callback: DeleteSearchHistoryCallback
+    ) = searchHistoryRepository.deleteSearchHistoryById(searchHistoryId, callback)
 }

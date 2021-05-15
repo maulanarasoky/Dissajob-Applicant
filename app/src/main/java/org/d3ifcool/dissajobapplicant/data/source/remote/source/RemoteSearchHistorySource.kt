@@ -61,12 +61,12 @@ class RemoteSearchHistorySource private constructor(
         })
     }
 
-    fun deleteAllSearchHistory(
+    fun deleteAllSearchHistories(
         applicantId: String,
         callback: DeleteSearchHistoryCallback
     ) {
         EspressoIdlingResource.increment()
-        searchHelper.deleteAllSearchHistory(applicantId, object : DeleteSearchHistoryCallback {
+        searchHelper.deleteAllSearchHistories(applicantId, object : DeleteSearchHistoryCallback {
             override fun onSuccess() {
                 callback.onSuccess()
                 EspressoIdlingResource.decrement()

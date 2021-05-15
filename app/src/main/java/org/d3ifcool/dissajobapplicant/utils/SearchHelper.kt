@@ -86,7 +86,7 @@ object SearchHelper {
             }
     }
 
-    fun deleteAllSearchHistory(applicantId: String, callback: DeleteSearchHistoryCallback) {
+    fun deleteAllSearchHistories(applicantId: String, callback: DeleteSearchHistoryCallback) {
         database.orderByChild("applicantId").equalTo(applicantId)
             .removeEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {

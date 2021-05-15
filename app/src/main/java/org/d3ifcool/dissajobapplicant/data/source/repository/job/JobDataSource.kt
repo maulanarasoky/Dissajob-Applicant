@@ -13,6 +13,7 @@ interface JobDataSource {
     fun getJobs(): LiveData<Resource<PagedList<JobEntity>>>
     fun getSavedJobs(): LiveData<Resource<PagedList<SavedJobEntity>>>
     fun getJobById(jobId: String): LiveData<Resource<JobEntity>>
+    fun getJobsByRecruiter(recruiterId: String): LiveData<Resource<PagedList<JobEntity>>>
     fun getJobDetails(jobId: String): LiveData<Resource<JobDetailsEntity>>
     fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback)
 }

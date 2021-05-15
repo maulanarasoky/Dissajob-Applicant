@@ -18,6 +18,9 @@ class JobViewModel(private val jobRepository: JobRepository) : ViewModel() {
 
     fun getJobById(jobId: String): LiveData<Resource<JobEntity>> = jobRepository.getJobById(jobId)
 
+    fun getJobsByRecruiter(recruiterId: String): LiveData<Resource<PagedList<JobEntity>>> =
+        jobRepository.getJobsByRecruiter(recruiterId)
+
     fun getJobDetails(jobId: String): LiveData<Resource<JobDetailsEntity>> =
         jobRepository.getJobDetails(jobId)
 

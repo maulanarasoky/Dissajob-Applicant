@@ -7,7 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
-import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
@@ -101,11 +101,11 @@ class RemoteApplicantSource private constructor(
         })
     }
 
-    fun uploadApplicantProfilePicture(image: Uri, callback: UploadProfilePictureCallback) {
+    fun uploadApplicantProfilePicture(image: Uri, callback: UploadFileCallback) {
         EspressoIdlingResource.increment()
-        applicantHelper.uploadApplicantProfilePicture(image, object : UploadProfilePictureCallback {
-            override fun onSuccessUpload(imageId: String) {
-                callback.onSuccessUpload(imageId)
+        applicantHelper.uploadApplicantProfilePicture(image, object : UploadFileCallback {
+            override fun onSuccessUpload(fileId: String) {
+                callback.onSuccessUpload(fileId)
                 EspressoIdlingResource.decrement()
             }
 

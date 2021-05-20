@@ -26,12 +26,12 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applica
 import org.d3ifcool.dissajobapplicant.databinding.ActivityChangeProfileBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
-import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class ChangeProfileActivity : AppCompatActivity(), View.OnClickListener, UpdateProfileCallback, UploadProfilePictureCallback {
+class ChangeProfileActivity : AppCompatActivity(), View.OnClickListener, UpdateProfileCallback, UploadFileCallback {
 
     companion object {
         //image pick code
@@ -253,8 +253,8 @@ class ChangeProfileActivity : AppCompatActivity(), View.OnClickListener, UpdateP
         dialog.show()
     }
 
-    override fun onSuccessUpload(imageId: String) {
-        updateUserProfile(imageId)
+    override fun onSuccessUpload(fileId: String) {
+        updateUserProfile(fileId)
     }
 
     override fun onFailureUpload(messageId: Int) {

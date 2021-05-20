@@ -11,7 +11,7 @@ import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
-import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
@@ -109,7 +109,7 @@ object ApplicantHelper {
         }
     }
 
-    fun uploadApplicantProfilePicture(image: Uri, callback: UploadProfilePictureCallback) {
+    fun uploadApplicantProfilePicture(image: Uri, callback: UploadFileCallback) {
         val storageRef = Firebase.storage.reference
         val imageId = database.push().key
         val uploadImage = storageRef.child("applicant/profile/images/${imageId}").putFile(image)

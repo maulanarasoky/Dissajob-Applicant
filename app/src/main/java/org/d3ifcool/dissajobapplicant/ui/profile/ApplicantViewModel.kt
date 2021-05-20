@@ -7,7 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.Applica
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.ApplicantRepository
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
-import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadProfilePictureCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
@@ -22,7 +22,7 @@ class ApplicantViewModel(private val applicantRepository: ApplicantRepository) :
 
     fun uploadApplicantProfilePicture(
         image: Uri,
-        callback: UploadProfilePictureCallback
+        callback: UploadFileCallback
     ) = applicantRepository.uploadApplicantProfilePicture(image, callback)
 
     fun updateApplicantEmail(

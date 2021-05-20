@@ -76,6 +76,8 @@ class CvRepository private constructor(
                 for (response in data) {
                     val cv = CvEntity(
                         response.id.toString(),
+                        response.cvName,
+                        response.cvDescription,
                         response.applicantId,
                         response.fileId
                     )

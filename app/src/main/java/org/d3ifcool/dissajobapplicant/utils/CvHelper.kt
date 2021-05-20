@@ -52,6 +52,9 @@ object CvHelper {
     }
 
     fun storeFileId(cvData: CvResponseEntity, callbackTo: InsertToDatabaseCallback) {
+        val id = database.push().key
+        cvData.id = id.toString()
+        cvData.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(cvData.id.toString()).setValue(cvData).addOnSuccessListener {
             callbackTo.onSuccess()
         }.addOnFailureListener {

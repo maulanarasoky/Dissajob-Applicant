@@ -88,8 +88,9 @@ class UploadCvActivity : AppCompatActivity(), View.OnClickListener {
         if (resultCode == Activity.RESULT_OK && requestCode == FILE_PICK_CODE) {
             if (data?.data != null) {
                 cvFile = data.data!!
-                val intent = Intent()
-                intent.putExtra("", cvFile)
+                val intent = Intent(this, CvDetailsActivity::class.java)
+                intent.putExtra(CvDetailsActivity.CV_FILE, cvFile)
+                startActivity(intent)
             }
         }
     }

@@ -12,9 +12,15 @@ data class CvEntity(
     @ColumnInfo(name = "id")
     var id: String,
 
+    @ColumnInfo(name = "cv_name")
+    var cvName: String? = "-",
+
+    @ColumnInfo(name = "cv_description")
+    var cvDescription: String? = "-",
+
     @ColumnInfo(name = "applicant_id")
     var applicantId: String,
 
     @ColumnInfo(name = "file_id")
-    var fileId: String,
+    var fileId: String
 )

@@ -134,4 +134,7 @@
     <string name="txt_failure_delete">%1$s gagal dihapus</string>
     <string name="txt_upload_cv_description">Unggah CV Terbaik Kamu</string>
     <string name="txt_failure_upload_cv">Gagal upload CV</string>
+    <string name="txt_cv_name">Judul</string>
+    <string name="txt_cv_description">Deskripsi</string>
+    <string name="txt_add_cv">Tambahkan</string>
 </resources>

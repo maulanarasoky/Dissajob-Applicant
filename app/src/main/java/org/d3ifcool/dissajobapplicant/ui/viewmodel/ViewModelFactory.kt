@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.ApplicantRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.cv.CvRepository
+import org.d3ifcool.dissajobapplicant.data.source.repository.education.EducationRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.experience.ExperienceRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.history.SearchHistoryRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.interview.InterviewRepository
@@ -14,6 +15,7 @@ import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.Recruiter
 import org.d3ifcool.dissajobapplicant.ui.application.ApplicationViewModel
 import org.d3ifcool.dissajobapplicant.ui.cv.CvViewModel
 import org.d3ifcool.dissajobapplicant.ui.di.Injection
+import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
@@ -31,7 +33,8 @@ class ViewModelFactory private constructor(
     private val recruiterRepository: RecruiterRepository,
     private val searchHistoryRepository: SearchHistoryRepository,
     private val cvRepository: CvRepository,
-    private val experienceRepository: ExperienceRepository
+    private val experienceRepository: ExperienceRepository,
+    private val educationRepository: EducationRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -47,7 +50,8 @@ class ViewModelFactory private constructor(
                 Injection.provideRecruiterRepository(context),
                 Injection.provideSearchHistoryRepository(context),
                 Injection.provideCvRepository(context),
-                Injection.provideExperienceRepository(context)
+                Injection.provideExperienceRepository(context),
+                Injection.provideEducationRepository(context)
             )
         }
     }
@@ -84,6 +88,9 @@ class ViewModelFactory private constructor(
             }
             modelClass.isAssignableFrom(ExperienceViewModel::class.java) -> {
                 ExperienceViewModel(experienceRepository) as T
+            }
+            modelClass.isAssignableFrom(EducationViewModel::class.java) -> {
+                EducationViewModel(educationRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

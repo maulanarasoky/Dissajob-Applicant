@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.cv.CvEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.history.SearchHistoryEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.interview.InterviewEntity
@@ -25,7 +26,8 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.Recruit
         RecruiterEntity::class,
         SearchHistoryEntity::class,
         CvEntity::class,
-        ExperienceEntity::class],
+        ExperienceEntity::class,
+        EducationEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -39,6 +41,7 @@ abstract class DissajobApplicantDatabase : RoomDatabase() {
     abstract fun searchHistoryDao(): SearchHistoryDao
     abstract fun cvDao(): CvDao
     abstract fun experienceDao(): ExperienceDao
+    abstract fun educationDao(): EducationDao
 
     companion object {
 

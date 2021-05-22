@@ -13,7 +13,7 @@ class ExperienceViewModel(private val experienceRepository: ExperienceRepository
     fun getApplicantExperiences(applicantId: String): LiveData<Resource<PagedList<ExperienceEntity>>> =
         experienceRepository.getApplicantExperiences(applicantId)
 
-    fun saveJob(
+    fun addApplicantExperience(
         experience: ExperienceResponseEntity,
         callback: InsertToDatabaseCallback
     ) = experienceRepository.addApplicantExperience(experience, callback)

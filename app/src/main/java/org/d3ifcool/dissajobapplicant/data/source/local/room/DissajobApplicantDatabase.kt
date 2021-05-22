@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.cv.CvEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.history.SearchHistoryEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.interview.InterviewEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
@@ -15,7 +16,16 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntit
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 
 @Database(
-    entities = [JobEntity::class, JobDetailsEntity::class, SavedJobEntity::class, ApplicationEntity::class, InterviewEntity::class, ApplicantEntity::class, RecruiterEntity::class, SearchHistoryEntity::class, CvEntity::class],
+    entities = [JobEntity::class,
+        JobDetailsEntity::class,
+        SavedJobEntity::class,
+        ApplicationEntity::class,
+        InterviewEntity::class,
+        ApplicantEntity::class,
+        RecruiterEntity::class,
+        SearchHistoryEntity::class,
+        CvEntity::class,
+        ExperienceEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -28,6 +38,7 @@ abstract class DissajobApplicantDatabase : RoomDatabase() {
     abstract fun recruiterDao(): RecruiterDao
     abstract fun searchHistoryDao(): SearchHistoryDao
     abstract fun cvDao(): CvDao
+    abstract fun experienceDao(): ExperienceDao
 
     companion object {
 

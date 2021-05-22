@@ -9,6 +9,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.source.*
 import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.ApplicantRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.cv.CvRepository
+import org.d3ifcool.dissajobapplicant.data.source.repository.experience.ExperienceRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.history.SearchHistoryRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.interview.InterviewRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
@@ -176,5 +177,29 @@ object Injection {
         }
 
         return CvRepository.getInstance(remoteDataSource, localDataSource, appExecutors, callback)
+    }
+
+    fun provideExperienceRepository(context: Context): ExperienceRepository {
+        val database = DissajobApplicantDatabase.getInstance(context)
+
+        val remoteDataSource = RemoteExperienceSource.getInstance(ExperienceHelper)
+        val localDataSource = LocalExperienceSource.getInstance(database.experienceDao())
+        val appExecutors = AppExecutors()
+
+        val callback = object : NetworkStateCallback {
+            override fun hasConnectivity(): Boolean {
+                val cm =
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+                return activeNetwork?.isConnectedOrConnecting == true
+            }
+        }
+
+        return ExperienceRepository.getInstance(
+            remoteDataSource,
+            localDataSource,
+            appExecutors,
+            callback
+        )
     }
 }

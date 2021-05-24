@@ -34,12 +34,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, SignUpCallback
     }
 
     private fun signUp() {
-        val phoneNumber = activitySignUpBinding.etPhoneNumber.text.toString().trim()
-        if (!isValidPhoneNumber(phoneNumber)) {
-            Toast.makeText(this, resources.getString(R.string.edit_text_alert_phone_number_invalid), Toast.LENGTH_SHORT).show()
-            return
-        }
-
         dialog = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
         dialog.titleText = resources.getString(R.string.txt_loading)
         dialog.setCancelable(false)
@@ -50,6 +44,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, SignUpCallback
         val lastName = activitySignUpBinding.etLastName.text.toString().trim()
         val fullName = "$firstName $lastName"
         val email = activitySignUpBinding.etEmail.text.toString().trim()
+        val phoneNumber = activitySignUpBinding.etPhoneNumber.text.toString().trim()
         val password = activitySignUpBinding.etPassword.text.toString().trim()
         val user = ApplicantResponseEntity(
             firstName = firstName,
@@ -76,6 +71,16 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, SignUpCallback
 
         if (!isValidMail(activitySignUpBinding.etEmail.text.toString().trim())) {
             activitySignUpBinding.etEmail.error = resources.getString(R.string.edit_text_alert_email_invalid)
+            return
+        }
+
+        if (TextUtils.isEmpty(activitySignUpBinding.etPhoneNumber.text.toString().trim())) {
+            activitySignUpBinding.etPhoneNumber.error = resources.getString(R.string.edit_text_error_alert, "Nomor telepon")
+            return
+        }
+
+        if (!isValidPhoneNumber(activitySignUpBinding.etPhoneNumber.text.toString().trim())) {
+            activitySignUpBinding.etPhoneNumber.error = resources.getString(R.string.edit_text_alert_phone_number_invalid)
             return
         }
 

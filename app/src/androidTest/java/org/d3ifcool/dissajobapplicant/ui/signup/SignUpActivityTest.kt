@@ -161,6 +161,17 @@ class SignUpActivityTest {
         }
     }
 
+    @Test
+    fun clickSignInButtonTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.btnSignIn)).perform(click())
+
+        Intents.init()
+        Intents.intended(IntentMatchers.hasComponent(SignInActivity::class.simpleName))
+    }
+
     private fun isValidMail(): Boolean {
         val emailString = ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")

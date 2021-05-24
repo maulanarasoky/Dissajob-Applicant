@@ -36,7 +36,13 @@
             android:layout_height="wrap_content" />
 
         <include
-            android:id="@+id/additional_information_section"
+            android:id="@+id/applicationDetailsSection"
+            layout="@layout/application_details_job_details_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/additionalInformationSection"
             layout="@layout/application_details_additional_information_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

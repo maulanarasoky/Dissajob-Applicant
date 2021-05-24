@@ -1,12 +1,11 @@
-package org.d3ifcool.dissajobapplicant.utils
+package org.d3ifcool.dissajobapplicant.utils.database
 
 import com.google.firebase.database.*
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.application.ApplicationResponseEntity
-import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.application.callback.LoadAllApplicationsCallback
+import org.d3ifcool.dissajobapplicant.ui.application.callback.LoadApplicationDataCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.ApplyJobCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
 
 object ApplicationHelper {
 
@@ -39,6 +38,28 @@ object ApplicationHelper {
                 }
 
             })
+    }
+
+    fun getApplicationById(applicationId: String, callback: LoadApplicationDataCallback) {
+        database.child(applicationId).addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val application = ApplicationResponseEntity(
+                        dataSnapshot.key.toString(),
+                        dataSnapshot.child("applicantId").value.toString(),
+                        dataSnapshot.child("jobId").value.toString(),
+                        dataSnapshot.child("applyDate").value.toString(),
+                        dataSnapshot.child("status").value.toString(),
+                        dataSnapshot.child("marked").value.toString().toBoolean()
+                    )
+                    callback.onApplicationDataReceived(application)
+                }
+            }
+
+        })
     }
 
     fun getAllApplicationsByStatus(status: String, callback: LoadAllApplicationsCallback) {

@@ -1,4 +1,4 @@
-package org.d3ifcool.dissajobapplicant.utils
+package org.d3ifcool.dissajobapplicant.utils.database
 
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
@@ -10,6 +10,7 @@ import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.cv.RetrieveCvFromDatabase
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
+import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 
 object CvHelper {
 

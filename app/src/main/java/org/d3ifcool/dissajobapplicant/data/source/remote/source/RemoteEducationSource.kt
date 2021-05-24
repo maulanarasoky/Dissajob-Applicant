@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.education.LoadEducationsCallback
-import org.d3ifcool.dissajobapplicant.utils.EducationHelper
+import org.d3ifcool.dissajobapplicant.utils.database.EducationHelper
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 

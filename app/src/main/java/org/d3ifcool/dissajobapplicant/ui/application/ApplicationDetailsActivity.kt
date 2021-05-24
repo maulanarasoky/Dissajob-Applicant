@@ -11,9 +11,12 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.interview.InterviewEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityApplicationDetailsBinding
+import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
 import org.d3ifcool.dissajobapplicant.ui.question.InterviewViewModel
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
@@ -22,6 +25,7 @@ import org.d3ifcool.dissajobapplicant.vo.Status
 class ApplicationDetailsActivity : AppCompatActivity() {
 
     companion object {
+        const val APPLICATION_ID = "application_id"
         const val JOB_ID = "job_id"
         const val RECRUITER_ID = "recruiter_id"
     }
@@ -29,6 +33,10 @@ class ApplicationDetailsActivity : AppCompatActivity() {
     private lateinit var activityApplicationDetailsBinding: ActivityApplicationDetailsBinding
 
     private lateinit var recruiterViewModel: RecruiterViewModel
+
+    private lateinit var applicationViewModel: ApplicationViewModel
+
+    private lateinit var jobViewModel: JobViewModel
 
     private lateinit var interviewViewModel: InterviewViewModel
 
@@ -38,10 +46,13 @@ class ApplicationDetailsActivity : AppCompatActivity() {
             ActivityApplicationDetailsBinding.inflate(layoutInflater)
         setContentView(activityApplicationDetailsBinding.root)
 
+        val applicationId = intent.getStringExtra(APPLICATION_ID)
         val recruiterId = intent.getStringExtra(RECRUITER_ID)
         val jobId = intent.getStringExtra(JOB_ID)
         val factory = ViewModelFactory.getInstance(this)
         recruiterViewModel = ViewModelProvider(this, factory)[RecruiterViewModel::class.java]
+        applicationViewModel = ViewModelProvider(this, factory)[ApplicationViewModel::class.java]
+        jobViewModel = ViewModelProvider(this, factory)[JobViewModel::class.java]
         interviewViewModel = ViewModelProvider(this, factory)[InterviewViewModel::class.java]
         recruiterViewModel.getRecruiterData(recruiterId.toString()).observe(this) { profile ->
             if (profile.data != null) {
@@ -49,6 +60,46 @@ class ApplicationDetailsActivity : AppCompatActivity() {
                     Status.LOADING -> {
                     }
                     Status.SUCCESS -> populateRecruiterData(profile.data)
+                    Status.ERROR -> {
+                        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        applicationViewModel.getApplicationById(applicationId.toString())
+            .observe(this) { application ->
+                if (application.data != null) {
+                    when (application.status) {
+                        Status.LOADING -> {
+                        }
+                        Status.SUCCESS -> {
+                            val applicationData = ApplicationEntity(
+                                application.data.id,
+                                application.data.applicantId.toString(),
+                                application.data.jobId.toString(),
+                                application.data.applyDate.toString(),
+                                application.data.status.toString(),
+                                application.data.isMarked.toString().toBoolean(),
+                            )
+
+                            populateApplicationData(applicationData)
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+
+        jobViewModel.getJobDetails(jobId.toString()).observe(this) { jobDetails ->
+            if (jobDetails.data != null) {
+                when (jobDetails.status) {
+                    Status.LOADING -> {
+                    }
+                    Status.SUCCESS -> {
+                        populateJobData(jobDetails.data)
+                    }
                     Status.ERROR -> {
                         Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
                     }
@@ -104,6 +155,18 @@ class ApplicationDetailsActivity : AppCompatActivity() {
                 .error(R.drawable.ic_profile_gray_24dp)
                 .into(activityApplicationDetailsBinding.recruiterProfileSection.imgRecruiterPicture)
         }
+    }
+
+    private fun populateApplicationData(applicationData: ApplicationEntity) {
+        activityApplicationDetailsBinding.applicationDetailsSection.tvApplicationStatus.text =
+            applicationData.status.toString()
+    }
+
+    private fun populateJobData(jobData: JobDetailsEntity) {
+        activityApplicationDetailsBinding.applicationDetailsSection.tvJobTitle.text =
+            jobData.title.toString()
+        activityApplicationDetailsBinding.applicationDetailsSection.tvJobDescription.text =
+            jobData.description.toString()
     }
 
     private fun populateInterviewData(interviewData: InterviewEntity) {

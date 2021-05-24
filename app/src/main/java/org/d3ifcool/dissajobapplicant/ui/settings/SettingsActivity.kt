@@ -13,7 +13,7 @@ import org.d3ifcool.dissajobapplicant.ui.application.ApplicationActivity
 import org.d3ifcool.dissajobapplicant.ui.job.savedjob.SavedJobActivity
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.AuthHelper
+import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.utils.SignOutDialog
 import org.d3ifcool.dissajobapplicant.vo.Status
 

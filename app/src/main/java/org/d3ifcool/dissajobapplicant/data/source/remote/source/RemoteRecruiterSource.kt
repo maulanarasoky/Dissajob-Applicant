@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.recruiter.RecruiterResponseEntity
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
-import org.d3ifcool.dissajobapplicant.utils.RecruiterHelper
+import org.d3ifcool.dissajobapplicant.utils.database.RecruiterHelper
 
 class RemoteRecruiterSource private constructor(
     private val recruiterHelper: RecruiterHelper

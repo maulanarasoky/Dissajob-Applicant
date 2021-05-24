@@ -9,6 +9,7 @@ import org.d3ifcool.dissajobapplicant.vo.Resource
 
 interface ApplicationDataSource {
     fun getApplications(): LiveData<Resource<PagedList<ApplicationEntity>>>
+    fun getApplicationById(applicationId: String): LiveData<Resource<ApplicationEntity>>
     fun getAcceptedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>>
     fun getRejectedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>>
     fun getMarkedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>>

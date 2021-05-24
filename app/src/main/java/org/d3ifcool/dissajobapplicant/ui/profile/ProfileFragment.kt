@@ -19,7 +19,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.Applica
 import org.d3ifcool.dissajobapplicant.databinding.FragmentProfileBinding
 import org.d3ifcool.dissajobapplicant.ui.settings.SettingsActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.AuthHelper
+import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class ProfileFragment : Fragment(), View.OnClickListener {

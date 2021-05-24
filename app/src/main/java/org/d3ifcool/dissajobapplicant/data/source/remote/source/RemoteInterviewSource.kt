@@ -7,7 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.intervi
 import org.d3ifcool.dissajobapplicant.ui.question.InsertInterviewAnswersCallback
 import org.d3ifcool.dissajobapplicant.ui.question.LoadInterviewAnswersCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
-import org.d3ifcool.dissajobapplicant.utils.InterviewHelper
+import org.d3ifcool.dissajobapplicant.utils.database.InterviewHelper
 
 class RemoteInterviewSource private constructor(
     private val mInterviewHelper: InterviewHelper

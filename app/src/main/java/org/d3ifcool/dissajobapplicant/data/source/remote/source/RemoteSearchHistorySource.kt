@@ -8,7 +8,7 @@ import org.d3ifcool.dissajobapplicant.ui.search.AddSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.DeleteSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.LoadSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
-import org.d3ifcool.dissajobapplicant.utils.SearchHelper
+import org.d3ifcool.dissajobapplicant.utils.database.SearchHelper
 
 class RemoteSearchHistorySource private constructor(
     private val searchHelper: SearchHelper

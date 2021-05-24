@@ -12,7 +12,7 @@ import org.d3ifcool.dissajobapplicant.databinding.ActivityChangeEmailBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.AuthHelper
+import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import java.util.regex.Pattern
 
 class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnClickListener {

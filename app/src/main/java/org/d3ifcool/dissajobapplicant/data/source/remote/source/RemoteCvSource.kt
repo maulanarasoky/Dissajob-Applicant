@@ -7,7 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.cv.RetrieveCvFromDatabase
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
-import org.d3ifcool.dissajobapplicant.utils.CvHelper
+import org.d3ifcool.dissajobapplicant.utils.database.CvHelper
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 

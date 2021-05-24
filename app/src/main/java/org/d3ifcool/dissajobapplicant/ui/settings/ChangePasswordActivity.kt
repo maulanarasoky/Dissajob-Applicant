@@ -9,14 +9,13 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivityChangePasswordBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.AuthHelper
+import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import java.util.regex.Pattern
 
 class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, UpdateProfileCallback {

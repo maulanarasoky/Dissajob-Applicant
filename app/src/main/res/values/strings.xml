@@ -137,4 +137,5 @@
     <string name="txt_cv_name">Judul</string>
     <string name="txt_cv_description">Deskripsi</string>
     <string name="txt_add_cv">Tambahkan</string>
+    <string name="txt_application_status">Status Lamaran</string>
 </resources>

@@ -1,9 +1,10 @@
-package org.d3ifcool.dissajobapplicant.utils
+package org.d3ifcool.dissajobapplicant.utils.database
 
 import com.google.firebase.database.*
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.education.LoadEducationsCallback
+import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 
 object EducationHelper {
     private val database: DatabaseReference =

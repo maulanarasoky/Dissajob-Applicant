@@ -16,6 +16,7 @@ import org.d3ifcool.dissajobapplicant.data.source.repository.interview.Interview
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.RecruiterRepository
 import org.d3ifcool.dissajobapplicant.utils.*
+import org.d3ifcool.dissajobapplicant.utils.database.*
 
 object Injection {
     fun provideJobRepository(context: Context): JobRepository {

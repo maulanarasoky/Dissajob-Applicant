@@ -1,4 +1,4 @@
-package org.d3ifcool.dissajobapplicant.utils
+package org.d3ifcool.dissajobapplicant.utils.database
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

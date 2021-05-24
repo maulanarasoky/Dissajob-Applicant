@@ -13,6 +13,9 @@ class ApplicationViewModel(private val applicationRepository: ApplicationReposit
     fun getApplications(): LiveData<Resource<PagedList<ApplicationEntity>>> =
         applicationRepository.getApplications()
 
+    fun getApplicationById(applicationId: String): LiveData<Resource<ApplicationEntity>> =
+        applicationRepository.getApplicationById(applicationId)
+
     fun getAcceptedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>> =
         applicationRepository.getAcceptedApplications()
 

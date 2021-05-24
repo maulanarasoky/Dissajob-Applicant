@@ -11,7 +11,7 @@ import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
-import org.d3ifcool.dissajobapplicant.utils.ApplicantHelper
+import org.d3ifcool.dissajobapplicant.utils.database.ApplicantHelper
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 
 class RemoteApplicantSource private constructor(

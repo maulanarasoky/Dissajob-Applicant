@@ -6,7 +6,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.experience.LoadExperiencesCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
-import org.d3ifcool.dissajobapplicant.utils.ExperienceHelper
+import org.d3ifcool.dissajobapplicant.utils.database.ExperienceHelper
 import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 
 class RemoteExperienceSource private constructor(

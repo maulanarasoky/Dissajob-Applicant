@@ -1,5 +1,6 @@
 package org.d3ifcool.dissajobapplicant.data.source.local.source
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.room.ApplicationDao
@@ -17,6 +18,9 @@ class LocalApplicationSource private constructor(
 
     fun getApplications(): DataSource.Factory<Int, ApplicationEntity> =
         mApplicationDao.getApplications()
+
+    fun getApplicationById(applicationId: String): LiveData<ApplicationEntity> =
+        mApplicationDao.getApplicationById(applicationId)
 
     fun getAcceptedApplications(): DataSource.Factory<Int, ApplicationEntity> =
         mApplicationDao.getApplicationsByStatus("accepted")

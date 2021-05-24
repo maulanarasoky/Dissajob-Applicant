@@ -1,4 +1,4 @@
-package org.d3ifcool.dissajobapplicant.utils
+package org.d3ifcool.dissajobapplicant.utils.database
 
 import android.net.Uri
 import com.google.firebase.auth.EmailAuthProvider

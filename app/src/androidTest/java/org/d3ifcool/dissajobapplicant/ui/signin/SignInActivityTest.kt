@@ -73,5 +73,18 @@ class SignInActivityTest {
         Intents.intended(hasComponent(HomeActivity::class.simpleName))
     }
 
+    @Test
+    fun showUnverifiedEmailAlertTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.etEmail)).perform(typeText(dummyUnverifiedEmail))
+        onView(withId(R.id.etPassword)).perform(typeText(dummyAccountPassword))
+
+        onView(withId(R.id.btnSignIn)).perform(click())
+
+        onView(withText(R.string.email_is_not_verified)).check(matches(isDisplayed()))
+    }
+
     
 }

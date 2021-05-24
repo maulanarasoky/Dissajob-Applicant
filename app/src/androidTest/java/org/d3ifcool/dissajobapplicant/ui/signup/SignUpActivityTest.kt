@@ -127,5 +127,28 @@ class SignUpActivityTest {
         }
     }
 
-    
+    @Test
+    fun showIsInvalidEmailEditTextErrorTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.etFirstName)).perform(typeText(dummyFirstName))
+        onView(withId(R.id.etLastName)).perform(typeText(dummyLastName))
+        onView(withId(R.id.etEmail)).perform(typeText(dummyInvalidEmail))
+        onView(withId(R.id.etPhoneNumber)).perform(typeText(dummyPhoneNumber))
+        onView(withId(R.id.etPassword)).perform(typeText(dummyPassword))
+        onView(withId(R.id.etConfirmPassword)).perform(typeText(dummyConfirmPassword))
+
+        if (!isValidMail()) {
+            onView(withId(R.id.etEmail)).check(matches(hasErrorText("Email tidak valid")))
+        }
+    }
+
+    private fun isValidMail(): Boolean {
+        val emailString = ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+        return Pattern.compile(emailString).matcher(dummyInvalidEmail).matches()
+    }
+
+
 }

@@ -99,5 +99,14 @@ class SignInActivityTest {
         onView(withText(R.string.error_login)).check(matches(isDisplayed()))
     }
 
-    
+    @Test
+    fun clickSignUpButtonTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.btnSignUp)).perform(click())
+
+        Intents.init()
+        Intents.intended(hasComponent(SignUpActivity::class.simpleName))
+    }
 }

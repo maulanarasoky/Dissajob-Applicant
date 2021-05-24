@@ -12,7 +12,6 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInActivity
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
-import org.d3ifcool.dissajobapplicant.utils.dummy.ApplicantDummy
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +25,8 @@ class SignUpActivityTest {
     private val dummyPhoneNumber = "0987654321"
     private val dummyInvalidPhoneNumber = "123"
     private val dummyPassword = "123456"
-    private val dummyConfirmPassword = "654321"
+    private val dummyConfirmPassword = "123456"
+    private val dummyWrongConfirmPassword = "654321"
 
     @Before
     fun setUp() {
@@ -117,11 +117,11 @@ class SignUpActivityTest {
         onView(withId(R.id.etEmail)).perform(typeText(dummyEmail))
         onView(withId(R.id.etPhoneNumber)).perform(typeText(dummyPhoneNumber))
         onView(withId(R.id.etPassword)).perform(typeText(dummyPassword))
-        onView(withId(R.id.etConfirmPassword)).perform(typeText(dummyConfirmPassword))
+        onView(withId(R.id.etConfirmPassword)).perform(typeText(dummyWrongConfirmPassword))
 
         onView(withId(R.id.btnSignUp)).perform(click())
 
-        if (dummyPassword != dummyConfirmPassword) {
+        if (dummyPassword != dummyWrongConfirmPassword) {
             onView(withId(R.id.etPassword)).check(matches(hasErrorText("Password dan confirm password tidak cocok")))
             onView(withId(R.id.etConfirmPassword)).check(matches(hasErrorText("Password dan confirm password tidak cocok")))
         }
@@ -159,6 +159,23 @@ class SignUpActivityTest {
         if (!isValidPhoneNumber()) {
             onView(withId(R.id.etPhoneNumber)).check(matches(hasErrorText("Nomor telepon tidak valid")))
         }
+    }
+
+    @Test
+    fun clickSignUpButtonTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.etFirstName)).perform(typeText(dummyFirstName))
+        onView(withId(R.id.etLastName)).perform(typeText(dummyLastName))
+        onView(withId(R.id.etEmail)).perform(typeText(dummyEmail))
+        onView(withId(R.id.etPhoneNumber)).perform(typeText(dummyInvalidPhoneNumber))
+        onView(withId(R.id.etPassword)).perform(typeText(dummyPassword))
+        onView(withId(R.id.etConfirmPassword)).perform(typeText(dummyConfirmPassword))
+
+        onView(withId(R.id.btnSignUp)).perform(click())
+
+        onView(withText("Silahkan lakukan verifikasi email")).check(matches(isDisplayed()))
     }
 
     @Test

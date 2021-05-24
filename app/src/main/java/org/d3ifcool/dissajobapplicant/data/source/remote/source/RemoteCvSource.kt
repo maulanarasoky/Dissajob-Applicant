@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.cv.RetrieveCvFromDatabase
+import org.d3ifcool.dissajobapplicant.ui.cv.AddCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.LoadCvCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
-import org.d3ifcool.dissajobapplicant.utils.database.CvHelper
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
-import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
+import org.d3ifcool.dissajobapplicant.utils.database.CvHelper
 
 class RemoteCvSource private constructor(
     private val cvHelper: CvHelper
@@ -26,11 +26,11 @@ class RemoteCvSource private constructor(
 
     fun getCvId(
         applicantId: String,
-        callback: RetrieveCvFromDatabase
+        callback: LoadCvCallback
     ): LiveData<ApiResponse<List<CvResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultCv = MutableLiveData<ApiResponse<List<CvResponseEntity>>>()
-        cvHelper.getCvId(applicantId, object : RetrieveCvFromDatabase {
+        cvHelper.getCvId(applicantId, object : LoadCvCallback {
             override fun onAllCvReceived(cvResponse: List<CvResponseEntity>): List<CvResponseEntity> {
                 resultCv.value = ApiResponse.success(callback.onAllCvReceived(cvResponse))
                 if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
@@ -60,19 +60,19 @@ class RemoteCvSource private constructor(
         })
     }
 
-    fun storeFileId(
+    fun addCv(
         cvData: CvResponseEntity,
-        callback: InsertToDatabaseCallback
+        callback: AddCvCallback
     ) {
         EspressoIdlingResource.increment()
-        cvHelper.storeFileId(cvData, object : InsertToDatabaseCallback {
-            override fun onSuccess() {
-                callback.onSuccess()
+        cvHelper.addCv(cvData, object : AddCvCallback {
+            override fun onSuccessAdding() {
+                callback.onSuccessAdding()
                 EspressoIdlingResource.decrement()
             }
 
-            override fun onFailure(messageId: Int) {
-                callback.onFailure(messageId)
+            override fun onFailureAdding(messageId: Int) {
+                callback.onFailureAdding(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

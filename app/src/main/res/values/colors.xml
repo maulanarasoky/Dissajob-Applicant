@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2867b2</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#2867b2</color>
-    <color name="softBlack">#353839</color>
+    <color name="colorPrimary">#2867B2</color>
+    <color name="colorPrimaryDark">#2867b2</color>
+    <color name="colorAccent">#2867B2</color>
     <color name="white">#FFFFFF</color>
-    <color name="gray">#868E96</color>
-    <color name="red">#fc4747</color>
+    <color name="lightGray">#E9E6E1</color>
+    <color name="gray">#C4C4C4</color>
+    <color name="darkGray">#5B5C5F</color>
+    <color name="red">#EF4F4F</color>
+    <color name="green">#00C500</color>
+    <color name="orange">#F29339</color>
     <color name="colorStroke">#DFE5ED</color>
-    <color name="text_color">@android:color/black</color>
-    <color name="text_color_secondary">#5B5C5F</color>
-    <color name="search_bar_color">#F7F7FF</color>
-    <color name="search_bar_text_color">#342E2E</color>
-    <color name="header_color">#4E81E9</color>
-    <color name="sub_heading_color">#5B5C5F</color>
+    <color name="searchBarColor">#F7F7FF</color>
+    <color name="searchBarTextColor">#342E2E</color>
+    <color name="black">@android:color/black</color>
 </resources>

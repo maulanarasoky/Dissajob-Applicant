@@ -6,6 +6,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtils {
+
+    fun getCurrentDate(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return sdf.format(Date())
+    }
+
     fun getPostedDate(date: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         sdf.timeZone = TimeZone.getTimeZone("Asia/Jakarta")

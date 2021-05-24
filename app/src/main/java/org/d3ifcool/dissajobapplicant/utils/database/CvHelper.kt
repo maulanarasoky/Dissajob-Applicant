@@ -8,9 +8,9 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.cv.RetrieveCvFromDatabase
+import org.d3ifcool.dissajobapplicant.ui.cv.AddCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.LoadCvCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
-import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 
 object CvHelper {
 
@@ -19,7 +19,7 @@ object CvHelper {
         FirebaseDatabase.getInstance().getReference("cv")
     private val arrCv: MutableList<CvResponseEntity> = mutableListOf()
 
-    fun getCvId(applicantId: String, callback: RetrieveCvFromDatabase) {
+    fun getCvId(applicantId: String, callback: LoadCvCallback) {
         database.orderByChild("applicantId").equalTo(applicantId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
@@ -52,14 +52,14 @@ object CvHelper {
         }
     }
 
-    fun storeFileId(cvData: CvResponseEntity, callbackTo: InsertToDatabaseCallback) {
+    fun addCv(cvData: CvResponseEntity, callbackTo: AddCvCallback) {
         val id = database.push().key
         cvData.id = id.toString()
         cvData.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(cvData.id.toString()).setValue(cvData).addOnSuccessListener {
-            callbackTo.onSuccess()
+            callbackTo.onSuccessAdding()
         }.addOnFailureListener {
-            callbackTo.onFailure(R.string.txt_failure_update)
+            callbackTo.onFailureAdding(R.string.txt_failure_update)
         }
     }
 }

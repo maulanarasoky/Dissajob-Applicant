@@ -3,9 +3,10 @@ package org.d3ifcool.dissajobapplicant.utils.database
 import com.google.firebase.database.*
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.search.AddSearchHistoryCallback
-import org.d3ifcool.dissajobapplicant.ui.search.DeleteSearchHistoryCallback
-import org.d3ifcool.dissajobapplicant.ui.search.LoadSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.AddSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.DeleteAllSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.DeleteSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.LoadSearchHistoryCallback
 
 object SearchHelper {
 
@@ -66,9 +67,9 @@ object SearchHelper {
         callback: AddSearchHistoryCallback
     ) {
         database.child(searchHistory.id.toString()).setValue(searchHistory).addOnSuccessListener {
-            callback.onSuccess()
+            callback.onSuccessAdding()
         }.addOnFailureListener {
-            callback.onFailure(R.string.txt_failure_insert)
+            callback.onFailureAdding(R.string.txt_failure_insert)
         }
     }
 
@@ -80,21 +81,21 @@ object SearchHelper {
         database.child(historyId)
             .child("searchDate")
             .setValue(searchDate).addOnSuccessListener {
-                callback.onSuccess()
+                callback.onSuccessAdding()
             }.addOnFailureListener {
-                callback.onFailure(R.string.txt_failure_insert)
+                callback.onFailureAdding(R.string.txt_failure_insert)
             }
     }
 
-    fun deleteAllSearchHistories(applicantId: String, callback: DeleteSearchHistoryCallback) {
+    fun deleteAllSearchHistories(applicantId: String, callback: DeleteAllSearchHistoryCallback) {
         database.orderByChild("applicantId").equalTo(applicantId)
             .removeEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    callback.onSuccess()
+                    callback.onSuccessDeleteAllHistory()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    callback.onFailure(R.string.txt_failure_delete)
+                    callback.onFailureDeleteAllHistory(R.string.txt_failure_delete)
                 }
 
             })
@@ -102,9 +103,9 @@ object SearchHelper {
 
     fun deleteSearchHistoryById(searchHistoryId: String, callback: DeleteSearchHistoryCallback) {
         database.child(searchHistoryId).removeValue().addOnSuccessListener {
-            callback.onSuccess()
+            callback.onSuccessDelete()
         }.addOnFailureListener {
-            callback.onFailure(R.string.txt_failure_delete)
+            callback.onFailureDelete(R.string.txt_failure_delete)
         }
     }
 }

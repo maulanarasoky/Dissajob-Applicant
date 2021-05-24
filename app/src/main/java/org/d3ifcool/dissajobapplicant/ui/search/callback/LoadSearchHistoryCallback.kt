@@ -1,4 +1,4 @@
-package org.d3ifcool.dissajobapplicant.ui.search
+package org.d3ifcool.dissajobapplicant.ui.search.callback
 
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 

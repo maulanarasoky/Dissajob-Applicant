@@ -4,18 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import org.d3ifcool.dissajobapplicant.data.NetworkBoundResource
-import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.interview.InterviewEntity
-import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalApplicationSource
 import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalInterviewSource
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
-import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.application.ApplicationResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.interview.InterviewResponseEntity
-import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicationSource
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteInterviewSource
-import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationDataSource
-import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
-import org.d3ifcool.dissajobapplicant.ui.application.callback.LoadAllApplicationsCallback
 import org.d3ifcool.dissajobapplicant.ui.question.InsertInterviewAnswersCallback
 import org.d3ifcool.dissajobapplicant.ui.question.LoadInterviewAnswersCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
@@ -71,11 +64,13 @@ class InterviewRepository private constructor(
                 networkCallback.hasConnectivity() && loadFromDB() != createCall()
 
             public override fun createCall(): LiveData<ApiResponse<List<InterviewResponseEntity>>> =
-                remoteInterviewSource.getInterviewAnswers(jobId, object : LoadInterviewAnswersCallback {
-                    override fun onAllInterviewAnswersReceived(interviewAnswers: List<InterviewResponseEntity>): List<InterviewResponseEntity> {
-                        return interviewAnswers
-                    }
-                })
+                remoteInterviewSource.getInterviewAnswers(
+                    jobId,
+                    object : LoadInterviewAnswersCallback {
+                        override fun onAllInterviewAnswersReceived(interviewAnswers: List<InterviewResponseEntity>): List<InterviewResponseEntity> {
+                            return interviewAnswers
+                        }
+                    })
 
             public override fun saveCallResult(data: List<InterviewResponseEntity>) {
                 val interviewAnswerList = ArrayList<InterviewEntity>()

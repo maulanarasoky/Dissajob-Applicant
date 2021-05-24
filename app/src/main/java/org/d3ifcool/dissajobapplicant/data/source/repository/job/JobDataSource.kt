@@ -16,4 +16,5 @@ interface JobDataSource {
     fun getJobsByRecruiter(recruiterId: String): LiveData<Resource<PagedList<JobEntity>>>
     fun getJobDetails(jobId: String): LiveData<Resource<JobDetailsEntity>>
     fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback)
+    fun searchJob(searchText: String): LiveData<Resource<PagedList<JobEntity>>>
 }

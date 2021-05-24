@@ -6,7 +6,10 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobDetailsResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.job.callback.*
+import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.database.JobHelper
 
@@ -54,7 +57,10 @@ class RemoteJobSource private constructor(
         return resultJob
     }
 
-    fun getJobById(jobId: String, callback: LoadJobDataCallback): LiveData<ApiResponse<JobResponseEntity>> {
+    fun getJobById(
+        jobId: String,
+        callback: LoadJobDataCallback
+    ): LiveData<ApiResponse<JobResponseEntity>> {
         EspressoIdlingResource.increment()
         val resultJob = MutableLiveData<ApiResponse<JobResponseEntity>>()
         jobHelper.getJobById(jobId, object : LoadJobDataCallback {
@@ -70,7 +76,10 @@ class RemoteJobSource private constructor(
         return resultJob
     }
 
-    fun getJobsByRecruiter(recruiterId: String, callback: LoadJobsCallback): LiveData<ApiResponse<List<JobResponseEntity>>> {
+    fun getJobsByRecruiter(
+        recruiterId: String,
+        callback: LoadJobsCallback
+    ): LiveData<ApiResponse<List<JobResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultJob = MutableLiveData<ApiResponse<List<JobResponseEntity>>>()
         jobHelper.getJobsByRecruiter(recruiterId, object : LoadJobsCallback {
@@ -119,6 +128,24 @@ class RemoteJobSource private constructor(
                 EspressoIdlingResource.decrement()
             }
         })
+    }
+
+    fun searchJob(
+        searchText: String,
+        callback: LoadJobsCallback
+    ): LiveData<ApiResponse<List<JobResponseEntity>>> {
+        EspressoIdlingResource.increment()
+        val resultJob = MutableLiveData<ApiResponse<List<JobResponseEntity>>>()
+        jobHelper.searchJob(searchText, object : LoadJobsCallback {
+            override fun onAllJobsReceived(jobResponse: List<JobResponseEntity>): List<JobResponseEntity> {
+                resultJob.value = ApiResponse.success(callback.onAllJobsReceived(jobResponse))
+                if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
+                    EspressoIdlingResource.decrement()
+                }
+                return jobResponse
+            }
+        })
+        return resultJob
     }
 
     interface LoadJobDataCallback {

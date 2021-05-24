@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
+import org.d3ifcool.dissajobapplicant.ui.experience.AddExperienceCallback
 import org.d3ifcool.dissajobapplicant.ui.experience.LoadExperiencesCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.database.ExperienceHelper
-import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 
 class RemoteExperienceSource private constructor(
     private val experienceHelper: ExperienceHelper
@@ -44,17 +44,17 @@ class RemoteExperienceSource private constructor(
 
     fun addApplicantExperience(
         experience: ExperienceResponseEntity,
-        callback: InsertToDatabaseCallback
+        callback: AddExperienceCallback
     ) {
         EspressoIdlingResource.increment()
-        experienceHelper.addApplicantExperience(experience, object : InsertToDatabaseCallback {
-            override fun onSuccess() {
-                callback.onSuccess()
+        experienceHelper.addApplicantExperience(experience, object : AddExperienceCallback {
+            override fun onSuccessAdding() {
+                callback.onSuccessAdding()
                 EspressoIdlingResource.decrement()
             }
 
-            override fun onFailure(messageId: Int) {
-                callback.onFailure(messageId)
+            override fun onFailureAdding(messageId: Int) {
+                callback.onFailureAdding(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

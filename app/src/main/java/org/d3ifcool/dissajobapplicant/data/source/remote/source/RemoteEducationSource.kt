@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
+import org.d3ifcool.dissajobapplicant.ui.education.AddEducationCallback
 import org.d3ifcool.dissajobapplicant.ui.education.LoadEducationsCallback
-import org.d3ifcool.dissajobapplicant.utils.database.EducationHelper
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
-import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
+import org.d3ifcool.dissajobapplicant.utils.database.EducationHelper
 
 class RemoteEducationSource private constructor(
     private val educationHelper: EducationHelper
@@ -44,17 +44,17 @@ class RemoteEducationSource private constructor(
 
     fun addApplicantEducation(
         education: EducationResponseEntity,
-        callback: InsertToDatabaseCallback
+        callback: AddEducationCallback
     ) {
         EspressoIdlingResource.increment()
-        educationHelper.addApplicantEducation(education, object : InsertToDatabaseCallback {
-            override fun onSuccess() {
-                callback.onSuccess()
+        educationHelper.addApplicantEducation(education, object : AddEducationCallback {
+            override fun onSuccessAdding() {
+                callback.onSuccessAdding()
                 EspressoIdlingResource.decrement()
             }
 
-            override fun onFailure(messageId: Int) {
-                callback.onFailure(messageId)
+            override fun onFailureAdding(messageId: Int) {
+                callback.onFailureAdding(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

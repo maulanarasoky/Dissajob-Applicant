@@ -21,7 +21,7 @@
         android:layout_marginEnd="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_curriculum_vitae"
-        android:textColor="@color/text_color"
+        android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/imgUploadCv"
         app:layout_constraintEnd_toEndOf="parent"

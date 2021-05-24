@@ -6,7 +6,6 @@ import androidx.paging.PagedList
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.repository.education.EducationRepository
-import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 class EducationViewModel(private val educationRepository: EducationRepository) : ViewModel() {
@@ -15,6 +14,6 @@ class EducationViewModel(private val educationRepository: EducationRepository) :
 
     fun addApplicantEducation(
         education: EducationResponseEntity,
-        callback: InsertToDatabaseCallback
+        callback: AddEducationCallback
     ) = educationRepository.addApplicantEducation(education, callback)
 }

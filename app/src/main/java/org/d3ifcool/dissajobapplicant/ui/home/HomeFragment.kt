@@ -2,14 +2,15 @@ package org.d3ifcool.dissajobapplicant.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.FragmentHomeBinding
 import org.d3ifcool.dissajobapplicant.ui.job.JobAdapter
@@ -18,10 +19,12 @@ import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
 import org.d3ifcool.dissajobapplicant.ui.job.callback.ItemClickListener
 import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
+import org.d3ifcool.dissajobapplicant.ui.search.SearchActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class HomeFragment : Fragment(), ItemClickListener, LoadRecruiterDataCallback {
+class HomeFragment : Fragment(), ItemClickListener, LoadRecruiterDataCallback,
+    View.OnClickListener {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
 
@@ -81,6 +84,8 @@ class HomeFragment : Fragment(), ItemClickListener, LoadRecruiterDataCallback {
             )
             adapter = jobAdapter
         }
+
+        fragmentHomeBinding.header.searchBar.setOnClickListener(this)
     }
 
     private fun showLoading(state: Boolean) {
@@ -109,6 +114,11 @@ class HomeFragment : Fragment(), ItemClickListener, LoadRecruiterDataCallback {
     }
 
     override fun onRecruiterDataReceived(recruiterData: RecruiterEntity) {
-        TODO("Not yet implemented")
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.searchBar -> startActivity(Intent(activity, SearchActivity::class.java))
+        }
     }
 }

@@ -29,6 +29,9 @@ class LocalJobSource private constructor(
 
     fun getJobDetails(jobId: String): LiveData<JobDetailsEntity> = mJobDao.getJobDetails(jobId)
 
+    fun searchJob(searchText: String): DataSource.Factory<Int, JobEntity> =
+        mJobDao.searchJob(searchText)
+
     fun insertJobs(jobs: List<JobEntity>) = mJobDao.insertJobs(jobs)
 
     fun insertSavedJobs(jobs: List<SavedJobEntity>) = mJobDao.insertSavedJobs(jobs)

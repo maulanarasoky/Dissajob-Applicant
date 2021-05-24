@@ -9,9 +9,9 @@ import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalSearchHistor
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteSearchHistorySource
-import org.d3ifcool.dissajobapplicant.ui.search.AddSearchHistoryCallback
-import org.d3ifcool.dissajobapplicant.ui.search.DeleteSearchHistoryCallback
-import org.d3ifcool.dissajobapplicant.ui.search.LoadSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.AddSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.DeleteSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.LoadSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource

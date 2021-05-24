@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.history.SearchHistoryEntity
 import org.d3ifcool.dissajobapplicant.databinding.SearchHistoryItemBinding
+import org.d3ifcool.dissajobapplicant.ui.search.callback.SearchHistoryDeleteClickCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.SearchHistoryItemClickCallback
 
 class SearchAdapter(
     private val clickCallback: SearchHistoryItemClickCallback,
@@ -56,7 +58,7 @@ class SearchAdapter(
                 }
 
                 itemView.setOnClickListener {
-                    clickCallback.onItemClicked(items.id)
+                    clickCallback.onItemClicked(items.searchText.toString())
                 }
             }
         }

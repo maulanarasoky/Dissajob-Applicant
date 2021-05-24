@@ -245,4 +245,46 @@ class JobRepository private constructor(
     override fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback) =
         appExecutors.diskIO()
             .execute { remoteJobSource.saveJob(savedJob, callback) }
+
+    override fun searchJob(searchText: String): LiveData<Resource<PagedList<JobEntity>>> {
+        return object :
+            NetworkBoundResource<PagedList<JobEntity>, List<JobResponseEntity>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<JobEntity>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(localJobSource.searchJob(searchText), config).build()
+            }
+
+            override fun shouldFetch(data: PagedList<JobEntity>?): Boolean =
+                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+//                data == null || data.isEmpty()
+
+            public override fun createCall(): LiveData<ApiResponse<List<JobResponseEntity>>> =
+                remoteJobSource.searchJob(searchText, object : LoadJobsCallback {
+                    override fun onAllJobsReceived(jobResponse: List<JobResponseEntity>): List<JobResponseEntity> {
+                        return jobResponse
+                    }
+                })
+
+            public override fun saveCallResult(data: List<JobResponseEntity>) {
+                val jobList = ArrayList<JobEntity>()
+                for (response in data) {
+                    val job = JobEntity(
+                        response.id.toString(),
+                        response.title,
+                        response.address,
+                        response.postedBy,
+                        response.postedDate,
+                        response.isOpen
+                    )
+                    jobList.add(job)
+                }
+
+                localJobSource.insertJobs(jobList)
+            }
+        }.asLiveData()
+    }
 }

@@ -6,7 +6,6 @@ import androidx.paging.PagedList
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.repository.experience.ExperienceRepository
-import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 class ExperienceViewModel(private val experienceRepository: ExperienceRepository) : ViewModel() {
@@ -15,6 +14,6 @@ class ExperienceViewModel(private val experienceRepository: ExperienceRepository
 
     fun addApplicantExperience(
         experience: ExperienceResponseEntity,
-        callback: InsertToDatabaseCallback
+        callback: AddExperienceCallback
     ) = experienceRepository.addApplicantExperience(experience, callback)
 }

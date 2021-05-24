@@ -10,6 +10,7 @@ import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
+import java.util.*
 
 object JobHelper {
 
@@ -155,5 +156,37 @@ object JobHelper {
             }.addOnFailureListener {
                 callback.onFailure(R.string.txt_failure_update)
             }
+    }
+
+    fun searchJob(searchText: String, callback: LoadJobsCallback) {
+        jobDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                arrJob.clear()
+                val text = searchText.toLowerCase(Locale.getDefault())
+                for (data in dataSnapshot.children) {
+                    val job = JobResponseEntity(
+                        data.key.toString(),
+                        data.child("title").value.toString(),
+                        data.child("address").value.toString(),
+                        data.child("postedBy").value.toString(),
+                        data.child("postedDate").value.toString(),
+                        data.child("open").value.toString().toBoolean()
+                    )
+                    when {
+                        job.title?.toLowerCase(Locale.ROOT)?.contains(text) == true -> {
+                            arrJob.add(job)
+                        }
+                        job.address?.toLowerCase(Locale.ROOT)?.contains(text) == true -> {
+                            arrJob.add(job)
+                        }
+                    }
+                }
+                callback.onAllJobsReceived(arrJob)
+            }
+        })
     }
 }

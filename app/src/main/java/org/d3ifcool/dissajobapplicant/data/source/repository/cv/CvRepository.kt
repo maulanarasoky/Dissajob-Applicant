@@ -10,10 +10,10 @@ import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalCvSource
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteCvSource
-import org.d3ifcool.dissajobapplicant.ui.cv.RetrieveCvFromDatabase
+import org.d3ifcool.dissajobapplicant.ui.cv.AddCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.LoadCvCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
-import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
@@ -65,7 +65,7 @@ class CvRepository private constructor(
 //                data == null || data.isEmpty()
 
             public override fun createCall(): LiveData<ApiResponse<List<CvResponseEntity>>> =
-                remoteCvSource.getCvId(applicantId, object : RetrieveCvFromDatabase {
+                remoteCvSource.getCvId(applicantId, object : LoadCvCallback {
                     override fun onAllCvReceived(cvResponse: List<CvResponseEntity>): List<CvResponseEntity> {
                         return cvResponse
                     }
@@ -98,10 +98,10 @@ class CvRepository private constructor(
                 )
             }
 
-    override fun storeFileId(cvData: CvResponseEntity, callback: InsertToDatabaseCallback) =
+    override fun addCv(cvData: CvResponseEntity, callback: AddCvCallback) =
         appExecutors.diskIO()
             .execute {
-                remoteCvSource.storeFileId(
+                remoteCvSource.addCv(
                     cvData,
                     callback
                 )

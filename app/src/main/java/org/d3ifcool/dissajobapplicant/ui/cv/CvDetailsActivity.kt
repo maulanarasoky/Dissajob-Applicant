@@ -11,7 +11,6 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvRe
 import org.d3ifcool.dissajobapplicant.databinding.ActivityCvDetailsBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 
 class CvDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFileCallback, InsertToDatabaseCallback {
 

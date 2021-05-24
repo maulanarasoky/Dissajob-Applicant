@@ -3,8 +3,8 @@ package org.d3ifcool.dissajobapplicant.utils.database
 import com.google.firebase.database.*
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
+import org.d3ifcool.dissajobapplicant.ui.experience.AddExperienceCallback
 import org.d3ifcool.dissajobapplicant.ui.experience.LoadExperiencesCallback
-import org.d3ifcool.dissajobapplicant.utils.InsertToDatabaseCallback
 
 object ExperienceHelper {
     private val database: DatabaseReference =
@@ -41,14 +41,17 @@ object ExperienceHelper {
             })
     }
 
-    fun addApplicantExperience(experience: ExperienceResponseEntity, callback: InsertToDatabaseCallback) {
+    fun addApplicantExperience(
+        experience: ExperienceResponseEntity,
+        callback: AddExperienceCallback
+    ) {
         val id = database.push().key
         experience.id = id.toString()
         experience.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(experience.id.toString()).setValue(experience).addOnSuccessListener {
-            callback.onSuccess()
+            callback.onSuccessAdding()
         }.addOnFailureListener {
-            callback.onFailure(R.string.txt_failure_update)
+            callback.onFailureAdding(R.string.txt_failure_update)
         }
     }
 }

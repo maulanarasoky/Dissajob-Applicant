@@ -1,18 +1,28 @@
 package org.d3ifcool.dissajobapplicant.ui.search
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.d3ifcool.dissajobapplicant.R
+import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySearchBinding
+import org.d3ifcool.dissajobapplicant.ui.search.callback.*
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
+import org.d3ifcool.dissajobapplicant.utils.DateUtils
 import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class SearchActivity : AppCompatActivity(), SearchHistoryItemClickCallback,
-    SearchHistoryDeleteClickCallback, DeleteSearchHistoryCallback {
+class SearchActivity : AppCompatActivity(), AddSearchHistoryCallback,
+    SearchHistoryItemClickCallback,
+    SearchHistoryDeleteClickCallback, DeleteSearchHistoryCallback, DeleteAllSearchHistoryCallback,
+    View.OnClickListener {
 
     private lateinit var activitySearchBinding: ActivitySearchBinding
 
@@ -38,6 +48,9 @@ class SearchActivity : AppCompatActivity(), SearchHistoryItemClickCallback,
                             if (searchHistory.data.isNotEmpty()) {
                                 searchAdapter.submitList(searchHistory.data)
                                 searchAdapter.notifyDataSetChanged()
+                                showHistory(true)
+                            } else {
+                                showHistory(false)
                             }
                         }
                         Status.ERROR -> {
@@ -59,20 +72,97 @@ class SearchActivity : AppCompatActivity(), SearchHistoryItemClickCallback,
             adapter = searchAdapter
         }
 
+        activitySearchBinding.header.searchBar.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                if (event?.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if (!TextUtils.isEmpty(
+                            activitySearchBinding.header.searchBar.text.toString().trim()
+                        )
+                    ) {
+                        addSearchHistory()
+                    }
+                    return true
+                }
+                return false
+            }
+        })
+
     }
 
-    override fun onItemClicked(searchHistoryId: String) {
+    private fun addSearchHistory() {
+        val searchText = activitySearchBinding.header.searchBar.text.toString().trim()
+        val searchDate = DateUtils.getCurrentDate()
+        val applicantId = AuthHelper.currentUser?.uid.toString()
+        val searchHistory = SearchHistoryResponseEntity(
+            "",
+            searchText,
+            searchDate,
+            applicantId
+        )
+        searchViewModel.addSearchHistory(searchHistory, this)
+    }
+
+    private fun showHistory(state: Boolean) {
+        if (state) {
+            activitySearchBinding.tvSearchHistory.visibility = View.VISIBLE
+            activitySearchBinding.tvDeleteHistory.visibility = View.VISIBLE
+            activitySearchBinding.rvSearchHistory.visibility = View.VISIBLE
+
+            activitySearchBinding.tvDeleteHistory.setOnClickListener(this)
+        } else {
+            activitySearchBinding.tvSearchHistory.visibility = View.GONE
+            activitySearchBinding.tvDeleteHistory.visibility = View.GONE
+            activitySearchBinding.rvSearchHistory.visibility = View.GONE
+        }
+    }
+
+    private fun showSearchResult(searchText: String) {
+        val intent = Intent(this, SearchResultActivity::class.java)
+        intent.putExtra(
+            SearchResultActivity.SEARCH_TEXT,
+            searchText
+        )
+        startActivity(intent)
+    }
+
+    override fun onSuccessAdding() {
+        showSearchResult(activitySearchBinding.header.searchBar.text.toString().trim())
+    }
+
+    override fun onFailureAdding(messageId: Int) {
+        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemClicked(searchText: String) {
+        showSearchResult(searchText)
     }
 
     override fun deleteSearchHistory(searchHistoryId: String) {
         searchViewModel.deleteSearchHistoryById(searchHistoryId, this)
     }
 
-    override fun onSuccess() {
+    override fun onSuccessDelete() {
         searchAdapter.notifyDataSetChanged()
     }
 
-    override fun onFailure(messageId: Int) {
-        Toast.makeText(this, resources.getString(messageId, "Pencarian"), Toast.LENGTH_SHORT).show()
+    override fun onFailureDelete(messageId: Int) {
+        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onSuccessDeleteAllHistory() {
+        showHistory(false)
+    }
+
+    override fun onFailureDeleteAllHistory(messageId: Int) {
+        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.tvDeleteHistory -> searchViewModel.deleteAllSearchHistories(
+                AuthHelper.currentUser?.uid.toString(),
+                this
+            )
+        }
     }
 }

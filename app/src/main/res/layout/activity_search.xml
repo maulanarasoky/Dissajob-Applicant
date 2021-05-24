@@ -6,16 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.search.SearchActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <include
+        android:id="@+id/header"
+        layout="@layout/search_activity_header"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        android:theme="@style/CustomToolbar"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextAppearance="@style/Toolbar.TitleText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvSearchHistory"
@@ -25,12 +23,12 @@
         android:layout_marginTop="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_search_history"
-        android:textColor="@color/softBlack"
+        android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/header" />
 
     <TextView
         android:id="@+id/tvDeleteHistory"
@@ -45,7 +43,7 @@
         android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/header" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchHistory"
@@ -53,6 +51,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_8dp"
         android:overScrollMode="never"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

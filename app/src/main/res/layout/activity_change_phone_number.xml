@@ -25,7 +25,7 @@
         android:layout_marginTop="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_change_phone_number_description"
-        android:textColor="@color/text_color"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
             android:fontFamily="@font/roboto"
             android:inputType="phone"
             android:padding="@dimen/margin_16dp"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black"
             android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="14sp" />
 
@@ -82,7 +82,7 @@
             android:fontFamily="@font/roboto"
             android:inputType="phone"
             android:padding="@dimen/margin_16dp"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black"
             android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="14sp" />
 
@@ -110,7 +110,7 @@
             android:fontFamily="@font/roboto"
             android:inputType="textPassword"
             android:padding="@dimen/margin_16dp"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black"
             android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="14sp" />
 
@@ -123,7 +123,7 @@
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
-        android:backgroundTint="@color/header_color"
+        android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/roboto"
         android:padding="@dimen/margin_16dp"
         android:text="@string/txt_update"

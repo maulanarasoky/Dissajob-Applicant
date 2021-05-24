@@ -41,7 +41,7 @@
                 android:fontFamily="@font/roboto"
                 android:inputType="textEmailAddress"
                 android:padding="@dimen/margin_16dp"
-                android:textColor="@color/text_color"
+                android:textColor="@color/black"
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="14sp" />
 
@@ -69,7 +69,7 @@
                 android:fontFamily="@font/roboto"
                 android:inputType="textPassword"
                 android:padding="@dimen/margin_16dp"
-                android:textColor="@color/text_color"
+                android:textColor="@color/black"
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="14sp" />
 
@@ -83,7 +83,7 @@
             android:layout_marginEnd="@dimen/margin_16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:text="@string/txt_lupa_password"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

@@ -49,5 +49,18 @@ class SignUpActivityTest {
         onView(withId(R.id.etFirstName)).check(matches(hasErrorText("Nama depan tidak boleh kosong")))
     }
 
+    @Test
+    fun showEmailEditTextErrorTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.etFirstName)).perform(typeText(dummyFirstName))
+        onView(withId(R.id.etLastName)).perform(typeText(dummyLastName))
+
+        onView(withId(R.id.btnSignUp)).perform(click())
+
+        onView(withId(R.id.etEmail)).check(matches(hasErrorText("Email tidak boleh kosong")))
+    }
+
     
 }

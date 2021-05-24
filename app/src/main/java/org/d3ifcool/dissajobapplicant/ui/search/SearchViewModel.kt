@@ -7,6 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.history.SearchHis
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.repository.history.SearchHistoryRepository
 import org.d3ifcool.dissajobapplicant.ui.search.callback.AddSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.DeleteAllSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.callback.DeleteSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
@@ -21,7 +22,7 @@ class SearchViewModel(private val searchHistoryRepository: SearchHistoryReposito
 
     fun deleteAllSearchHistories(
         applicantId: String,
-        callback: DeleteSearchHistoryCallback
+        callback: DeleteAllSearchHistoryCallback
     ) = searchHistoryRepository.deleteAllSearchHistories(applicantId, callback)
 
     fun deleteSearchHistoryById(

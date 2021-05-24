@@ -36,8 +36,8 @@
         android:layout_height="25dp"
         android:background="@null"
         android:src="@drawable/ic_delete_gray_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/tvHistory"
+        app:layout_constraintBottom_toBottomOf="@id/tvSearchedText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvHistory" />
+        app:layout_constraintTop_toTopOf="@id/tvSearchedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

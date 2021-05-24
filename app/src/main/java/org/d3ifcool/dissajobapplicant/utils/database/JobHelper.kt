@@ -161,7 +161,6 @@ object JobHelper {
     fun searchJob(searchText: String, callback: LoadJobsCallback) {
         jobDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {

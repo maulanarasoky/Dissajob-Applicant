@@ -11,15 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.d3ifcool.dissajobapplicant.R
-import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySearchBinding
 import org.d3ifcool.dissajobapplicant.ui.search.callback.*
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.DateUtils
 import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class SearchActivity : AppCompatActivity(), AddSearchHistoryCallback,
+class SearchActivity : AppCompatActivity(),
     SearchHistoryItemClickCallback,
     SearchHistoryDeleteClickCallback, DeleteSearchHistoryCallback, DeleteAllSearchHistoryCallback,
     View.OnClickListener {
@@ -79,7 +77,9 @@ class SearchActivity : AppCompatActivity(), AddSearchHistoryCallback,
                             activitySearchBinding.header.searchBar.text.toString().trim()
                         )
                     ) {
-                        addSearchHistory()
+                        showSearchResult(
+                            activitySearchBinding.header.searchBar.text.toString().trim()
+                        )
                     }
                     return true
                 }
@@ -87,20 +87,9 @@ class SearchActivity : AppCompatActivity(), AddSearchHistoryCallback,
             }
         })
 
+        activitySearchBinding.header.imgBackBtn.setOnClickListener(this)
     }
 
-    private fun addSearchHistory() {
-        val searchText = activitySearchBinding.header.searchBar.text.toString().trim()
-        val searchDate = DateUtils.getCurrentDate()
-        val applicantId = AuthHelper.currentUser?.uid.toString()
-        val searchHistory = SearchHistoryResponseEntity(
-            "",
-            searchText,
-            searchDate,
-            applicantId
-        )
-        searchViewModel.addSearchHistory(searchHistory, this)
-    }
 
     private fun showHistory(state: Boolean) {
         if (state) {
@@ -123,14 +112,6 @@ class SearchActivity : AppCompatActivity(), AddSearchHistoryCallback,
             searchText
         )
         startActivity(intent)
-    }
-
-    override fun onSuccessAdding() {
-        showSearchResult(activitySearchBinding.header.searchBar.text.toString().trim())
-    }
-
-    override fun onFailureAdding(messageId: Int) {
-        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
     }
 
     override fun onItemClicked(searchText: String) {
@@ -159,6 +140,7 @@ class SearchActivity : AppCompatActivity(), AddSearchHistoryCallback,
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.imgBackBtn -> finish()
             R.id.tvDeleteHistory -> searchViewModel.deleteAllSearchHistories(
                 AuthHelper.currentUser?.uid.toString(),
                 this

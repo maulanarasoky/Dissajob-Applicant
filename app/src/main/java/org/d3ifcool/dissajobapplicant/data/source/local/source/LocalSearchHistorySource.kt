@@ -20,4 +20,10 @@ class LocalSearchHistorySource private constructor(
 
     fun insertSearchHistories(searchHistories: List<SearchHistoryEntity>) =
         mSearchHistoryDao.insertSearchHistories(searchHistories)
+
+    fun deleteSearchHistoryById(searchId: String) =
+        mSearchHistoryDao.deleteSearchHistoryById(searchId)
+
+    fun deleteAllSearchHistories(applicantId: String) =
+        mSearchHistoryDao.deleteAllSearchHistory(applicantId)
 }

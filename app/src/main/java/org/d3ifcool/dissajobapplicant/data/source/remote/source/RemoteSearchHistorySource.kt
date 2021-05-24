@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.search.callback.AddSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.DeleteAllSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.callback.DeleteSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.callback.LoadSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
@@ -63,17 +64,17 @@ class RemoteSearchHistorySource private constructor(
 
     fun deleteAllSearchHistories(
         applicantId: String,
-        callback: DeleteSearchHistoryCallback
+        callback: DeleteAllSearchHistoryCallback
     ) {
         EspressoIdlingResource.increment()
-        searchHelper.deleteAllSearchHistories(applicantId, object : DeleteSearchHistoryCallback {
-            override fun onSuccessDelete() {
-                callback.onSuccessDelete()
+        searchHelper.deleteAllSearchHistories(applicantId, object : DeleteAllSearchHistoryCallback {
+            override fun onSuccessDeleteAllHistory() {
+                callback.onSuccessDeleteAllHistory()
                 EspressoIdlingResource.decrement()
             }
 
-            override fun onFailureDelete(messageId: Int) {
-                callback.onFailureDelete(messageId)
+            override fun onFailureDeleteAllHistory(messageId: Int) {
+                callback.onFailureDeleteAllHistory(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

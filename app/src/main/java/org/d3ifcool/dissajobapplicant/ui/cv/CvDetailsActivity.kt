@@ -12,7 +12,7 @@ import org.d3ifcool.dissajobapplicant.databinding.ActivityCvDetailsBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 
-class CvDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFileCallback, InsertToDatabaseCallback {
+class CvDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFileCallback, AddCvCallback {
 
     companion object {
         const val CV_FILE = "cv_file"
@@ -88,9 +88,9 @@ class CvDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFileC
     override fun onFailureUpload(messageId: Int) {
     }
 
-    override fun onSuccess() {
+    override fun onSuccessAdding() {
     }
 
-    override fun onFailure(messageId: Int) {
+    override fun onFailureAdding(messageId: Int) {
     }
 }

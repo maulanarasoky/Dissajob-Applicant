@@ -10,6 +10,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteSearchHistorySource
 import org.d3ifcool.dissajobapplicant.ui.search.callback.AddSearchHistoryCallback
+import org.d3ifcool.dissajobapplicant.ui.search.callback.DeleteAllSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.callback.DeleteSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.search.callback.LoadSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
@@ -100,15 +101,27 @@ class SearchHistoryRepository private constructor(
 
     override fun deleteAllSearchHistories(
         applicantId: String,
-        callback: DeleteSearchHistoryCallback
+        callback: DeleteAllSearchHistoryCallback
     ) =
         appExecutors.diskIO()
-            .execute { remoteSearchHistorySource.deleteAllSearchHistories(applicantId, callback) }
+            .execute {
+                localSearchHistorySource.deleteAllSearchHistories(applicantId)
+                remoteSearchHistorySource.deleteAllSearchHistories(applicantId, callback)
+            }
 
     override fun deleteSearchHistoryById(
         searchHistoryId: String,
         callback: DeleteSearchHistoryCallback
     ) =
         appExecutors.diskIO()
-            .execute { remoteSearchHistorySource.deleteSearchHistoryById(searchHistoryId, callback) }
+            .execute {
+                localSearchHistorySource.deleteSearchHistoryById(
+                    searchHistoryId
+                )
+
+                remoteSearchHistorySource.deleteSearchHistoryById(
+                    searchHistoryId,
+                    callback
+                )
+            }
 }

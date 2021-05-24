@@ -10,11 +10,11 @@ import org.d3ifcool.dissajobapplicant.ui.search.callback.LoadSearchHistoryCallba
 
 object SearchHelper {
 
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("jobs")
+    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("search_history")
     private val arrSearchHistory: MutableList<SearchHistoryResponseEntity> = mutableListOf()
 
     fun getSearchHistories(applicantId: String, callback: LoadSearchHistoryCallback) {
-        database.orderByChild("applicant_id").equalTo(applicantId)
+        database.orderByChild("applicantId").equalTo(applicantId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     arrSearchHistory.clear()
@@ -22,9 +22,9 @@ object SearchHelper {
                         for (data in dataSnapshot.children.reversed()) {
                             val searchHistory = SearchHistoryResponseEntity(
                                 data.key.toString(),
-                                data.child("search_text").value.toString(),
-                                data.child("search_date").value.toString(),
-                                data.child("applicant_id").value.toString()
+                                data.child("searchText").value.toString(),
+                                data.child("searchDate").value.toString(),
+                                data.child("applicantId").value.toString()
                             )
                             arrSearchHistory.add(searchHistory)
                         }
@@ -46,11 +46,13 @@ object SearchHelper {
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        updateToDatabase(
-                            dataSnapshot.key.toString(),
-                            dataSnapshot.child("searchDate").toString(),
-                            callback
-                        )
+                        for (items in dataSnapshot.children) {
+                            updateToDatabase(
+                                items.key.toString(),
+                                searchHistory.searchDate.toString(),
+                                callback
+                            )
+                        }
                     } else {
                         insertToDatabase(searchHistory, callback)
                     }
@@ -66,6 +68,7 @@ object SearchHelper {
         searchHistory: SearchHistoryResponseEntity,
         callback: AddSearchHistoryCallback
     ) {
+        searchHistory.id = database.push().key
         database.child(searchHistory.id.toString()).setValue(searchHistory).addOnSuccessListener {
             callback.onSuccessAdding()
         }.addOnFailureListener {
@@ -78,8 +81,7 @@ object SearchHelper {
         searchDate: String,
         callback: AddSearchHistoryCallback
     ) {
-        database.child(historyId)
-            .child("searchDate")
+        database.child(historyId).child("searchDate")
             .setValue(searchDate).addOnSuccessListener {
                 callback.onSuccessAdding()
             }.addOnFailureListener {

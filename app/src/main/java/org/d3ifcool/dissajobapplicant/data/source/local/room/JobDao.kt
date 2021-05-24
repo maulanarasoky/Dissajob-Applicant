@@ -27,7 +27,7 @@ interface JobDao {
     @Query("SELECT * FROM job_details WHERE id = :jobId")
     fun getJobDetails(jobId: String): LiveData<JobDetailsEntity>
 
-    @Query("SELECT * FROM jobs WHERE title LIKE :searchText OR address LIKE :searchText")
+    @Query("SELECT * FROM jobs WHERE title LIKE '%' || :searchText || '%' OR address LIKE '%' || :searchText || '%'")
     fun searchJob(searchText: String): DataSource.Factory<Int, JobEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

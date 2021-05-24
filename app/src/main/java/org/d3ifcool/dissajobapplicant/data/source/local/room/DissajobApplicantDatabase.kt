@@ -17,31 +17,32 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntit
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 
 @Database(
-    entities = [JobEntity::class,
+    entities = [
+        ApplicantEntity::class,
+        ApplicationEntity::class,
+        CvEntity::class,
+        EducationEntity::class,
+        ExperienceEntity::class,
+        InterviewEntity::class,
+        JobEntity::class,
         JobDetailsEntity::class,
         SavedJobEntity::class,
-        ApplicationEntity::class,
-        InterviewEntity::class,
-        ApplicantEntity::class,
         RecruiterEntity::class,
-        SearchHistoryEntity::class,
-        CvEntity::class,
-        ExperienceEntity::class,
-        EducationEntity::class],
+        SearchHistoryEntity::class],
     version = 1,
     exportSchema = false
 )
 abstract class DissajobApplicantDatabase : RoomDatabase() {
 
-    abstract fun jobDao(): JobDao
-    abstract fun applicationDao(): ApplicationDao
-    abstract fun interviewDao(): InterviewDao
     abstract fun applicantDao(): ApplicantDao
+    abstract fun applicationDao(): ApplicationDao
+    abstract fun cvDao(): CvDao
+    abstract fun educationDao(): EducationDao
+    abstract fun experienceDao(): ExperienceDao
+    abstract fun interviewDao(): InterviewDao
+    abstract fun jobDao(): JobDao
     abstract fun recruiterDao(): RecruiterDao
     abstract fun searchHistoryDao(): SearchHistoryDao
-    abstract fun cvDao(): CvDao
-    abstract fun experienceDao(): ExperienceDao
-    abstract fun educationDao(): EducationDao
 
     companion object {
 

@@ -76,5 +76,20 @@ class SignUpActivityTest {
         onView(withId(R.id.etPhoneNumber)).check(matches(hasErrorText("Nomor telepon tidak boleh kosong")))
     }
 
+    @Test
+    fun showPasswordEditTextErrorTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.etFirstName)).perform(typeText(dummyFirstName))
+        onView(withId(R.id.etLastName)).perform(typeText(dummyLastName))
+        onView(withId(R.id.etEmail)).perform(typeText(dummyEmail))
+        onView(withId(R.id.etPhoneNumber)).perform(typeText(dummyPhoneNumber))
+
+        onView(withId(R.id.btnSignUp)).perform(click())
+
+        onView(withId(R.id.etPassword)).check(matches(hasErrorText("Password tidak boleh kosong")))
+    }
+
     
 }

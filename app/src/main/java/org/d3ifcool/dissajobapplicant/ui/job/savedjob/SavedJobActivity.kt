@@ -3,11 +3,13 @@ package org.d3ifcool.dissajobapplicant.ui.job.savedjob
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySavedJobBinding
@@ -35,6 +37,12 @@ class SavedJobActivity : AppCompatActivity(), ItemClickListener, LoadJobByIdCall
         super.onCreate(savedInstanceState)
         activitySavedJobBinding = ActivitySavedJobBinding.inflate(layoutInflater)
         setContentView(activitySavedJobBinding.root)
+
+        activitySavedJobBinding.toolbar.title =
+            resources.getString(R.string.txt_saved_job)
+        setSupportActionBar(activitySavedJobBinding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val factory = ViewModelFactory.getInstance(this)
         jobViewModel = ViewModelProvider(this, factory)[JobViewModel::class.java]
@@ -85,6 +93,16 @@ class SavedJobActivity : AppCompatActivity(), ItemClickListener, LoadJobByIdCall
         val intent = Intent(this, JobDetailsActivity::class.java)
         intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
         startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onLoadJobData(jobId: String, callback: LoadJobByIdCallback) {

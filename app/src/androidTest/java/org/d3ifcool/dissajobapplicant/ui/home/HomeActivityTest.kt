@@ -34,21 +34,22 @@ class HomeActivityTest {
     }
 
     @Test
-    fun loadJobs() {
+    fun loadJobsTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
         onView(withId(R.id.rvJob))
             .check(matches(isDisplayed()))
         onView(withId(R.id.rvJob)).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                5
+                0
             )
         )
     }
 
     @Test
-    fun loadJobDetails() {
+    fun loadJobDetailsTest() {
         onView(withId(R.id.rvJob)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                1,
+                0,
                 click()
             )
         )
@@ -84,7 +85,7 @@ class HomeActivityTest {
     }
 
     @Test
-    fun loadApplicantProfile() {
+    fun loadApplicantProfileTest() {
         onView(withId(R.id.profile))
             .check(matches(isDisplayed()))
         onView(withId(R.id.profile)).perform(click())

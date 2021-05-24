@@ -80,4 +80,29 @@ class HomeActivityTest {
         onView(withId(R.id.tvJobSalary)).check(matches(isDisplayed()))
         onView(withId(R.id.tvJobSalary)).check(matches(withText(dummyDetailsJob.salary)))
     }
+
+    @Test
+    fun loadApplicantProfile() {
+        onView(withId(R.id.profile))
+            .check(matches(isDisplayed()))
+        onView(withId(R.id.profile)).perform(click())
+
+        onView(withId(R.id.imgProfilePic)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.tvProfileName)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvProfileName)).check(matches(withText(dummyApplicantData.fullName)))
+
+        onView(withId(R.id.tvEmail)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvEmail)).check(matches(withText(dummyApplicantData.email)))
+
+        onView(withId(R.id.tvPhoneNumber)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvPhoneNumber)).check(matches(withText(dummyApplicantData.phoneNumber)))
+
+        onView(withId(R.id.tvAboutMe)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvAboutMe)).check(matches(withText(dummyApplicantData.aboutMe)))
+
+        onView(withId(R.id.rvWorkExperience)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.rvEducationalBackground)).check(matches(isDisplayed()))
+    }
 }

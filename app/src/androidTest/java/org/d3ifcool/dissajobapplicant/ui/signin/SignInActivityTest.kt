@@ -46,4 +46,18 @@ class SignInActivityTest {
 
         onView(withId(R.id.etEmail)).check(matches(hasErrorText("Email tidak boleh kosong")))
     }
+
+    @Test
+    fun showPasswordEditTextErrorTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.etEmail)).perform(typeText(dummyApplicantData.email))
+
+        onView(withId(R.id.btnSignIn)).perform(click())
+
+        onView(withId(R.id.etPassword)).check(matches(hasErrorText("Password tidak boleh kosong")))
+    }
+
+    
 }

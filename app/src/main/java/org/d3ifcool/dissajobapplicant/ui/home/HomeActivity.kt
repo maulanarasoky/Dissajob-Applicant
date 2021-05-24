@@ -1,8 +1,8 @@
 package org.d3ifcool.dissajobapplicant.ui.home
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseUser
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivityHomeBinding
 import org.d3ifcool.dissajobapplicant.ui.auth.AuthViewModel
+import org.d3ifcool.dissajobapplicant.ui.profile.ProfileFragment
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInActivity
 
 class HomeActivity : AppCompatActivity() {
@@ -47,6 +48,7 @@ class HomeActivity : AppCompatActivity() {
                     R.id.notification -> {
                     }
                     R.id.profile -> {
+                        loadProfileFragment()
                     }
                 }
             }
@@ -63,7 +65,8 @@ class HomeActivity : AppCompatActivity() {
             .replace(R.id.container_layout, HomeFragment(), HomeFragment::class.java.simpleName)
             .commit()
     }
-//
+
+    //
 //    private fun loadNotificationFragment() {
 //        supportFragmentManager
 //            .beginTransaction()
@@ -75,14 +78,14 @@ class HomeActivity : AppCompatActivity() {
 //            .commit()
 //    }
 //
-//    private fun loadProfileFragment() {
-//        supportFragmentManager
-//            .beginTransaction()
-//            .replace(
-//                R.id.container_layout,
-//                ProfileFragment(),
-//                ProfileFragment::class.java.simpleName
-//            )
-//            .commit()
-//    }
+    private fun loadProfileFragment() {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.container_layout,
+                ProfileFragment(),
+                ProfileFragment::class.java.simpleName
+            )
+            .commit()
+    }
 }

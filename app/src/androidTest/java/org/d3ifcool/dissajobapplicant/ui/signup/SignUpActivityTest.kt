@@ -144,11 +144,32 @@ class SignUpActivityTest {
         }
     }
 
+    @Test
+    fun showIsInvalidPhoneNumberEditTextErrorTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.etFirstName)).perform(typeText(dummyFirstName))
+        onView(withId(R.id.etLastName)).perform(typeText(dummyLastName))
+        onView(withId(R.id.etEmail)).perform(typeText(dummyEmail))
+        onView(withId(R.id.etPhoneNumber)).perform(typeText(dummyInvalidPhoneNumber))
+        onView(withId(R.id.etPassword)).perform(typeText(dummyPassword))
+        onView(withId(R.id.etConfirmPassword)).perform(typeText(dummyConfirmPassword))
+
+        if (!isValidPhoneNumber()) {
+            onView(withId(R.id.etPhoneNumber)).check(matches(hasErrorText("Nomor telepon tidak valid")))
+        }
+    }
+
     private fun isValidMail(): Boolean {
         val emailString = ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
         return Pattern.compile(emailString).matcher(dummyInvalidEmail).matches()
     }
 
-
+    private fun isValidPhoneNumber(): Boolean {
+        return if (!Pattern.matches("[a-zA-Z]+", dummyInvalidPhoneNumber)) {
+            dummyInvalidPhoneNumber.length in 7..13
+        } else false
+    }
 }

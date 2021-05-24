@@ -86,5 +86,18 @@ class SignInActivityTest {
         onView(withText(R.string.email_is_not_verified)).check(matches(isDisplayed()))
     }
 
+    @Test
+    fun unCorrectEmailOrPasswordTest() {
+        onView(withId(R.id.header)).check(matches(isDisplayed()))
+        onView(withId(R.id.footer)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.etEmail)).perform(typeText(dummyApplicantData.email))
+        onView(withId(R.id.etPassword)).perform(typeText(dummyWrongAccountPassword))
+
+        onView(withId(R.id.btnSignIn)).perform(click())
+
+        onView(withText(R.string.error_login)).check(matches(isDisplayed()))
+    }
+
     
 }

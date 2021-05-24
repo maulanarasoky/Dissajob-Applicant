@@ -1,10 +1,8 @@
-package org.d3ifcool.dissajobapplicant.utils
+package org.d3ifcool.dissajobapplicant.utils.dummy
 
-import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
-import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 
-object DataDummy {
+object JobDummy {
     fun generateJobDetails(): JobDetailsEntity {
         val job = JobDetailsEntity(
             "-MZ3qcbNLLpA5aGKnhbb",
@@ -24,36 +22,5 @@ object DataDummy {
         )
 
         return job
-    }
-
-    fun generateRecruiterDetails(): RecruiterEntity {
-        val recruiter = RecruiterEntity(
-            "RT7zlmPyqte9uhi6W9zoNh3i88E2",
-            "Telkom",
-            "University",
-            "Telkom University",
-            "hahaboi02@gmail.com",
-            "Jl. Telekomunikasi No 01",
-            "-",
-            "HRD",
-            "-MZ42Vx55oXuKRp2pPL-"
-        )
-
-        return recruiter
-    }
-
-    fun generateApplicantDetails(): ApplicantEntity {
-        val applicant = ApplicantEntity(
-            "MiGz2j0NTyTJXxsAP8uLyIOv8QN2",
-            "Steve",
-            "Richard",
-            "Steve Richard",
-            "lanaeuylana@gmail.com",
-            "-",
-            "123456789",
-            "-MZEBFJbmCo9FGaLLbQv"
-        )
-
-        return applicant
     }
 }

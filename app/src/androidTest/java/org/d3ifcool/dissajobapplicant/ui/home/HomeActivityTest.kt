@@ -9,16 +9,18 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import org.d3ifcool.dissajobapplicant.R
-import org.d3ifcool.dissajobapplicant.utils.DataDummy
+import org.d3ifcool.dissajobapplicant.utils.dummy.ApplicantDummy
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
+import org.d3ifcool.dissajobapplicant.utils.dummy.JobDummy
+import org.d3ifcool.dissajobapplicant.utils.dummy.RecruiterDummy
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 class HomeActivityTest {
-    private val dummyDetailsJob = DataDummy.generateJobDetails()
-    private val dummyRecruiterData = DataDummy.generateRecruiterDetails()
-    private val dummyApplicantData = DataDummy.generateApplicantDetails()
+    private val dummyDetailsJob = JobDummy.generateJobDetails()
+    private val dummyRecruiterData = RecruiterDummy.generateRecruiterDetails()
+    private val dummyApplicantData = ApplicantDummy.generateApplicantDetails()
 
     @Before
     fun setUp() {

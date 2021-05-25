@@ -7,32 +7,43 @@
     android:padding="@dimen/margin_16dp">
 
     <TextView
-        android:id="@+id/tvAboutMeTitle"
+        android:id="@+id/tvInstitutionName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto"
-        android:text="@string/txt_about_me"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Telkom University" />
 
     <TextView
-        android:id="@+id/tvAboutMe"
+        android:id="@+id/tvEducationDegree"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:ellipsize="end"
+        android:layout_marginTop="@dimen/margin_4dp"
         android:fontFamily="@font/roboto"
-        android:lineSpacingExtra="5dp"
-        android:maxLines="3"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAboutMeTitle"
-        tools:text="@string/txt_lorem_ipsum" />
+        app:layout_constraintTop_toBottomOf="@id/tvInstitutionName"
+        tools:text="Associate\'s degree, Computer Science" />
+
+    <TextView
+        android:id="@+id/tvEducationRangeDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEducationDegree"
+        tools:text="Agustus 2018 - Sekarang" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

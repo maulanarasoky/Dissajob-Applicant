@@ -2,15 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_16dp">
 
     <TextView
         android:id="@+id/tvEducationalBackgroundTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_educational_background"
         android:textColor="@color/black"
@@ -20,12 +18,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imgAddEducation"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_add_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvEducationalBackgroundTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvEducationalBackgroundTitle" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvEducationalBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
         app:layout_constraintBottom_toTopOf="@id/tvViewAllEducationalBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/txt_no_job"
+        android:text="@string/txt_no_experience"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:visibility="gone"
@@ -72,9 +78,9 @@
         android:paddingBottom="@dimen/margin_16dp"
         android:text="@string/txt_view_all"
         android:textColor="@color/colorPrimary"
-        android:visibility="gone"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvEducationalBackground" />

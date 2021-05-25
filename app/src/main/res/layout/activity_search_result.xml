@@ -17,14 +17,43 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextAppearance="@style/Toolbar.TitleText" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvJob"
+    <LinearLayout
+        android:id="@+id/linearSearchResult"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:divider="?android:listDivider"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/margin_16dp"
+        android:paddingEnd="@dimen/margin_16dp"
+        android:paddingBottom="@dimen/margin_16dp"
+        android:showDividers="middle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Difabel friendly"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/white"
+                app:chipStrokeColor="@color/colorPrimary"
+                app:chipStrokeWidth="0.5dp" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvJob"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvNoData"

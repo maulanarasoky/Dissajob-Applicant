@@ -15,9 +15,9 @@
         android:layout_height="25dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_arrow_back_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/searchBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/searchBar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/searchBar"
@@ -33,9 +33,9 @@
         android:paddingStart="@dimen/margin_16dp"
         android:paddingEnd="@dimen/margin_16dp"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/imgBackBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgBackBtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/imgBackBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

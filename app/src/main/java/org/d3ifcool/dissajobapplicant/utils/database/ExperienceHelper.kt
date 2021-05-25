@@ -23,11 +23,14 @@ object ExperienceHelper {
                         for (data in dataSnapshot.children.reversed()) {
                             val experience = ExperienceResponseEntity(
                                 data.key.toString(),
+                                data.child("title").value.toString(),
                                 data.child("employmentType").value.toString(),
                                 data.child("companyName").value.toString(),
                                 data.child("location").value.toString(),
-                                data.child("startDate").value.toString(),
-                                data.child("endDate").value.toString(),
+                                data.child("startMonth").value.toString(),
+                                data.child("startYear").value.toString(),
+                                data.child("endMonth").value.toString(),
+                                data.child("endYear").value.toString(),
                                 data.child("description").value.toString(),
                                 data.child("isCurrentlyWorking").value.toString().toBoolean(),
                                 data.child("applicantId").value.toString()

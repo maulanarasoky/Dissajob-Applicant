@@ -12,6 +12,9 @@ data class ExperienceEntity(
     @ColumnInfo(name = "id")
     var id: String,
 
+    @ColumnInfo(name = "title")
+    var title: String? = "-",
+
     @ColumnInfo(name = "employment_type")
     var employmentType: String? = "-",
 
@@ -21,11 +24,17 @@ data class ExperienceEntity(
     @ColumnInfo(name = "location")
     var location: String? = "-",
 
-    @ColumnInfo(name = "start_date")
-    var startDate: String? = "-",
+    @ColumnInfo(name = "start_month")
+    var startMonth: String? = "-",
 
-    @ColumnInfo(name = "end_date")
-    var endDate: String? = "-",
+    @ColumnInfo(name = "start_year")
+    var startYear: String? = "-",
+
+    @ColumnInfo(name = "end_month")
+    var endMonth: String? = "-",
+
+    @ColumnInfo(name = "end_year")
+    var endYear: String? = "-",
 
     @ColumnInfo(name = "description")
     var description: String? = "-",

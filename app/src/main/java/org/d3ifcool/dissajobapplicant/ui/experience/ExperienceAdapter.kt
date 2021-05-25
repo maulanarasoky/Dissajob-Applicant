@@ -1,0 +1,69 @@
+package org.d3ifcool.dissajobapplicant.ui.experience
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import org.d3ifcool.dissajobapplicant.R
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
+import org.d3ifcool.dissajobapplicant.databinding.ExperienceItemBinding
+
+class ExperienceAdapter :
+    PagedListAdapter<ExperienceEntity, ExperienceAdapter.ExperienceViewHolder>(DIFF_CALLBACK) {
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ExperienceEntity>() {
+            override fun areItemsTheSame(
+                oldItem: ExperienceEntity,
+                newItem: ExperienceEntity
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(
+                oldItem: ExperienceEntity,
+                newItem: ExperienceEntity
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExperienceViewHolder {
+        val itemsExperienceBinding =
+            ExperienceItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ExperienceViewHolder(itemsExperienceBinding)
+    }
+
+    override fun onBindViewHolder(holder: ExperienceViewHolder, position: Int) {
+        val experience = getItem(position)
+        if (experience != null) {
+            holder.bindItem(experience)
+        }
+    }
+
+    inner class ExperienceViewHolder(private val binding: ExperienceItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bindItem(items: ExperienceEntity) {
+            with(binding) {
+                tvJobRole.text = items.title.toString()
+                tvCompanyName.text = itemView.resources.getString(
+                    R.string.txt_company_type,
+                    items.companyName.toString(),
+                    items.employmentType.toString()
+                )
+                val startDate = "${items.startMonth} ${items.startYear}"
+                val endDate = if (items.isCurrentlyWorking == true) {
+                    "Sekarang"
+                } else {
+                    "${items.endMonth} ${items.endYear}"
+                }
+
+                tvJobRangeDate.text =
+                    itemView.resources.getString(R.string.txt_range_date, startDate, endDate)
+            }
+        }
+    }
+}

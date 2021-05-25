@@ -26,8 +26,10 @@ object EducationHelper {
                                 data.child("schoolName").value.toString(),
                                 data.child("degree").value.toString(),
                                 data.child("fieldOfStudy").value.toString(),
-                                data.child("startDate").value.toString(),
-                                data.child("endDate").value.toString(),
+                                data.child("startMonth").value.toString(),
+                                data.child("startYear").value.toString(),
+                                data.child("endMonth").value.toString(),
+                                data.child("endYear").value.toString(),
                                 data.child("description").value.toString(),
                                 data.child("applicantId").value.toString()
                             )

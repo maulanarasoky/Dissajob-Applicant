@@ -8,8 +8,10 @@ data class EducationResponseEntity(
     var schoolName: String? = "-",
     var degree: String? = "-",
     var fieldOfStudy: String? = "-",
-    var startDate: String? = "-",
-    var endDate: String? = "-",
+    var startMonth: String? = "-",
+    var startYear: String? = "-",
+    var endMonth: String? = "-",
+    var endYear: String? = "-",
     var description: String? = "-",
     var applicantId: String
 )

@@ -75,6 +75,7 @@ class SearchResultActivity : AppCompatActivity(), ItemClickListener, LoadRecruit
                             jobAdapter.submitList(jobs.data)
                             jobAdapter.notifyDataSetChanged()
                         } else {
+                            activitySearchResultBinding.linearSearchResult.visibility = View.GONE
                             activitySearchResultBinding.tvNoData.visibility = View.VISIBLE
                         }
                     }
@@ -101,8 +102,10 @@ class SearchResultActivity : AppCompatActivity(), ItemClickListener, LoadRecruit
 
     private fun showLoading(state: Boolean) {
         if (state) {
+            activitySearchResultBinding.linearSearchResult.visibility = View.GONE
             activitySearchResultBinding.progressBar.visibility = View.VISIBLE
         } else {
+            activitySearchResultBinding.linearSearchResult.visibility = View.VISIBLE
             activitySearchResultBinding.progressBar.visibility = View.GONE
         }
     }

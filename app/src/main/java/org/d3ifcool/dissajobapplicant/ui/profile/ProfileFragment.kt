@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -17,6 +19,10 @@ import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.databinding.FragmentProfileBinding
+import org.d3ifcool.dissajobapplicant.ui.education.EducationAdapter
+import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
+import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceAdapter
+import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
 import org.d3ifcool.dissajobapplicant.ui.settings.SettingsActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
@@ -27,6 +33,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var fragmentProfileBinding: FragmentProfileBinding
 
     private lateinit var applicantViewModel: ApplicantViewModel
+
+    private lateinit var experienceViewModel: ExperienceViewModel
+
+    private lateinit var educationViewModel: EducationViewModel
+
+    private lateinit var experienceAdapter: ExperienceAdapter
+
+    private lateinit var educationAdapter: EducationAdapter
 
     private var isAboutMeExpanded = false
 
@@ -43,9 +57,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
+            val applicantId = AuthHelper.currentUser?.uid.toString()
             val factory = ViewModelFactory.getInstance(requireContext())
+            experienceViewModel = ViewModelProvider(this, factory)[ExperienceViewModel::class.java]
+            educationViewModel = ViewModelProvider(this, factory)[EducationViewModel::class.java]
             applicantViewModel = ViewModelProvider(this, factory)[ApplicantViewModel::class.java]
-            applicantViewModel.getApplicantDetails(AuthHelper.currentUser?.uid.toString())
+            applicantViewModel.getApplicantDetails(applicantId)
                 .observe(viewLifecycleOwner) { profile ->
                     if (profile.data != null) {
                         when (profile.status) {
@@ -58,6 +75,76 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         }
                     }
                 }
+
+            experienceAdapter = ExperienceAdapter()
+            experienceViewModel.getApplicantExperiences(applicantId)
+                .observe(viewLifecycleOwner) { experiences ->
+                    if (experiences != null) {
+                        when (experiences.status) {
+                            Status.LOADING -> {
+                            }
+                            Status.SUCCESS -> {
+                                if (experiences.data?.isNotEmpty() == true) {
+                                    experienceAdapter.submitList(experiences.data)
+                                    experienceAdapter.notifyDataSetChanged()
+                                } else {
+                                    fragmentProfileBinding.workExperienceSection.tvNoData.visibility =
+                                        View.VISIBLE
+                                }
+                            }
+                            Status.ERROR -> {
+                                Toast.makeText(context, "Error occurred", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+
+            with(fragmentProfileBinding.workExperienceSection.rvWorkExperience) {
+                layoutManager = LinearLayoutManager(requireContext())
+                setHasFixedSize(true)
+                addItemDecoration(
+                    DividerItemDecoration(
+                        requireContext(),
+                        DividerItemDecoration.VERTICAL
+                    )
+                )
+                adapter = experienceAdapter
+            }
+
+            educationAdapter = EducationAdapter()
+            educationViewModel.getApplicantEducations(applicantId)
+                .observe(viewLifecycleOwner) { educations ->
+                    if (educations != null) {
+                        when (educations.status) {
+                            Status.LOADING -> {
+                            }
+                            Status.SUCCESS -> {
+                                if (educations.data?.isNotEmpty() == true) {
+                                    educationAdapter.submitList(educations.data)
+                                    educationAdapter.notifyDataSetChanged()
+                                } else {
+                                    fragmentProfileBinding.educationalBackgroundSection.tvNoData.visibility =
+                                        View.VISIBLE
+                                }
+                            }
+                            Status.ERROR -> {
+                                Toast.makeText(context, "Error occurred", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+
+            with(fragmentProfileBinding.educationalBackgroundSection.rvEducationalBackground) {
+                layoutManager = LinearLayoutManager(requireContext())
+                setHasFixedSize(true)
+                addItemDecoration(
+                    DividerItemDecoration(
+                        requireContext(),
+                        DividerItemDecoration.VERTICAL
+                    )
+                )
+                adapter = educationAdapter
+            }
 
             //Settings
             fragmentProfileBinding.header.imgSettings.setOnClickListener(this)
@@ -91,7 +178,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private val tvAboutMeClickListener = View.OnClickListener {
         isAboutMeExpanded = if (isAboutMeExpanded) {
             //This will shrink textview to 2 lines if it is expanded.
-            fragmentProfileBinding.aboutMeSection.tvAboutMe.maxLines = 2
+            fragmentProfileBinding.aboutMeSection.tvAboutMe.maxLines = 3
             false
         } else {
             //This will expand the textview if it is of 2 lines

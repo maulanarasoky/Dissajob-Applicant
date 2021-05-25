@@ -81,8 +81,10 @@ class EducationRepository private constructor(
                         response.schoolName,
                         response.degree,
                         response.fieldOfStudy,
-                        response.startDate,
-                        response.endDate,
+                        response.startMonth,
+                        response.startYear,
+                        response.endMonth,
+                        response.endYear,
                         response.description,
                         response.applicantId
                     )

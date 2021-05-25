@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="?android:listDivider"
-            android:dividerPadding="16dp"
+            android:dividerPadding="@dimen/margin_16dp"
             android:orientation="vertical"
             android:showDividers="middle"
             app:layout_constraintEnd_toEndOf="parent"

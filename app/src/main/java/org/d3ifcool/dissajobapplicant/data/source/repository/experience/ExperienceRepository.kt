@@ -79,11 +79,14 @@ class ExperienceRepository private constructor(
                 for (response in data) {
                     val experience = ExperienceEntity(
                         response.id.toString(),
+                        response.title,
                         response.employmentType,
                         response.companyName,
                         response.location,
-                        response.startDate,
-                        response.endDate,
+                        response.startMonth,
+                        response.startYear,
+                        response.endMonth,
+                        response.endYear,
                         response.description,
                         response.isCurrentlyWorking,
                         response.applicantId

@@ -1,20 +1,21 @@
 package org.d3ifcool.dissajobapplicant.utils.database
 
 import android.net.Uri
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.cv.AddCvCallback
-import org.d3ifcool.dissajobapplicant.ui.cv.LoadCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.AddCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.LoadCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.LoadCvFileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
+import java.io.File
+
 
 object CvHelper {
 
-    private val auth = FirebaseAuth.getInstance()
+    private val storageRef = Firebase.storage.reference
     private val database: DatabaseReference =
         FirebaseDatabase.getInstance().getReference("cv")
     private val arrCv: MutableList<CvResponseEntity> = mutableListOf()
@@ -29,10 +30,13 @@ object CvHelper {
                     arrCv.clear()
                     if (dataSnapshot.exists()) {
                         for (data in dataSnapshot.children.reversed()) {
-                            val cvData =
-                                data.getValue<CvResponseEntity>() ?: return
-                            cvData.id = data.key ?: return
-
+                            val cvData = CvResponseEntity(
+                                data.key.toString(),
+                                data.child("cvName").value.toString(),
+                                data.child("cvDescription").value.toString(),
+                                data.child("applicantId").value.toString(),
+                                data.child("fileId").value.toString()
+                            )
                             arrCv.add(cvData)
                         }
                     }
@@ -60,6 +64,22 @@ object CvHelper {
             callbackTo.onSuccessAdding()
         }.addOnFailureListener {
             callbackTo.onFailureAdding(R.string.txt_failure_update)
+        }
+    }
+
+    fun getCvById(cvId: String, callback: LoadCvFileCallback) {
+//        storageRef.child("applicant/profile/cv/$cvId").downloadUrl
+//            .addOnSuccessListener {
+//
+//            }
+
+//        val localFile = File.createTempFile("application", "pdf")
+//        storageRef.child("applicant/profile/cv/$cvId").getFile(localFile).addOnSuccessListener {
+//            callback.onCvFileReceived(it.storage.stream.result.stream)
+//        }
+
+        storageRef.child("applicant/profile/cv/$cvId").getBytes(Long.MAX_VALUE).addOnSuccessListener {
+            callback.onCvFileReceived(it)
         }
     }
 }

@@ -79,6 +79,7 @@ class ApplicationRepository private constructor(
                         response.applicantId,
                         response.jobId,
                         response.applyDate,
+                        response.updatedDate,
                         response.status,
                         response.isMarked
                     )
@@ -117,6 +118,7 @@ class ApplicationRepository private constructor(
                     data.applicantId,
                     data.jobId,
                     data.applyDate,
+                    data.updatedDate,
                     data.status,
                     data.isMarked
                 )
@@ -162,6 +164,7 @@ class ApplicationRepository private constructor(
                         response.applicantId,
                         response.jobId,
                         response.applyDate,
+                        response.updatedDate,
                         response.status,
                         response.isMarked
                     )
@@ -209,6 +212,7 @@ class ApplicationRepository private constructor(
                         response.applicantId,
                         response.jobId,
                         response.applyDate,
+                        response.updatedDate,
                         response.status,
                         response.isMarked
                     )
@@ -255,6 +259,7 @@ class ApplicationRepository private constructor(
                         response.applicantId,
                         response.jobId,
                         response.applyDate,
+                        response.updatedDate,
                         response.status,
                         response.isMarked
                     )

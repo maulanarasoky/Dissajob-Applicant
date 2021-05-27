@@ -10,8 +10,9 @@ import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalCvSource
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteCvSource
-import org.d3ifcool.dissajobapplicant.ui.cv.AddCvCallback
-import org.d3ifcool.dissajobapplicant.ui.cv.LoadCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.AddCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.LoadCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.LoadCvFileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
@@ -106,4 +107,7 @@ class CvRepository private constructor(
                     callback
                 )
             }
+
+    override fun getCvById(fileId: String, callback: LoadCvFileCallback) =
+        appExecutors.diskIO().execute { remoteCvSource.getCvById(fileId, callback) }
 }

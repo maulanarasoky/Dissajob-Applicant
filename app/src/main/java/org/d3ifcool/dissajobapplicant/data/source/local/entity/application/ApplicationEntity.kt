@@ -23,6 +23,9 @@ data class ApplicationEntity(
     @ColumnInfo(name = "apply_date")
     var applyDate: String? = "-",
 
+    @ColumnInfo(name = "updated_date")
+    var updatedDate: String? = "-",
+
     @ColumnInfo(name = "status")
     var status: String? = "-",
 

@@ -19,6 +19,7 @@ import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.databinding.FragmentProfileBinding
+import org.d3ifcool.dissajobapplicant.ui.cv.UploadCvActivity
 import org.d3ifcool.dissajobapplicant.ui.education.EducationAdapter
 import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceAdapter
@@ -148,6 +149,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
             //Settings
             fragmentProfileBinding.header.imgSettings.setOnClickListener(this)
+
+            //Upload cv section
+            fragmentProfileBinding.uploadCvSection.root.setOnClickListener(this)
         }
     }
 
@@ -189,9 +193,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.imgSettings -> {
-                startActivity(Intent(activity, SettingsActivity::class.java))
-            }
+            R.id.imgSettings -> startActivity(Intent(activity, SettingsActivity::class.java))
+            R.id.uploadCvSection -> startActivity(Intent(activity, UploadCvActivity::class.java))
         }
     }
 }

@@ -5,11 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.cv.AddCvCallback
-import org.d3ifcool.dissajobapplicant.ui.cv.LoadCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.AddCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.LoadCvCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.LoadCvFileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.database.CvHelper
+import java.io.InputStream
 
 class RemoteCvSource private constructor(
     private val cvHelper: CvHelper
@@ -73,6 +75,19 @@ class RemoteCvSource private constructor(
 
             override fun onFailureAdding(messageId: Int) {
                 callback.onFailureAdding(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun getCvById(
+        fileId: String,
+        callback: LoadCvFileCallback
+    ) {
+        EspressoIdlingResource.increment()
+        cvHelper.getCvById(fileId, object : LoadCvFileCallback {
+            override fun onCvFileReceived(cvFile: ByteArray) {
+                callback.onCvFileReceived(cvFile)
                 EspressoIdlingResource.decrement()
             }
         })

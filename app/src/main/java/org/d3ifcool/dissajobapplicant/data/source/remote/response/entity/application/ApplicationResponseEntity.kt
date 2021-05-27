@@ -8,6 +8,7 @@ data class ApplicationResponseEntity(
     var applicantId: String? = "-",
     var jobId: String? = "-",
     var applyDate: String? = "-",
+    var updatedDate: String? = "-",
     var status: String? = "-",
     var isMarked: Boolean? = false,
 )

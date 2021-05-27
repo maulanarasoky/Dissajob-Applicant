@@ -7,14 +7,27 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.d3ifcool.dissajobapplicant.R
+import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.cv.CvResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityUploadCvBinding
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.LoadCvFileCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.LoadPdfCallback
+import org.d3ifcool.dissajobapplicant.ui.cv.callback.OnClickCvListener
+import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
+import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
+import org.d3ifcool.dissajobapplicant.vo.Status
 
 
-class UploadCvActivity : AppCompatActivity(), View.OnClickListener {
+class UploadCvActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback,
+    OnClickCvListener {
 
     companion object {
         //image pick code
@@ -28,12 +41,85 @@ class UploadCvActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var activityUploadCvBinding: ActivityUploadCvBinding
 
+    private lateinit var cvViewModel: CvViewModel
+
+    private lateinit var cvAdapter: CvAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityUploadCvBinding = ActivityUploadCvBinding.inflate(layoutInflater)
         setContentView(activityUploadCvBinding.root)
 
+        activityUploadCvBinding.toolbar.title = resources.getString(R.string.txt_curriculum_vitae)
+        setSupportActionBar(activityUploadCvBinding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        val applicantId = AuthHelper.currentUser?.uid.toString()
+        val factory = ViewModelFactory.getInstance(this)
+        cvViewModel = ViewModelProvider(this, factory)[CvViewModel::class.java]
+
+        cvAdapter = CvAdapter(this)
+        showCv(applicantId)
+        with(activityUploadCvBinding.rvCv) {
+            layoutManager = LinearLayoutManager(this@UploadCvActivity)
+            setHasFixedSize(true)
+            addItemDecoration(
+                DividerItemDecoration(
+                    this@UploadCvActivity,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            adapter = cvAdapter
+        }
+
         activityUploadCvBinding.btnSelectCv.setOnClickListener(this)
+    }
+
+    private fun showCv(applicantId: String) {
+        cvViewModel.getApplicantCv(applicantId)
+            .observe(this) { cvFiles ->
+                if (cvFiles != null) {
+                    when (cvFiles.status) {
+                        Status.LOADING -> showLoading(true)
+                        Status.SUCCESS -> {
+                            showLoading(false)
+                            if (cvFiles.data?.isNotEmpty() == true) {
+                                showRecyclerViewCv(true)
+                                cvAdapter.submitList(cvFiles.data)
+                                cvAdapter.notifyDataSetChanged()
+                            } else {
+                                showRecyclerViewCv(false)
+                            }
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            activityUploadCvBinding.progressBar.visibility = View.VISIBLE
+        } else {
+            activityUploadCvBinding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun showRecyclerViewCv(state: Boolean) {
+        if (state) {
+            activityUploadCvBinding.rvCv.visibility = View.VISIBLE
+            activityUploadCvBinding.imgFolder.visibility = View.GONE
+            activityUploadCvBinding.tvCvDescription.visibility = View.GONE
+            activityUploadCvBinding.btnSelectCv.visibility = View.GONE
+        } else {
+            activityUploadCvBinding.rvCv.visibility = View.GONE
+            activityUploadCvBinding.imgFolder.visibility = View.VISIBLE
+            activityUploadCvBinding.tvCvDescription.visibility = View.VISIBLE
+            activityUploadCvBinding.btnSelectCv.visibility = View.VISIBLE
+        }
     }
 
     private fun checkPermission() {
@@ -89,15 +175,55 @@ class UploadCvActivity : AppCompatActivity(), View.OnClickListener {
             if (data?.data != null) {
                 cvFile = data.data!!
                 val intent = Intent(this, CvDetailsActivity::class.java)
-                intent.putExtra(CvDetailsActivity.CV_FILE, cvFile)
-                startActivity(intent)
+                intent.putExtra(CvDetailsActivity.CV_FILE, cvFile.toString())
+                startActivityForResult(intent, CvDetailsActivity.REQUEST_ADD)
+            }
+        } else if (requestCode == CvDetailsActivity.REQUEST_ADD) {
+            if (resultCode == CvDetailsActivity.RESULT_ADD) {
+                val applicantId = AuthHelper.currentUser?.uid.toString()
+                showCv(applicantId)
             }
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_cv_toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            R.id.addCv -> {
+                checkPermission()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.btnSelectCv -> checkPermission()
         }
+    }
+
+    override fun onLoadPdfData(cvId: String, callback: LoadPdfCallback) {
+        cvViewModel.getCvById(cvId, object : LoadCvFileCallback {
+            override fun onCvFileReceived(cvFile: ByteArray) {
+                callback.onPdfDataReceived(cvFile)
+            }
+        })
+    }
+
+    override fun onPdfDataReceived(cvFile: ByteArray) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onCvClick(cvData: CvResponseEntity) {
+        TODO("Not yet implemented")
     }
 }

@@ -143,4 +143,9 @@
     <string name="txt_company_type">%1$s \u2022 %2$s</string>
     <string name="txt_range_date">%1$s - %2$s</string>
     <string name="txt_education_degree">%1$s, %2$s</string>
+    <string name="txt_edit">Edit</string>
+    <string name="txt_delete">Hapus</string>
+
+
+    <string name="tv_success_adding_cv">Cv berhasil ditambahkan</string>
 </resources>

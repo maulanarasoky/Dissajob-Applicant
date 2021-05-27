@@ -79,6 +79,7 @@ class ApplicationDetailsActivity : AppCompatActivity() {
                                 application.data.applicantId.toString(),
                                 application.data.jobId.toString(),
                                 application.data.applyDate.toString(),
+                                application.data.updatedDate.toString(),
                                 application.data.status.toString(),
                                 application.data.isMarked.toString().toBoolean(),
                             )

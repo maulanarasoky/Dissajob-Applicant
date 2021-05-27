@@ -38,9 +38,9 @@ class EducationAdapter :
     }
 
     override fun onBindViewHolder(holder: EducationViewHolder, position: Int) {
-        val experience = getItem(position)
-        if (experience != null) {
-            holder.bindItem(experience)
+        val education = getItem(position)
+        if (education != null) {
+            holder.bindItem(education)
         }
     }
 

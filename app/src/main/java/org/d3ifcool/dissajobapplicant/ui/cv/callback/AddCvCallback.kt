@@ -1,4 +1,4 @@
-package org.d3ifcool.dissajobapplicant.ui.cv
+package org.d3ifcool.dissajobapplicant.ui.cv.callback
 
 interface AddCvCallback {
     fun onSuccessAdding()

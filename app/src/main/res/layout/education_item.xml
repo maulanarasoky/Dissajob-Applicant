@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
     android:padding="@dimen/margin_16dp">
 
     <TextView
-        android:id="@+id/tvInstitutionName"
+        android:id="@+id/tvSchoolName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto"
@@ -20,7 +21,7 @@
         tools:text="Telkom University" />
 
     <TextView
-        android:id="@+id/tvEducationDegree"
+        android:id="@+id/tvEducationLevel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_4dp"
@@ -29,7 +30,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvInstitutionName"
+        app:layout_constraintTop_toBottomOf="@id/tvSchoolName"
         tools:text="Associate\'s degree, Computer Science" />
 
     <TextView
@@ -42,8 +43,22 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEducationDegree"
-        tools:text="Agustus 2018 - Sekarang" />
+        app:layout_constraintTop_toBottomOf="@id/tvEducationLevel"
+        tools:text="Aug 2018 - Now" />
+
+    <TextView
+        android:id="@+id/tvEducationDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEducationRangeDate"
+        tools:text="Description" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

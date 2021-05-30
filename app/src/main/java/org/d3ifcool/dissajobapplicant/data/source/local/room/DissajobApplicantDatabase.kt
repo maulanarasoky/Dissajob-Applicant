@@ -13,7 +13,6 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.interview.Intervi
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntity
-import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.FileEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 
@@ -23,7 +22,6 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.Recruit
         ApplicationEntity::class,
         EducationEntity::class,
         ExperienceEntity::class,
-        FileEntity::class,
         InterviewEntity::class,
         JobEntity::class,
         JobDetailsEntity::class,

@@ -19,6 +19,7 @@ import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.databinding.FragmentProfileBinding
+import org.d3ifcool.dissajobapplicant.ui.education.AddEditEducationActivity
 import org.d3ifcool.dissajobapplicant.ui.education.EducationAdapter
 import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceAdapter
@@ -152,6 +153,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
             //Upload media section
             fragmentProfileBinding.uploadMediaSection.root.setOnClickListener(this)
+
+            //Education section
+            fragmentProfileBinding.educationalBackgroundSection.imgAddEducation.setOnClickListener(
+                this
+            )
         }
     }
 
@@ -195,6 +201,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
             R.id.imgSettings -> startActivity(Intent(activity, SettingsActivity::class.java))
             R.id.uploadMediaSection -> startActivity(Intent(activity, MediaActivity::class.java))
+            R.id.imgAddEducation -> startActivity(
+                Intent(
+                    activity,
+                    AddEditEducationActivity::class.java
+                )
+            )
         }
     }
 }

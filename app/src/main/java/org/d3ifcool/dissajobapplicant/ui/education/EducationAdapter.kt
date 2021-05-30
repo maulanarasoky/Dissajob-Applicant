@@ -1,6 +1,7 @@
 package org.d3ifcool.dissajobapplicant.ui.education
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.databinding.EducationItemBinding
+import java.text.DateFormatSymbols
 
 class EducationAdapter :
     PagedListAdapter<EducationEntity, EducationAdapter.EducationViewHolder>(DIFF_CALLBACK) {
@@ -48,17 +50,28 @@ class EducationAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bindItem(items: EducationEntity) {
             with(binding) {
-                tvInstitutionName.text = items.schoolName.toString()
-                tvEducationDegree.text = itemView.resources.getString(
-                    R.string.txt_company_type,
-                    items.degree.toString(),
-                    items.fieldOfStudy.toString()
-                )
-                val startDate = "${items.startMonth} ${items.startYear}"
-                val endDate = "${items.endMonth} ${items.endYear}"
+                tvSchoolName.text = items.schoolName.toString()
+                if (items.fieldOfStudy != "-") {
+                    tvEducationLevel.text = itemView.resources.getString(
+                        R.string.txt_education_level_field_of_study,
+                        items.educationLevel.toString(),
+                        items.fieldOfStudy.toString()
+                    )
+                } else {
+                    tvEducationLevel.text = items.educationLevel.toString()
+                }
+                val startMonth = DateFormatSymbols().months[items.startMonth!! - 1]
+                val endMonth = DateFormatSymbols().months[items.endMonth!! - 1]
+                val startDate = "$startMonth ${items.startYear}"
+                val endDate = "$endMonth ${items.endYear}"
 
                 tvEducationRangeDate.text =
                     itemView.resources.getString(R.string.txt_range_date, startDate, endDate)
+
+                if (items.description != "-") {
+                    tvEducationDescription.text = items.description.toString()
+                    tvEducationDescription.visibility = View.VISIBLE
+                }
             }
         }
     }

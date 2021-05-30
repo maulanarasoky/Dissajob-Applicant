@@ -142,10 +142,32 @@
 
     <string name="txt_company_type">%1$s \u2022 %2$s</string>
     <string name="txt_range_date">%1$s - %2$s</string>
-    <string name="txt_education_degree">%1$s, %2$s</string>
+    <string name="txt_education_level_field_of_study">%1$s, %2$s</string>
     <string name="txt_edit">Edit</string>
     <string name="txt_delete">Hapus</string>
 
 
     <string name="tv_success_adding_media">Media berhasil ditambahkan</string>
+    <string name="txt_school_name">Nama sekolah</string>
+    <string name="txt_field_of_study">Bidang studi</string>
+    <string name="txt_start_date">Tanggal mulai</string>
+    <string name="txt_end_date">Tanggal selesai (atau perkiraan)</string>
+    <string name="txt_description">Deskripsi</string>
+    <string name="txt_save">Simpan</string>
+    <string name="txt_start_end_date_value">%1$s %2$s</string>
+    <string name="txt_invalid_start_date">Tanggal mulai tidak boleh setelah tanggal selesai</string>
+    <string name="txt_invalid_end_date">Tanggal selesai tidak boleh sebelum tanggal mulai</string>
+    <string name="tv_success_adding_education">Riwayat pendidikan berhasil ditambahkan</string>
+    <string name="txt_elementary_school">SD</string>
+    <string name="txt_junior_high_school">SMP</string>
+    <string name="txt_senior_high_school">SMA</string>
+    <string name="txt_vocational_high_school">SMK</string>
+    <string name="txt_diploma_one">D1</string>
+    <string name="txt_diploma_two">D2</string>
+    <string name="txt_diploma_three">D3</string>
+    <string name="txt_diploma_four">D4</string>
+    <string name="txt_bachelor_degree">S1</string>
+    <string name="txt_undergraduate_degree">S2</string>
+    <string name="txt_postgraduate_degree">S3</string>
+    <string name="txt_education_level">Tingkat pendidikan</string>
 </resources>

@@ -15,23 +15,23 @@ data class EducationEntity(
     @ColumnInfo(name = "school_name")
     var schoolName: String? = "-",
 
-    @ColumnInfo(name = "degree")
-    var degree: String? = "-",
+    @ColumnInfo(name = "education_level")
+    var educationLevel: String? = "-",
 
     @ColumnInfo(name = "field_of_study")
     var fieldOfStudy: String? = "-",
 
     @ColumnInfo(name = "start_month")
-    var startMonth: String? = "-",
+    var startMonth: Int? = 0,
 
     @ColumnInfo(name = "start_year")
-    var startYear: String? = "-",
+    var startYear: Int? = 0,
 
     @ColumnInfo(name = "end_month")
-    var endMonth: String? = "-",
+    var endMonth: Int? = 0,
 
     @ColumnInfo(name = "end_year")
-    var endYear: String? = "-",
+    var endYear: Int? = 0,
 
     @ColumnInfo(name = "description")
     var description: String? = "-",

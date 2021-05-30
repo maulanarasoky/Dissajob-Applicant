@@ -79,7 +79,7 @@ class EducationRepository private constructor(
                     val education = EducationEntity(
                         response.id.toString(),
                         response.schoolName,
-                        response.degree,
+                        response.educationLevel,
                         response.fieldOfStudy,
                         response.startMonth,
                         response.startYear,

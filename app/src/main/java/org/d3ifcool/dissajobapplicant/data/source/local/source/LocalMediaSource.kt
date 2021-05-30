@@ -1,8 +1,6 @@
 package org.d3ifcool.dissajobapplicant.data.source.local.source
 
-import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.FileEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.room.MediaDao
 
@@ -24,8 +22,4 @@ class LocalMediaSource private constructor(
         mMediaDao.updateMedia(id, mediaName, mediaDescription)
 
     fun insertMedia(media: List<MediaEntity>) = mMediaDao.insertMedia(media)
-
-    fun getFileByteArray(id: String): LiveData<FileEntity> = mMediaDao.getFileByteArray(id)
-
-    fun insertFileByteArray(file: FileEntity) = mMediaDao.insertFileByteArray(file)
 }

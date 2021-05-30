@@ -24,12 +24,12 @@ object EducationHelper {
                             val education = EducationResponseEntity(
                                 data.key.toString(),
                                 data.child("schoolName").value.toString(),
-                                data.child("degree").value.toString(),
+                                data.child("educationLevel").value.toString(),
                                 data.child("fieldOfStudy").value.toString(),
-                                data.child("startMonth").value.toString(),
-                                data.child("startYear").value.toString(),
-                                data.child("endMonth").value.toString(),
-                                data.child("endYear").value.toString(),
+                                data.child("startMonth").value.toString().toInt(),
+                                data.child("startYear").value.toString().toInt(),
+                                data.child("endMonth").value.toString().toInt(),
+                                data.child("endYear").value.toString().toInt(),
                                 data.child("description").value.toString(),
                                 data.child("applicantId").value.toString()
                             )
@@ -52,7 +52,7 @@ object EducationHelper {
         database.child(education.id.toString()).setValue(education).addOnSuccessListener {
             callback.onSuccessAdding()
         }.addOnFailureListener {
-            callback.onFailureAdding(R.string.txt_failure_update)
+            callback.onFailureAdding(R.string.txt_failure_insert)
         }
     }
 }

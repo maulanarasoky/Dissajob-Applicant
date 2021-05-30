@@ -5,19 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.ApplicantRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
-import org.d3ifcool.dissajobapplicant.data.source.repository.cv.CvRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.education.EducationRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.experience.ExperienceRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.history.SearchHistoryRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.interview.InterviewRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
+import org.d3ifcool.dissajobapplicant.data.source.repository.media.MediaRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.RecruiterRepository
 import org.d3ifcool.dissajobapplicant.ui.application.ApplicationViewModel
-import org.d3ifcool.dissajobapplicant.ui.cv.CvViewModel
 import org.d3ifcool.dissajobapplicant.ui.di.Injection
 import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
+import org.d3ifcool.dissajobapplicant.ui.media.MediaViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.question.InterviewViewModel
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
@@ -32,7 +32,7 @@ class ViewModelFactory private constructor(
     private val applicantRepository: ApplicantRepository,
     private val recruiterRepository: RecruiterRepository,
     private val searchHistoryRepository: SearchHistoryRepository,
-    private val cvRepository: CvRepository,
+    private val mediaRepository: MediaRepository,
     private val experienceRepository: ExperienceRepository,
     private val educationRepository: EducationRepository
 ) : ViewModelProvider.NewInstanceFactory() {
@@ -49,7 +49,7 @@ class ViewModelFactory private constructor(
                 Injection.provideApplicantRepository(context),
                 Injection.provideRecruiterRepository(context),
                 Injection.provideSearchHistoryRepository(context),
-                Injection.provideCvRepository(context),
+                Injection.provideMediaRepository(context),
                 Injection.provideExperienceRepository(context),
                 Injection.provideEducationRepository(context)
             )
@@ -83,8 +83,8 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> {
                 SearchViewModel(searchHistoryRepository) as T
             }
-            modelClass.isAssignableFrom(CvViewModel::class.java) -> {
-                CvViewModel(cvRepository) as T
+            modelClass.isAssignableFrom(MediaViewModel::class.java) -> {
+                MediaViewModel(mediaRepository) as T
             }
             modelClass.isAssignableFrom(ExperienceViewModel::class.java) -> {
                 ExperienceViewModel(experienceRepository) as T

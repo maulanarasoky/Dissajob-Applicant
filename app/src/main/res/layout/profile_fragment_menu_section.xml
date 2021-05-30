@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/txt_curriculum_vitae"
+        android:text="@string/txt_media"
         android:textColor="@color/black"
         android:textSize="15.5sp"
         app:layout_constraintBottom_toBottomOf="@id/imgCurriculumVitaeMenu"

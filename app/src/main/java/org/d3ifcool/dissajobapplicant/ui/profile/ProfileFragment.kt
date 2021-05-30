@@ -19,11 +19,11 @@ import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.databinding.FragmentProfileBinding
-import org.d3ifcool.dissajobapplicant.ui.cv.UploadCvActivity
 import org.d3ifcool.dissajobapplicant.ui.education.EducationAdapter
 import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceAdapter
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
+import org.d3ifcool.dissajobapplicant.ui.media.MediaActivity
 import org.d3ifcool.dissajobapplicant.ui.settings.SettingsActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
@@ -150,8 +150,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             //Settings
             fragmentProfileBinding.header.imgSettings.setOnClickListener(this)
 
-            //Upload cv section
-            fragmentProfileBinding.uploadCvSection.root.setOnClickListener(this)
+            //Upload media section
+            fragmentProfileBinding.uploadMediaSection.root.setOnClickListener(this)
         }
     }
 
@@ -194,7 +194,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgSettings -> startActivity(Intent(activity, SettingsActivity::class.java))
-            R.id.uploadCvSection -> startActivity(Intent(activity, UploadCvActivity::class.java))
+            R.id.uploadMediaSection -> startActivity(Intent(activity, MediaActivity::class.java))
         }
     }
 }

@@ -45,8 +45,8 @@
                 android:layout_height="wrap_content" />
 
             <include
-                android:id="@+id/uploadCvSection"
-                layout="@layout/profile_fragment_curriculum_vitae_section"
+                android:id="@+id/uploadMediaSection"
+                layout="@layout/profile_fragment_media_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

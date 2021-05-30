@@ -111,7 +111,7 @@
     <!-- Profile -->
     <string name="txt_work_experience">Pengalaman Kerja</string>
     <string name="txt_educational_background">Riwayat Pendidikan</string>
-    <string name="txt_curriculum_vitae">Curriculum Vitae</string>
+    <string name="txt_media">Media</string>
     <string name="txt_contact">Kontak</string>
     <string name="txt_view_all">Lihat semua</string>
 
@@ -132,11 +132,11 @@
 
     <string name="txt_failure_insert">%1$s gagal ditambahkan</string>
     <string name="txt_failure_delete">%1$s gagal dihapus</string>
-    <string name="txt_upload_cv_description">Unggah CV Terbaik Kamu</string>
-    <string name="txt_failure_upload_cv">Gagal upload CV</string>
-    <string name="txt_cv_name">Judul</string>
-    <string name="txt_cv_description">Deskripsi</string>
-    <string name="txt_add_cv">Tambahkan</string>
+    <string name="txt_upload_media_description">Unggah media</string>
+    <string name="txt_failure_upload_media">Gagal upload media</string>
+    <string name="txt_media_name">Judul</string>
+    <string name="txt_media_description">Deskripsi</string>
+    <string name="txt_add_media">Tambahkan</string>
     <string name="txt_application_status">Status Lamaran</string>
     <string name="txt_no_experience">Belum ada pengalaman</string>
 
@@ -147,5 +147,5 @@
     <string name="txt_delete">Hapus</string>
 
 
-    <string name="tv_success_adding_cv">Cv berhasil ditambahkan</string>
+    <string name="tv_success_adding_media">Media berhasil ditambahkan</string>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.cv.UploadCvActivity">
+    tools:context=".ui.media.MediaActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
-        android:id="@+id/tvCvDescription"
+        android:id="@+id/tvMediaDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
@@ -37,7 +37,7 @@
         android:layout_marginEnd="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
         android:gravity="center"
-        android:text="@string/txt_upload_cv_description"
+        android:text="@string/txt_upload_media_description"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@id/imgFolder" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSelectCv"
+        android:id="@+id/btnSelectMedia"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
@@ -56,7 +56,7 @@
         android:layout_marginBottom="@dimen/margin_32dp"
         android:background="@drawable/bg_outline_color_primary_radius_10dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/txt_add_cv"
+        android:text="@string/txt_add_media"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
@@ -64,10 +64,10 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCvDescription" />
+        app:layout_constraintTop_toBottomOf="@id/tvMediaDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCv"
+        android:id="@+id/rvMedia"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:nestedScrollingEnabled="false"

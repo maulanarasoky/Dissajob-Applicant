@@ -8,14 +8,15 @@ import org.d3ifcool.dissajobapplicant.data.source.local.source.*
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.*
 import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.ApplicantRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.application.ApplicationRepository
-import org.d3ifcool.dissajobapplicant.data.source.repository.cv.CvRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.education.EducationRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.experience.ExperienceRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.history.SearchHistoryRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.interview.InterviewRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
+import org.d3ifcool.dissajobapplicant.data.source.repository.media.MediaRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.RecruiterRepository
-import org.d3ifcool.dissajobapplicant.utils.*
+import org.d3ifcool.dissajobapplicant.utils.AppExecutors
+import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.utils.database.*
 
 object Injection {
@@ -162,11 +163,11 @@ object Injection {
         )
     }
 
-    fun provideCvRepository(context: Context): CvRepository {
+    fun provideMediaRepository(context: Context): MediaRepository {
         val database = DissajobApplicantDatabase.getInstance(context)
 
-        val remoteDataSource = RemoteCvSource.getInstance(CvHelper)
-        val localDataSource = LocalCvSource.getInstance(database.cvDao())
+        val remoteDataSource = RemoteMediaSource.getInstance(MediaHelper)
+        val localDataSource = LocalMediaSource.getInstance(database.mediaDao())
         val appExecutors = AppExecutors()
 
         val callback = object : NetworkStateCallback {
@@ -178,7 +179,12 @@ object Injection {
             }
         }
 
-        return CvRepository.getInstance(remoteDataSource, localDataSource, appExecutors, callback)
+        return MediaRepository.getInstance(
+            remoteDataSource,
+            localDataSource,
+            appExecutors,
+            callback
+        )
     }
 
     fun provideExperienceRepository(context: Context): ExperienceRepository {

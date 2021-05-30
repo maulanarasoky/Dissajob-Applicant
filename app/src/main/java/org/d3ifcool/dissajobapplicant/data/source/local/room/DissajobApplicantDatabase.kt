@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
-import org.d3ifcool.dissajobapplicant.data.source.local.entity.cv.CvEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.history.SearchHistoryEntity
@@ -14,18 +13,21 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.interview.Intervi
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.FileEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 
 @Database(
     entities = [
         ApplicantEntity::class,
         ApplicationEntity::class,
-        CvEntity::class,
         EducationEntity::class,
         ExperienceEntity::class,
+        FileEntity::class,
         InterviewEntity::class,
         JobEntity::class,
         JobDetailsEntity::class,
+        MediaEntity::class,
         SavedJobEntity::class,
         RecruiterEntity::class,
         SearchHistoryEntity::class],
@@ -36,7 +38,7 @@ abstract class DissajobApplicantDatabase : RoomDatabase() {
 
     abstract fun applicantDao(): ApplicantDao
     abstract fun applicationDao(): ApplicationDao
-    abstract fun cvDao(): CvDao
+    abstract fun mediaDao(): MediaDao
     abstract fun educationDao(): EducationDao
     abstract fun experienceDao(): ExperienceDao
     abstract fun interviewDao(): InterviewDao

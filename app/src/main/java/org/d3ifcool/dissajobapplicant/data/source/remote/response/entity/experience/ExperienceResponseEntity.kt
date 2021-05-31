@@ -9,11 +9,11 @@ data class ExperienceResponseEntity(
     var employmentType: String? = "-",
     var companyName: String? = "-",
     var location: String? = "-",
-    var startMonth: String? = "-",
-    var startYear: String? = "-",
-    var endMonth: String? = "-",
-    var endYear: String? = "-",
+    var startMonth: Int,
+    var startYear: Int,
+    var endMonth: Int,
+    var endYear: Int,
     var description: String? = "-",
-    var isCurrentlyWorking: Boolean? = false,
+    var isCurrentlyWorking: Boolean,
     var applicantId: String
 )

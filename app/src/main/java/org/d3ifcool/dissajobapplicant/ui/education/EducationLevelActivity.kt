@@ -11,9 +11,9 @@ import org.d3ifcool.dissajobapplicant.databinding.ActivityEducationLevelBinding
 class EducationLevelActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
-        const val REQUEST_DEGREE = 300
-        const val RESULT_DEGREE = 301
-        const val SELECTED_DEGREE = "selected_degree"
+        const val REQUEST_LEVEL = 100
+        const val RESULT_LEVEL = 101
+        const val SELECTED_LEVEL = "selected_level"
     }
 
     private lateinit var activityEducationLevelBinding: ActivityEducationLevelBinding
@@ -56,68 +56,68 @@ class EducationLevelActivity : AppCompatActivity(), View.OnClickListener {
         when (v?.id) {
             R.id.tvElementaryLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "SD")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "SD")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvJuniorLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "SMP")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "SMP")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvSeniorLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "SMA")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "SMA")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvVocationalLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "SMK")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "SMK")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvDiplomaOneLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "D1")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "D1")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvDiplomaTwoLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "D2")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "D2")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvDiplomaThreeLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "D3")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "D3")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvDiplomaFourLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "D4")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "D4")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvBachelorLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "S1")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "S1")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvUndergraduateLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "S2")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "S2")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
             R.id.tvPostgraduateLevel -> {
                 val intent = Intent()
-                intent.putExtra(SELECTED_DEGREE, "S3")
-                setResult(RESULT_DEGREE, intent)
+                intent.putExtra(SELECTED_LEVEL, "S3")
+                setResult(RESULT_LEVEL, intent)
                 finish()
             }
         }

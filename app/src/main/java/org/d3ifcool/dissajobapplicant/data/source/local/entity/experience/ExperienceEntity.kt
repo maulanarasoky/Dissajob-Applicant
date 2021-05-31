@@ -1,10 +1,13 @@
 package org.d3ifcool.dissajobapplicant.data.source.local.entity.experience
 
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "experiences")
 data class ExperienceEntity(
     @PrimaryKey
@@ -25,24 +28,24 @@ data class ExperienceEntity(
     var location: String? = "-",
 
     @ColumnInfo(name = "start_month")
-    var startMonth: String? = "-",
+    var startMonth: Int,
 
     @ColumnInfo(name = "start_year")
-    var startYear: String? = "-",
+    var startYear: Int,
 
     @ColumnInfo(name = "end_month")
-    var endMonth: String? = "-",
+    var endMonth: Int,
 
     @ColumnInfo(name = "end_year")
-    var endYear: String? = "-",
+    var endYear: Int,
 
     @ColumnInfo(name = "description")
     var description: String? = "-",
 
     @ColumnInfo(name = "is_currently_working")
-    var isCurrentlyWorking: Boolean? = false,
+    var isCurrentlyWorking: Boolean,
 
     @NonNull
     @ColumnInfo(name = "applicant_id")
     var applicantId: String
-)
+) : Parcelable

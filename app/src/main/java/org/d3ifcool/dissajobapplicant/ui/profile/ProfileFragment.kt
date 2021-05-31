@@ -24,6 +24,7 @@ import org.d3ifcool.dissajobapplicant.ui.education.AddEditEducationActivity
 import org.d3ifcool.dissajobapplicant.ui.education.EducationAdapter
 import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
 import org.d3ifcool.dissajobapplicant.ui.education.callback.OnEducationItemClickListener
+import org.d3ifcool.dissajobapplicant.ui.experience.AddEditExperienceActivity
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceAdapter
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
 import org.d3ifcool.dissajobapplicant.ui.media.MediaActivity
@@ -156,6 +157,11 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
             //Upload media section
             fragmentProfileBinding.uploadMediaSection.root.setOnClickListener(this)
 
+            //Experience section
+            fragmentProfileBinding.workExperienceSection.imgAddExperience.setOnClickListener(
+                this
+            )
+
             //Education section
             fragmentProfileBinding.educationalBackgroundSection.imgAddEducation.setOnClickListener(
                 this
@@ -203,6 +209,12 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
         when (v?.id) {
             R.id.imgSettings -> startActivity(Intent(activity, SettingsActivity::class.java))
             R.id.uploadMediaSection -> startActivity(Intent(activity, MediaActivity::class.java))
+            R.id.imgAddExperience -> startActivity(
+                Intent(
+                    activity,
+                    AddEditExperienceActivity::class.java
+                )
+            )
             R.id.imgAddEducation -> startActivity(
                 Intent(
                     activity,

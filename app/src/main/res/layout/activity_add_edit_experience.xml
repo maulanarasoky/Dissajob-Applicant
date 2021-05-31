@@ -7,7 +7,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.education.AddEditEducationActivity">
+        tools:context=".ui.experience.AddEditExperienceActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,20 +21,20 @@
             app:titleTextAppearance="@style/Toolbar.TitleText" />
 
         <TextView
-            android:id="@+id/tvSchoolName"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="@dimen/margin_16dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/txt_school_name"
+            android:text="@string/txt_title"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <EditText
-            android:id="@+id/etSchoolName"
+            android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
@@ -42,29 +42,30 @@
             android:layout_marginEnd="@dimen/margin_16dp"
             android:backgroundTint="@color/black"
             android:fontFamily="@font/roboto"
+            android:hint="@string/txt_edit_text_title_hint"
             android:inputType="textCapWords"
             android:textColor="@color/black"
             android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvSchoolName" />
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
         <TextView
-            android:id="@+id/tvEducationDegree"
+            android:id="@+id/tvEmploymentType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="@dimen/margin_16dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/txt_education_level"
+            android:text="@string/txt_employment_type"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etSchoolName" />
+            app:layout_constraintTop_toBottomOf="@id/etTitle" />
 
         <EditText
-            android:id="@+id/etEducationLevel"
+            android:id="@+id/etEmploymentType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
@@ -80,23 +81,54 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEducationDegree" />
+            app:layout_constraintTop_toBottomOf="@id/tvEmploymentType" />
 
         <TextView
-            android:id="@+id/tvFieldOfStudy"
+            android:id="@+id/tvCompanyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="@dimen/margin_16dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/txt_field_of_study"
+            android:text="@string/txt_company_name"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etEducationLevel" />
+            app:layout_constraintTop_toBottomOf="@id/etEmploymentType" />
 
         <EditText
-            android:id="@+id/etFieldOfStudy"
+            android:id="@+id/etCompanyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/roboto"
+            android:hint="@string/txt_edit_text_company_name_hint"
+            android:inputType="textCapWords"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCompanyName" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/txt_location"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etCompanyName" />
+
+        <EditText
+            android:id="@+id/etLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
@@ -110,7 +142,17 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvFieldOfStudy" />
+            app:layout_constraintTop_toBottomOf="@id/tvLocation" />
+
+        <CheckBox
+            android:id="@+id/cbCurrentWorking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:text="@string/txt_checkbox_current_working_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etLocation" />
 
         <TextView
             android:id="@+id/tvStartDate"
@@ -123,7 +165,7 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etFieldOfStudy" />
+            app:layout_constraintTop_toBottomOf="@id/cbCurrentWorking" />
 
         <EditText
             android:id="@+id/etStartDate"
@@ -166,7 +208,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="@dimen/margin_16dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/txt_end_date_education"
+            android:text="@string/txt_end_date_experience"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -220,7 +262,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvInvalidEndDate" />
 
         <EditText
-            android:id="@+id/etEducationDescription"
+            android:id="@+id/etExperienceDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
@@ -237,7 +279,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvEducationDescription" />
 
         <Button
-            android:id="@+id/btnSubmitEducation"
+            android:id="@+id/btnSubmitExperience"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
@@ -253,6 +295,6 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etEducationDescription" />
+            app:layout_constraintTop_toBottomOf="@id/etExperienceDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

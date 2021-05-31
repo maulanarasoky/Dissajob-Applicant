@@ -62,14 +62,14 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
         val oldEducationData = intent.getParcelableExtra<EducationEntity>(EDUCATION_DATA)
         if (oldEducationData != null) {
             showOldEducationData(oldEducationData)
-            activityAddEditEducationBinding.btnAddEducation.text =
+            activityAddEditEducationBinding.btnSubmitEducation.text =
                 resources.getString(R.string.txt_update)
         }
 
         activityAddEditEducationBinding.etEducationLevel.setOnClickListener(this)
         activityAddEditEducationBinding.etStartDate.setOnClickListener(this)
         activityAddEditEducationBinding.etEndDate.setOnClickListener(this)
-        activityAddEditEducationBinding.btnAddEducation.setOnClickListener(this)
+        activityAddEditEducationBinding.btnSubmitEducation.setOnClickListener(this)
     }
 
     private fun showOldEducationData(education: EducationEntity) {
@@ -171,6 +171,12 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
             return
         }
 
+        if (activityAddEditEducationBinding.tvInvalidStartDate.visibility == View.VISIBLE
+            || activityAddEditEducationBinding.tvInvalidEndDate.visibility == View.VISIBLE
+        ) {
+            return
+        }
+
         dialog = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
         dialog.titleText = resources.getString(R.string.txt_loading)
         dialog.setCancelable(false)
@@ -196,9 +202,16 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
                 startYear = year
 
                 if (endMonth != 0 || endYear != 0) {
+
+                    activityAddEditEducationBinding.tvInvalidStartDate.visibility =
+                        View.GONE
+
+                    activityAddEditEducationBinding.tvInvalidEndDate.visibility =
+                        View.GONE
+
                     if (year > endYear) {
                         activityAddEditEducationBinding.tvInvalidStartDate.visibility = View.VISIBLE
-                    } else {
+                    } else if (year == endYear) {
                         if ((monthOfYear + 1) > endMonth) {
                             activityAddEditEducationBinding.tvInvalidStartDate.visibility =
                                 View.VISIBLE
@@ -206,6 +219,12 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
                             activityAddEditEducationBinding.tvInvalidStartDate.visibility =
                                 View.GONE
                         }
+                    } else {
+                        activityAddEditEducationBinding.tvInvalidStartDate.visibility =
+                            View.GONE
+
+                        activityAddEditEducationBinding.tvInvalidEndDate.visibility =
+                            View.GONE
                     }
                 }
 
@@ -214,17 +233,30 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
                 endYear = year
 
                 if (startMonth != 0 || startYear != 0) {
+
+                    activityAddEditEducationBinding.tvInvalidStartDate.visibility =
+                        View.GONE
+
+                    activityAddEditEducationBinding.tvInvalidEndDate.visibility =
+                        View.GONE
+
                     if (year < startYear) {
                         activityAddEditEducationBinding.tvInvalidEndDate.visibility =
                             View.VISIBLE
-                    } else {
-                        if ((monthOfYear + 1) > startMonth) {
+                    } else if (year == startYear) {
+                        if ((monthOfYear + 1) < startMonth) {
                             activityAddEditEducationBinding.tvInvalidEndDate.visibility =
                                 View.VISIBLE
                         } else {
                             activityAddEditEducationBinding.tvInvalidEndDate.visibility =
                                 View.GONE
                         }
+                    } else {
+                        activityAddEditEducationBinding.tvInvalidStartDate.visibility =
+                            View.GONE
+
+                        activityAddEditEducationBinding.tvInvalidEndDate.visibility =
+                            View.GONE
                     }
                 }
             }
@@ -278,11 +310,24 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
                 Intent(
                     this,
                     EducationLevelActivity::class.java
-                ), EducationLevelActivity.REQUEST_DEGREE
+                ), EducationLevelActivity.REQUEST_LEVEL
             )
             R.id.etStartDate -> startEndDateListener(activityAddEditEducationBinding.etStartDate)
             R.id.etEndDate -> startEndDateListener(activityAddEditEducationBinding.etEndDate)
-            R.id.btnAddEducation -> formValidation()
+            R.id.btnSubmitEducation -> formValidation()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == EducationLevelActivity.REQUEST_LEVEL) {
+            if (resultCode == EducationLevelActivity.RESULT_LEVEL) {
+                activityAddEditEducationBinding.etEducationLevel.setText(
+                    data?.getStringExtra(
+                        EducationLevelActivity.SELECTED_LEVEL
+                    )
+                )
+            }
         }
     }
 
@@ -305,19 +350,6 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
             it.dismissWithAnimation()
         }
         dialog.show()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == EducationLevelActivity.REQUEST_DEGREE) {
-            if (resultCode == EducationLevelActivity.RESULT_DEGREE) {
-                activityAddEditEducationBinding.etEducationLevel.setText(
-                    data?.getStringExtra(
-                        EducationLevelActivity.SELECTED_DEGREE
-                    )
-                )
-            }
-        }
     }
 
     override fun onSuccessUpdate() {

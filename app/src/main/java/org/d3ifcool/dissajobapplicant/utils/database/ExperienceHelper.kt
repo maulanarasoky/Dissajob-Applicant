@@ -27,12 +27,12 @@ object ExperienceHelper {
                                 data.child("employmentType").value.toString(),
                                 data.child("companyName").value.toString(),
                                 data.child("location").value.toString(),
-                                data.child("startMonth").value.toString(),
-                                data.child("startYear").value.toString(),
-                                data.child("endMonth").value.toString(),
-                                data.child("endYear").value.toString(),
+                                data.child("startMonth").value.toString().toInt(),
+                                data.child("startYear").value.toString().toInt(),
+                                data.child("endMonth").value.toString().toInt(),
+                                data.child("endYear").value.toString().toInt(),
                                 data.child("description").value.toString(),
-                                data.child("isCurrentlyWorking").value.toString().toBoolean(),
+                                data.child("currentlyWorking").value.toString().toBoolean(),
                                 data.child("applicantId").value.toString()
                             )
                             arrExperience.add(experience)

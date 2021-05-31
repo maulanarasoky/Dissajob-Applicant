@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.databinding.ExperienceItemBinding
+import java.text.DateFormatSymbols
 
 class ExperienceAdapter :
     PagedListAdapter<ExperienceEntity, ExperienceAdapter.ExperienceViewHolder>(DIFF_CALLBACK) {
@@ -54,11 +55,13 @@ class ExperienceAdapter :
                     items.companyName.toString(),
                     items.employmentType.toString()
                 )
-                val startDate = "${items.startMonth} ${items.startYear}"
-                val endDate = if (items.isCurrentlyWorking == true) {
-                    "Sekarang"
+                val startMonth = DateFormatSymbols().months[items.startMonth - 1]
+                val startDate = "$startMonth ${items.startYear}"
+                val endDate = if (items.isCurrentlyWorking) {
+                    itemView.resources.getString(R.string.txt_present)
                 } else {
-                    "${items.endMonth} ${items.endYear}"
+                    val endMonth = DateFormatSymbols().months[items.endMonth - 1]
+                    "$endMonth ${items.endYear}"
                 }
 
                 tvJobRangeDate.text =

@@ -153,12 +153,14 @@
     <string name="txt_school_name">Nama sekolah</string>
     <string name="txt_field_of_study">Bidang studi</string>
     <string name="txt_start_date">Tanggal mulai</string>
-    <string name="txt_end_date">Tanggal selesai (atau perkiraan)</string>
+    <string name="txt_end_date_education">Tanggal selesai (atau perkiraan)</string>
+    <string name="txt_end_date_experience">Tanggal selesai</string>
     <string name="txt_description">Deskripsi</string>
     <string name="txt_save">Simpan</string>
     <string name="txt_start_end_date_value">%1$s %2$s</string>
     <string name="txt_invalid_start_date">Tanggal mulai tidak boleh setelah tanggal selesai</string>
     <string name="txt_invalid_end_date">Tanggal selesai tidak boleh sebelum tanggal mulai</string>
+    <string name="tv_success_adding_experience">Pengalaman kerja berhasil ditambahkan</string>
     <string name="tv_success_adding_education">Riwayat pendidikan berhasil ditambahkan</string>
     <string name="txt_elementary_school">SD</string>
     <string name="txt_junior_high_school">SMP</string>
@@ -173,4 +175,19 @@
     <string name="txt_postgraduate_degree">S3</string>
     <string name="txt_education_level">Tingkat pendidikan</string>
     <string name="txt_education_delete_alert">Hapus riwayat pendidikan ?</string>
+    <string name="txt_title">Judul</string>
+    <string name="txt_edit_text_title_hint">Contoh : Software Engineer</string>
+    <string name="txt_employment_type">Jenis pekerjaan</string>
+    <string name="txt_edit_text_company_name_hint">Contoh : Telkom University</string>
+    <string name="txt_checkbox_current_working_hint">Ini adalah pekerjaan saya saat ini</string>
+    <string name="txt_location">Lokasi</string>
+    <string name="txt_company_name">Nama perusahaan</string>
+    <string name="txt_full_time">Purnawaktu</string>
+    <string name="txt_part_time">Paruh waktu</string>
+    <string name="txt_self_employed">Wiraswasta</string>
+    <string name="txt_freelance">Pekerja lepas</string>
+    <string name="txt_contract">Kontrak</string>
+    <string name="txt_internship">Magang</string>
+    <string name="txt_currently_working">Sedang bekerja di posisi ini</string>
+    <string name="txt_present">Saat ini</string>
 </resources>

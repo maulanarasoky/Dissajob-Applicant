@@ -121,7 +121,7 @@ object ApplicationHelper {
     }
 
     fun insertApplication(application: ApplicationResponseEntity, callback: ApplyJobCallback) {
-        database.child(application.id.toString())
+        database.child(application.id)
             .setValue(application).addOnSuccessListener {
                 callback.onSuccess()
             }.addOnFailureListener {

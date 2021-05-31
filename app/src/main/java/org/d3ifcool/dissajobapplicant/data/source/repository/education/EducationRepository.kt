@@ -9,8 +9,9 @@ import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalEducationSou
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteEducationSource
-import org.d3ifcool.dissajobapplicant.ui.education.AddEducationCallback
-import org.d3ifcool.dissajobapplicant.ui.education.LoadEducationsCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.AddEducationCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.LoadEducationsCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.UpdateEducationCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -102,4 +103,15 @@ class EducationRepository private constructor(
     ) =
         appExecutors.diskIO()
             .execute { remoteEducationSource.addApplicantEducation(education, callback) }
+
+    override fun updateApplicantEducation(
+        education: EducationResponseEntity,
+        callback: UpdateEducationCallback
+    ) = appExecutors.diskIO()
+        .execute {
+            remoteEducationSource.updateApplicantEducation(
+                education,
+                callback
+            )
+        }
 }

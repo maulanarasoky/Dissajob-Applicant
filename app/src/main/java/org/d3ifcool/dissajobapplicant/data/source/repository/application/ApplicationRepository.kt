@@ -75,7 +75,7 @@ class ApplicationRepository private constructor(
                 val applicationList = ArrayList<ApplicationEntity>()
                 for (response in data) {
                     val application = ApplicationEntity(
-                        response.id.toString(),
+                        response.id,
                         response.applicantId,
                         response.jobId,
                         response.applyDate,

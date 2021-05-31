@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.databinding.EducationItemBinding
+import org.d3ifcool.dissajobapplicant.ui.education.callback.OnEducationItemClickListener
 import java.text.DateFormatSymbols
 
-class EducationAdapter :
+class EducationAdapter(private val onClickCallback: OnEducationItemClickListener) :
     PagedListAdapter<EducationEntity, EducationAdapter.EducationViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -60,8 +61,8 @@ class EducationAdapter :
                 } else {
                     tvEducationLevel.text = items.educationLevel.toString()
                 }
-                val startMonth = DateFormatSymbols().months[items.startMonth!! - 1]
-                val endMonth = DateFormatSymbols().months[items.endMonth!! - 1]
+                val startMonth = DateFormatSymbols().months[items.startMonth - 1]
+                val endMonth = DateFormatSymbols().months[items.endMonth - 1]
                 val startDate = "$startMonth ${items.startYear}"
                 val endDate = "$endMonth ${items.endYear}"
 
@@ -71,6 +72,10 @@ class EducationAdapter :
                 if (items.description != "-") {
                     tvEducationDescription.text = items.description.toString()
                     tvEducationDescription.visibility = View.VISIBLE
+                }
+
+                itemView.setOnClickListener {
+                    onClickCallback.onClickItem(items)
                 }
             }
         }

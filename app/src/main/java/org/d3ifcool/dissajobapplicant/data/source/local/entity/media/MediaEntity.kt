@@ -21,9 +21,11 @@ data class MediaEntity(
     @ColumnInfo(name = "media_description")
     var mediaDescription: String? = "-",
 
+    @NonNull
     @ColumnInfo(name = "applicant_id")
     var applicantId: String,
 
+    @NonNull
     @ColumnInfo(name = "file_id")
     var fileId: String
 ) : Parcelable

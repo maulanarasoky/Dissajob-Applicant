@@ -12,13 +12,13 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.media.MediaResponseEntity
-import org.d3ifcool.dissajobapplicant.databinding.ActivityMediaDetailsBinding
+import org.d3ifcool.dissajobapplicant.databinding.ActivityAddEditMediaBinding
 import org.d3ifcool.dissajobapplicant.ui.media.callback.AddMediaCallback
 import org.d3ifcool.dissajobapplicant.ui.media.callback.UpdateMediaCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 
-class MediaDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFileCallback,
+class AddEditMediaActivity : AppCompatActivity(), View.OnClickListener, UploadFileCallback,
     AddMediaCallback, UpdateMediaCallback {
 
     companion object {
@@ -31,7 +31,7 @@ class MediaDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFi
         const val RESULT_UPDATE = 103
     }
 
-    private lateinit var activityMediaDetailsBinding: ActivityMediaDetailsBinding
+    private lateinit var activityAddEditMediaBinding: ActivityAddEditMediaBinding
 
     private lateinit var viewModel: MediaViewModel
 
@@ -39,11 +39,11 @@ class MediaDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMediaDetailsBinding = ActivityMediaDetailsBinding.inflate(layoutInflater)
-        setContentView(activityMediaDetailsBinding.root)
+        activityAddEditMediaBinding = ActivityAddEditMediaBinding.inflate(layoutInflater)
+        setContentView(activityAddEditMediaBinding.root)
 
-        activityMediaDetailsBinding.toolbar.title = resources.getString(R.string.txt_media)
-        setSupportActionBar(activityMediaDetailsBinding.toolbar)
+        activityAddEditMediaBinding.toolbar.title = resources.getString(R.string.txt_media)
+        setSupportActionBar(activityAddEditMediaBinding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -51,34 +51,37 @@ class MediaDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFi
         viewModel = ViewModelProvider(this, factory)[MediaViewModel::class.java]
 
         if (intent.extras != null) {
-            val oldMediaData = intent.getParcelableExtra<MediaEntity>(MEDIA_DATA)
+            val oldMediaData =
+                intent.getParcelableExtra<MediaEntity>(MEDIA_DATA)
             if (oldMediaData != null) {
-                activityMediaDetailsBinding.progressBar.visibility = View.VISIBLE
+                activityAddEditMediaBinding.progressBar.visibility = View.VISIBLE
                 viewModel.getMediaById(oldMediaData.fileId).observe(this) { file ->
                     if (file != null) {
-                        activityMediaDetailsBinding.pdfViewer.fromBytes(file)
+                        activityAddEditMediaBinding.pdfViewer.fromBytes(file)
                             .enableSwipe(true)
                             .swipeHorizontal(true)
                             .load()
                     } else {
                         Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
                     }
-                    activityMediaDetailsBinding.progressBar.visibility = View.GONE
+                    activityAddEditMediaBinding.progressBar.visibility = View.GONE
                 }
-                activityMediaDetailsBinding.etMediaName.setText(oldMediaData.mediaName)
-                activityMediaDetailsBinding.etMediaDescription.setText(oldMediaData.mediaDescription)
+                activityAddEditMediaBinding.etMediaName.setText(oldMediaData.mediaName)
+                activityAddEditMediaBinding.etMediaDescription.setText(oldMediaData.mediaDescription)
+                activityAddEditMediaBinding.btnUpload.text =
+                    resources.getString(R.string.txt_update)
             } else {
                 val mediaFile = Uri.parse(intent.getStringExtra(MEDIA_FILE))
                 val mediaName = intent.getStringExtra(MEDIA_NAME)
-                activityMediaDetailsBinding.pdfViewer.fromUri(mediaFile)
+                activityAddEditMediaBinding.pdfViewer.fromUri(mediaFile)
                     .enableSwipe(true)
                     .swipeHorizontal(true)
                     .load()
 
-                activityMediaDetailsBinding.etMediaName.setText(mediaName)
+                activityAddEditMediaBinding.etMediaName.setText(mediaName)
             }
         }
-        activityMediaDetailsBinding.btnUpload.setOnClickListener(this)
+        activityAddEditMediaBinding.btnUpload.setOnClickListener(this)
     }
 
     private fun uploadMedia() {
@@ -87,8 +90,8 @@ class MediaDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFi
     }
 
     private fun storeToDatabase(fileId: String) {
-        val mediaName = activityMediaDetailsBinding.etMediaName.text.toString().trim()
-        var mediaDescription = activityMediaDetailsBinding.etMediaDescription.text.toString().trim()
+        val mediaName = activityAddEditMediaBinding.etMediaName.text.toString().trim()
+        var mediaDescription = activityAddEditMediaBinding.etMediaDescription.text.toString().trim()
         if (mediaDescription == "") {
             mediaDescription = "-"
         }
@@ -110,10 +113,10 @@ class MediaDetailsActivity : AppCompatActivity(), View.OnClickListener, UploadFi
     }
 
     private fun formValidation() {
-        val mediaName = activityMediaDetailsBinding.etMediaName.text.toString().trim()
+        val mediaName = activityAddEditMediaBinding.etMediaName.text.toString().trim()
 
         if (TextUtils.isEmpty(mediaName)) {
-            activityMediaDetailsBinding.etMediaName.error =
+            activityAddEditMediaBinding.etMediaName.error =
                 getString(R.string.edit_text_error_alert, "Judul")
             return
         }

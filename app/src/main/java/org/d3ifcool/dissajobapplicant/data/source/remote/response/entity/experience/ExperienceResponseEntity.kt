@@ -4,7 +4,7 @@ import com.google.firebase.database.Exclude
 
 data class ExperienceResponseEntity(
     @get:Exclude
-    var id: String? = "-",
+    var id: String,
     var title: String? = "-",
     var employmentType: String? = "-",
     var companyName: String? = "-",

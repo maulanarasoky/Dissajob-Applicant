@@ -39,8 +39,9 @@ data class JobDetailsEntity(
     @ColumnInfo(name = "salary")
     val salary: String? = "-",
 
+    @NonNull
     @ColumnInfo(name = "posted_by")
-    var postedBy: String? = "-",
+    var postedBy: String,
 
     @ColumnInfo(name = "posted_date")
     val postedDate: String? = "-",
@@ -53,4 +54,4 @@ data class JobDetailsEntity(
 
     @ColumnInfo(name = "is_open")
     val isOpen: Boolean? = true
-): Parcelable
+) : Parcelable

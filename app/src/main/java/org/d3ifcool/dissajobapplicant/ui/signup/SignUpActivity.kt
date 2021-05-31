@@ -47,6 +47,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, SignUpCallback
         val phoneNumber = activitySignUpBinding.etPhoneNumber.text.toString().trim()
         val password = activitySignUpBinding.etPassword.text.toString().trim()
         val user = ApplicantResponseEntity(
+            id = "",
             firstName = firstName,
             lastName = lastName,
             fullName = fullName,

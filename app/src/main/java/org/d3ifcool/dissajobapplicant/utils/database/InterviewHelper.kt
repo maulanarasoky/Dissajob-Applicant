@@ -43,7 +43,7 @@ object InterviewHelper {
         interviewAnswers: InterviewResponseEntity,
         callback: InsertInterviewAnswersCallback
     ) {
-        database.child(interviewAnswers.id.toString())
+        database.child(interviewAnswers.id)
             .setValue(interviewAnswers).addOnSuccessListener {
                 callback.onSuccess()
             }.addOnFailureListener {

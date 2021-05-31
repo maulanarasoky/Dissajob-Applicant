@@ -10,7 +10,8 @@ import org.d3ifcool.dissajobapplicant.ui.search.callback.LoadSearchHistoryCallba
 
 object SearchHelper {
 
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("search_history")
+    private val database: DatabaseReference =
+        FirebaseDatabase.getInstance().getReference("search_history")
     private val arrSearchHistory: MutableList<SearchHistoryResponseEntity> = mutableListOf()
 
     fun getSearchHistories(applicantId: String, callback: LoadSearchHistoryCallback) {
@@ -68,8 +69,8 @@ object SearchHelper {
         searchHistory: SearchHistoryResponseEntity,
         callback: AddSearchHistoryCallback
     ) {
-        searchHistory.id = database.push().key
-        database.child(searchHistory.id.toString()).setValue(searchHistory).addOnSuccessListener {
+        searchHistory.id = database.push().key.toString()
+        database.child(searchHistory.id).setValue(searchHistory).addOnSuccessListener {
             callback.onSuccessAdding()
         }.addOnFailureListener {
             callback.onFailureAdding(R.string.txt_failure_insert)

@@ -193,19 +193,19 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
                     }
 
                     mediaFile = data.data!!
-                    val intent = Intent(this, MediaDetailsActivity::class.java)
-                    intent.putExtra(MediaDetailsActivity.MEDIA_FILE, mediaFile.toString())
-                    intent.putExtra(MediaDetailsActivity.MEDIA_NAME, cursor.getString(name))
-                    startActivityForResult(intent, MediaDetailsActivity.REQUEST_ADD)
+                    val intent = Intent(this, AddEditMediaActivity::class.java)
+                    intent.putExtra(AddEditMediaActivity.MEDIA_FILE, mediaFile.toString())
+                    intent.putExtra(AddEditMediaActivity.MEDIA_NAME, cursor.getString(name))
+                    startActivityForResult(intent, AddEditMediaActivity.REQUEST_ADD)
                 }
             }
-        } else if (requestCode == MediaDetailsActivity.REQUEST_ADD) {
-            if (resultCode == MediaDetailsActivity.RESULT_ADD) {
+        } else if (requestCode == AddEditMediaActivity.REQUEST_ADD) {
+            if (resultCode == AddEditMediaActivity.RESULT_ADD) {
                 showRecyclerViewMedia(true)
                 showMedia(AuthHelper.currentUser?.uid.toString())
             }
-        } else if (requestCode == MediaDetailsActivity.REQUEST_UPDATE) {
-            if (resultCode == MediaDetailsActivity.RESULT_UPDATE) {
+        } else if (requestCode == AddEditMediaActivity.REQUEST_UPDATE) {
+            if (resultCode == AddEditMediaActivity.RESULT_UPDATE) {
                 showMedia(AuthHelper.currentUser?.uid.toString())
             }
         }
@@ -250,8 +250,8 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
     }
 
     override fun onClickBtnEdit(mediaData: MediaEntity) {
-        val intent = Intent(this, MediaDetailsActivity::class.java)
-        intent.putExtra(MediaDetailsActivity.MEDIA_DATA, mediaData)
-        startActivityForResult(intent, MediaDetailsActivity.REQUEST_UPDATE)
+        val intent = Intent(this, AddEditMediaActivity::class.java)
+        intent.putExtra(AddEditMediaActivity.MEDIA_DATA, mediaData)
+        startActivityForResult(intent, AddEditMediaActivity.REQUEST_UPDATE)
     }
 }

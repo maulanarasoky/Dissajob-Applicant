@@ -1,4 +1,4 @@
-package org.d3ifcool.dissajobapplicant.ui.education
+package org.d3ifcool.dissajobapplicant.ui.education.callback
 
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 

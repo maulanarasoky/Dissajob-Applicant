@@ -1,4 +1,4 @@
-package org.d3ifcool.dissajobapplicant.ui.education
+package org.d3ifcool.dissajobapplicant.ui.education.callback
 
 interface AddEducationCallback {
     fun onSuccessAdding()

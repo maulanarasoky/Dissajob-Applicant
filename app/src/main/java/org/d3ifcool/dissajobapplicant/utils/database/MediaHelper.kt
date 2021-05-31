@@ -60,7 +60,7 @@ object MediaHelper {
         val id = database.push().key
         mediaData.id = id.toString()
         mediaData.applicantId = AuthHelper.currentUser?.uid.toString()
-        database.child(mediaData.id.toString()).setValue(mediaData).addOnSuccessListener {
+        database.child(mediaData.id).setValue(mediaData).addOnSuccessListener {
             callback.onSuccessAdding()
         }.addOnFailureListener {
             callback.onFailureAdding(R.string.txt_failure_update)
@@ -68,7 +68,7 @@ object MediaHelper {
     }
 
     fun updateMedia(mediaData: MediaResponseEntity, callback: UpdateMediaCallback) {
-        database.child(mediaData.id.toString()).setValue(mediaData).addOnSuccessListener {
+        database.child(mediaData.id).setValue(mediaData).addOnSuccessListener {
             callback.onSuccessUpdate()
         }.addOnFailureListener {
             callback.onFailureUpdate(R.string.txt_failure_update)

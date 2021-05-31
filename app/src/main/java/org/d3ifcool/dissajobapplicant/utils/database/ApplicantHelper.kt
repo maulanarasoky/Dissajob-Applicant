@@ -4,7 +4,6 @@ import android.net.Uri
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
@@ -74,7 +73,7 @@ object ApplicantHelper {
     }
 
     private fun insertData(applicant: ApplicantResponseEntity, callback: SignUpCallback) {
-        database.child(applicant.id.toString()).setValue(applicant).addOnSuccessListener {
+        database.child(applicant.id).setValue(applicant).addOnSuccessListener {
             callback.onSuccess()
         }.addOnFailureListener {
             callback.onFailure(R.string.alert_email_not_available)
@@ -87,11 +86,18 @@ object ApplicantHelper {
     ) {
         database.child(applicantId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        val applicantDetails =
-                            snapshot.getValue<ApplicantResponseEntity>() ?: return
-                        applicantDetails.id = snapshot.key ?: return
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        val applicantDetails = ApplicantResponseEntity(
+                            dataSnapshot.key.toString(),
+                            dataSnapshot.child("firstName").value.toString(),
+                            dataSnapshot.child("lastName").value.toString(),
+                            dataSnapshot.child("fullName").value.toString(),
+                            dataSnapshot.child("email").value.toString(),
+                            dataSnapshot.child("aboutMe").value.toString(),
+                            dataSnapshot.child("phoneNumber").value.toString(),
+                            dataSnapshot.child("imagePath").value.toString()
+                        )
                         callback.onApplicantDetailsReceived(applicantDetails)
                     }
                 }
@@ -102,7 +108,7 @@ object ApplicantHelper {
     }
 
     fun updateApplicantData(applicant: ApplicantResponseEntity, callback: UpdateProfileCallback) {
-        database.child(applicant.id.toString()).setValue(applicant).addOnSuccessListener {
+        database.child(applicant.id).setValue(applicant).addOnSuccessListener {
             callback.onSuccess()
         }.addOnFailureListener {
             callback.onFailure(R.string.txt_failure_update)

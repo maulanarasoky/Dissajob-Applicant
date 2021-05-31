@@ -11,14 +11,22 @@ import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.github.dewinjm.monthyearpicker.MonthYearPickerDialogFragment
 import org.d3ifcool.dissajobapplicant.R
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityAddEditEducationBinding
+import org.d3ifcool.dissajobapplicant.ui.education.callback.AddEducationCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.UpdateEducationCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import java.text.DateFormatSymbols
 import java.util.*
 
 
-class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddEducationCallback {
+class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddEducationCallback,
+    UpdateEducationCallback {
+
+    companion object {
+        const val EDUCATION_DATA = "education_data"
+    }
 
     private lateinit var activityAddEditEducationBinding: ActivityAddEditEducationBinding
 
@@ -30,6 +38,8 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
     private var startYear = 0
     private var endMonth = 0
     private var endYear = 0
+
+    private var isEdit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +55,40 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[EducationViewModel::class.java]
 
+        val oldEducationData = intent.getParcelableExtra<EducationEntity>(EDUCATION_DATA)
+        if (oldEducationData != null) {
+            showOldEducationData(oldEducationData)
+            activityAddEditEducationBinding.btnAddEducation.text =
+                resources.getString(R.string.txt_update)
+        }
+
         activityAddEditEducationBinding.etEducationLevel.setOnClickListener(this)
         activityAddEditEducationBinding.etStartDate.setOnClickListener(this)
         activityAddEditEducationBinding.etEndDate.setOnClickListener(this)
         activityAddEditEducationBinding.btnAddEducation.setOnClickListener(this)
+    }
+
+    private fun showOldEducationData(education: EducationEntity) {
+        activityAddEditEducationBinding.etSchoolName.setText(education.schoolName.toString())
+        activityAddEditEducationBinding.etEducationLevel.setText(education.educationLevel.toString())
+        activityAddEditEducationBinding.etFieldOfStudy.setText(education.fieldOfStudy.toString())
+
+        val startMonth = DateFormatSymbols().months[education.startMonth - 1]
+        val endMonth = DateFormatSymbols().months[education.endMonth - 1]
+        val startDate = "$startMonth ${education.startYear}"
+        val endDate = "$endMonth ${education.endYear}"
+
+        activityAddEditEducationBinding.etStartDate.setText(startDate)
+        activityAddEditEducationBinding.etEndDate.setText(endDate)
+        if (education.description != "-") {
+            activityAddEditEducationBinding.etEducationDescription.setText(education.description.toString())
+        }
+
+        this.startMonth = education.startMonth
+        this.startYear = education.startYear
+        this.endMonth = education.endMonth
+        this.endYear = education.endYear
+        isEdit = true
     }
 
     private fun addEducation() {
@@ -76,7 +116,14 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
             ""
         )
 
-        viewModel.addApplicantEducation(education, this)
+        if (!isEdit) {
+            viewModel.addApplicantEducation(education, this)
+        } else {
+            val oldEducationData = intent.getParcelableExtra<EducationEntity>(EDUCATION_DATA)
+            education.id = oldEducationData?.id.toString()
+            education.applicantId = oldEducationData?.applicantId.toString()
+            viewModel.updateApplicantEducation(education, this)
+        }
     }
 
     private fun formValidation() {
@@ -203,8 +250,8 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
             R.id.etEducationLevel -> startActivityForResult(
                 Intent(
                     this,
-                    EducationDegreeActivity::class.java
-                ), EducationDegreeActivity.REQUEST_DEGREE
+                    EducationLevelActivity::class.java
+                ), EducationLevelActivity.REQUEST_DEGREE
             )
             R.id.etStartDate -> startEndDateListener(activityAddEditEducationBinding.etStartDate)
             R.id.etEndDate -> startEndDateListener(activityAddEditEducationBinding.etEndDate)
@@ -235,14 +282,35 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == EducationDegreeActivity.REQUEST_DEGREE) {
-            if (resultCode == EducationDegreeActivity.RESULT_DEGREE) {
+        if (requestCode == EducationLevelActivity.REQUEST_DEGREE) {
+            if (resultCode == EducationLevelActivity.RESULT_DEGREE) {
                 activityAddEditEducationBinding.etEducationLevel.setText(
                     data?.getStringExtra(
-                        EducationDegreeActivity.SELECTED_DEGREE
+                        EducationLevelActivity.SELECTED_DEGREE
                     )
                 )
             }
         }
+    }
+
+    override fun onSuccessUpdate() {
+        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_success_update, "Riwayat pendidikan")
+        dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+            finish()
+        }
+        dialog.show()
+    }
+
+    override fun onFailureUpdate(messageId: Int) {
+        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(messageId, "Riwayat pendidikan")
+        dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+        }
+        dialog.show()
     }
 }

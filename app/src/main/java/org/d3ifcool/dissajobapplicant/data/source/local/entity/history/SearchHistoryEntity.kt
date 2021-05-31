@@ -18,6 +18,7 @@ data class SearchHistoryEntity(
     @ColumnInfo(name = "search_date")
     val searchDate: String? = "-",
 
+    @NonNull
     @ColumnInfo(name = "applicant_id")
-    val applicantId: String? = "-"
+    val applicantId: String
 )

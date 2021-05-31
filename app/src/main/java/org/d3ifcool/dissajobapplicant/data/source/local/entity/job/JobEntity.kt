@@ -18,8 +18,9 @@ data class JobEntity(
     @ColumnInfo(name = "address")
     val address: String? = "-",
 
+    @NonNull
     @ColumnInfo(name = "posted_by")
-    val postedBy: String? = "-",
+    val postedBy: String,
 
     @ColumnInfo(name = "posted_date")
     val postedDate: String? = "-",

@@ -136,7 +136,7 @@
     <string name="txt_failure_upload_media">Gagal upload media</string>
     <string name="txt_media_name">Judul</string>
     <string name="txt_media_description">Deskripsi</string>
-    <string name="txt_add_media">Tambahkan</string>
+    <string name="txt_add">Tambahkan</string>
     <string name="txt_application_status">Status Lamaran</string>
     <string name="txt_no_experience">Belum ada pengalaman</string>
 

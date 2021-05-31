@@ -150,7 +150,7 @@ object JobHelper {
     }
 
     fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback) {
-        savedJobDatabase.child(AuthHelper.currentUser?.uid.toString()).child(savedJob.id.toString())
+        savedJobDatabase.child(AuthHelper.currentUser?.uid.toString()).child(savedJob.id)
             .setValue(savedJob).addOnSuccessListener {
                 callback.onSuccess()
             }.addOnFailureListener {

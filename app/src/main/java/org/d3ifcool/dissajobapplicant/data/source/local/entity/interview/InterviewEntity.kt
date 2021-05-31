@@ -14,11 +14,11 @@ data class InterviewEntity(
 
     @NonNull
     @ColumnInfo(name = "applicant_id")
-    var applicantId: String? = "-",
+    var applicantId: String,
 
     @NonNull
     @ColumnInfo(name = "job_id")
-    var jobId: String? = "-",
+    var jobId: String,
 
     @ColumnInfo(name = "first_answer")
     var firstAnswer: String? = "-",

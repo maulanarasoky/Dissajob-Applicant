@@ -18,10 +18,12 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.databinding.FragmentProfileBinding
 import org.d3ifcool.dissajobapplicant.ui.education.AddEditEducationActivity
 import org.d3ifcool.dissajobapplicant.ui.education.EducationAdapter
 import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
+import org.d3ifcool.dissajobapplicant.ui.education.callback.OnEducationItemClickListener
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceAdapter
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
 import org.d3ifcool.dissajobapplicant.ui.media.MediaActivity
@@ -30,7 +32,7 @@ import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class ProfileFragment : Fragment(), View.OnClickListener {
+class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickListener {
 
     private lateinit var fragmentProfileBinding: FragmentProfileBinding
 
@@ -113,7 +115,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 adapter = experienceAdapter
             }
 
-            educationAdapter = EducationAdapter()
+            educationAdapter = EducationAdapter(this)
             educationViewModel.getApplicantEducations(applicantId)
                 .observe(viewLifecycleOwner) { educations ->
                     if (educations != null) {
@@ -208,5 +210,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 )
             )
         }
+    }
+
+    override fun onClickItem(educationData: EducationEntity) {
+        val intent = Intent(activity, AddEditEducationActivity::class.java)
+        intent.putExtra(AddEditEducationActivity.EDUCATION_DATA, educationData)
+        startActivity(intent)
     }
 }

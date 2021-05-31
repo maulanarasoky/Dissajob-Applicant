@@ -4,7 +4,7 @@ import com.google.firebase.database.Exclude
 
 data class MediaResponseEntity(
     @get:Exclude
-    var id: String? = "-",
+    var id: String,
     var mediaName: String? = "-",
     var mediaDescription: String? = "-",
     var applicantId: String,

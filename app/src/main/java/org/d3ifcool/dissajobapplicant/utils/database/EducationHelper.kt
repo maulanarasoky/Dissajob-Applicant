@@ -3,8 +3,9 @@ package org.d3ifcool.dissajobapplicant.utils.database
 import com.google.firebase.database.*
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.education.AddEducationCallback
-import org.d3ifcool.dissajobapplicant.ui.education.LoadEducationsCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.AddEducationCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.LoadEducationsCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.UpdateEducationCallback
 
 object EducationHelper {
     private val database: DatabaseReference =
@@ -49,10 +50,21 @@ object EducationHelper {
         val id = database.push().key
         education.id = id.toString()
         education.applicantId = AuthHelper.currentUser?.uid.toString()
-        database.child(education.id.toString()).setValue(education).addOnSuccessListener {
+        database.child(education.id).setValue(education).addOnSuccessListener {
             callback.onSuccessAdding()
         }.addOnFailureListener {
             callback.onFailureAdding(R.string.txt_failure_insert)
+        }
+    }
+
+    fun updateApplicantEducation(
+        education: EducationResponseEntity,
+        callback: UpdateEducationCallback
+    ) {
+        database.child(education.id).setValue(education).addOnSuccessListener {
+            callback.onSuccessUpdate()
+        }.addOnFailureListener {
+            callback.onFailureUpdate(R.string.txt_failure_update)
         }
     }
 }

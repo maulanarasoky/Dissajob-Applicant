@@ -6,6 +6,8 @@ import androidx.paging.PagedList
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.repository.education.EducationRepository
+import org.d3ifcool.dissajobapplicant.ui.education.callback.AddEducationCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.UpdateEducationCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 class EducationViewModel(private val educationRepository: EducationRepository) : ViewModel() {
@@ -16,4 +18,9 @@ class EducationViewModel(private val educationRepository: EducationRepository) :
         education: EducationResponseEntity,
         callback: AddEducationCallback
     ) = educationRepository.addApplicantEducation(education, callback)
+
+    fun updateApplicantEducation(
+        education: EducationResponseEntity,
+        callback: UpdateEducationCallback
+    ) = educationRepository.updateApplicantEducation(education, callback)
 }

@@ -7,7 +7,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.education.EducationDegreeActivity">
+        tools:context=".ui.education.EducationLevelActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

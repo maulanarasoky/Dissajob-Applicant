@@ -2,12 +2,13 @@ package org.d3ifcool.dissajobapplicant.ui.education
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import org.d3ifcool.dissajobapplicant.R
-import org.d3ifcool.dissajobapplicant.databinding.ActivityEducationDegreeBinding
+import org.d3ifcool.dissajobapplicant.databinding.ActivityEducationLevelBinding
 
-class EducationDegreeActivity : AppCompatActivity(), View.OnClickListener {
+class EducationLevelActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val REQUEST_DEGREE = 300
@@ -15,30 +16,40 @@ class EducationDegreeActivity : AppCompatActivity(), View.OnClickListener {
         const val SELECTED_DEGREE = "selected_degree"
     }
 
-    private lateinit var activityEducationDegreeBinding: ActivityEducationDegreeBinding
+    private lateinit var activityEducationLevelBinding: ActivityEducationLevelBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityEducationDegreeBinding = ActivityEducationDegreeBinding.inflate(layoutInflater)
-        setContentView(activityEducationDegreeBinding.root)
+        activityEducationLevelBinding = ActivityEducationLevelBinding.inflate(layoutInflater)
+        setContentView(activityEducationLevelBinding.root)
 
-        activityEducationDegreeBinding.toolbar.title =
+        activityEducationLevelBinding.toolbar.title =
             resources.getString(R.string.txt_education_level)
-        setSupportActionBar(activityEducationDegreeBinding.toolbar)
+        setSupportActionBar(activityEducationLevelBinding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        activityEducationDegreeBinding.tvElementaryLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvJuniorLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvSeniorLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvVocationalLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvDiplomaOneLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvDiplomaTwoLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvDiplomaThreeLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvDiplomaFourLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvBachelorLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvUndergraduateLevel.setOnClickListener(this)
-        activityEducationDegreeBinding.tvPostgraduateLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvElementaryLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvJuniorLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvSeniorLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvVocationalLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvDiplomaOneLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvDiplomaTwoLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvDiplomaThreeLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvDiplomaFourLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvBachelorLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvUndergraduateLevel.setOnClickListener(this)
+        activityEducationLevelBinding.tvPostgraduateLevel.setOnClickListener(this)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onClick(v: View?) {

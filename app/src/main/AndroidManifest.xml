@@ -15,9 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DissajobApplicant"
         tools:replace="android:icon">
-        <activity android:name=".ui.education.EducationDegreeActivity"></activity>
+        <activity android:name=".ui.media.AddEditMediaActivity" />
+        <activity android:name=".ui.education.EducationLevelActivity" />
         <activity android:name=".ui.education.AddEditEducationActivity" />
-        <activity android:name=".ui.media.MediaDetailsActivity" />
         <activity android:name=".ui.media.MediaActivity" />
         <activity android:name=".ui.search.SearchResultActivity" />
         <activity android:name=".ui.search.SearchActivity" />

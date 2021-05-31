@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.education.AddEducationCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.AddEducationCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.UpdateEducationCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 interface EducationDataSource {
@@ -12,5 +13,10 @@ interface EducationDataSource {
     fun addApplicantEducation(
         education: EducationResponseEntity,
         callback: AddEducationCallback
+    )
+
+    fun updateApplicantEducation(
+        education: EducationResponseEntity,
+        callback: UpdateEducationCallback
     )
 }

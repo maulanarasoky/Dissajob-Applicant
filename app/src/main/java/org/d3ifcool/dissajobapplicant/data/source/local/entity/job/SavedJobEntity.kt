@@ -12,6 +12,7 @@ data class SavedJobEntity(
     @ColumnInfo(name = "id")
     var id: String,
 
+    @NonNull
     @ColumnInfo(name = "job_id")
-    val jobId: String? = "-",
+    val jobId: String,
 )

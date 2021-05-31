@@ -14,4 +14,7 @@ interface EducationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertApplicantEducations(educations: List<EducationEntity>)
+
+    @Query("DELETE FROM educations WHERE id = :id")
+    fun deleteApplicantEducation(id: String)
 }

@@ -4,6 +4,7 @@ import com.google.firebase.database.*
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.education.callback.AddEducationCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.DeleteEducationCallback
 import org.d3ifcool.dissajobapplicant.ui.education.callback.LoadEducationsCallback
 import org.d3ifcool.dissajobapplicant.ui.education.callback.UpdateEducationCallback
 
@@ -65,6 +66,17 @@ object EducationHelper {
             callback.onSuccessUpdate()
         }.addOnFailureListener {
             callback.onFailureUpdate(R.string.txt_failure_update)
+        }
+    }
+
+    fun deleteApplicantEducation(
+        id: String,
+        callback: DeleteEducationCallback
+    ) {
+        database.child(id).removeValue().addOnSuccessListener {
+            callback.onSuccessDelete()
+        }.addOnFailureListener {
+            callback.onFailureDelete(R.string.txt_failure_delete)
         }
     }
 }

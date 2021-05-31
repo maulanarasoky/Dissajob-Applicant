@@ -10,6 +10,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteEducationSource
 import org.d3ifcool.dissajobapplicant.ui.education.callback.AddEducationCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.DeleteEducationCallback
 import org.d3ifcool.dissajobapplicant.ui.education.callback.LoadEducationsCallback
 import org.d3ifcool.dissajobapplicant.ui.education.callback.UpdateEducationCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
@@ -114,4 +115,11 @@ class EducationRepository private constructor(
                 callback
             )
         }
+
+    override fun deleteApplicantEducation(id: String, callback: DeleteEducationCallback) =
+        appExecutors.diskIO()
+            .execute {
+                localEducationSource.deleteApplicantEducation(id)
+                remoteEducationSource.deleteApplicantEducation(id, callback)
+            }
 }

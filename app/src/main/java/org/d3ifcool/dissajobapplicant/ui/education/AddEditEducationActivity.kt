@@ -3,6 +3,7 @@ package org.d3ifcool.dissajobapplicant.ui.education
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
@@ -15,6 +16,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.Educati
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityAddEditEducationBinding
 import org.d3ifcool.dissajobapplicant.ui.education.callback.AddEducationCallback
+import org.d3ifcool.dissajobapplicant.ui.education.callback.DeleteEducationCallback
 import org.d3ifcool.dissajobapplicant.ui.education.callback.UpdateEducationCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import java.text.DateFormatSymbols
@@ -22,7 +24,7 @@ import java.util.*
 
 
 class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddEducationCallback,
-    UpdateEducationCallback {
+    UpdateEducationCallback, DeleteEducationCallback {
 
     companion object {
         const val EDUCATION_DATA = "education_data"
@@ -40,6 +42,8 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
     private var endYear = 0
 
     private var isEdit = false
+
+    private lateinit var educationId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +88,7 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
             activityAddEditEducationBinding.etEducationDescription.setText(education.description.toString())
         }
 
+        this.educationId = education.id
         this.startMonth = education.startMonth
         this.startYear = education.startYear
         this.endMonth = education.endMonth
@@ -91,7 +96,7 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
         isEdit = true
     }
 
-    private fun addEducation() {
+    private fun submitEducation() {
         val schoolName = activityAddEditEducationBinding.etSchoolName.text.toString().trim()
         val educationDegree =
             activityAddEditEducationBinding.etEducationLevel.text.toString().trim()
@@ -171,7 +176,7 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
         dialog.setCancelable(false)
         dialog.show()
 
-        addEducation()
+        submitEducation()
     }
 
     private fun startEndDateListener(view: EditText) {
@@ -235,10 +240,32 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (isEdit) {
+            menuInflater.inflate(R.menu.top_toolbar_delete_menu, menu)
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 finish()
+                true
+            }
+            R.id.deleteMenu -> {
+                dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                dialog.titleText = resources.getString(R.string.txt_education_delete_alert)
+                dialog.confirmText = resources.getString(R.string.txt_delete)
+                dialog.cancelText = resources.getString(R.string.txt_cancel)
+                dialog.setCancelable(false)
+                dialog.showCancelButton(true)
+                dialog.setConfirmClickListener {
+                    viewModel.deleteApplicantEducation(educationId, this)
+                }.setCancelClickListener {
+                    it.dismissWithAnimation()
+                }
+                dialog.show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -308,6 +335,31 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
         dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
         dialog.titleText = resources.getString(messageId, "Riwayat pendidikan")
         dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+        }
+        dialog.show()
+    }
+
+    override fun onSuccessDelete() {
+        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_success_delete, "Riwayat pendidikan")
+        dialog.confirmText = resources.getString(R.string.dialog_ok)
+        dialog.setCancelable(false)
+        dialog.showCancelButton(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+            finish()
+        }
+        dialog.show()
+    }
+
+    override fun onFailureDelete(messageId: Int) {
+        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(messageId, "Riwayat pendidikan")
+        dialog.confirmText = resources.getString(R.string.dialog_ok)
+        dialog.setCancelable(false)
+        dialog.showCancelButton(false)
         dialog.setConfirmClickListener {
             it.dismissWithAnimation()
         }

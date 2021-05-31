@@ -212,7 +212,7 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.top_media_toolbar_menu, menu)
+        menuInflater.inflate(R.menu.top_toolbar_add_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -222,7 +222,7 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
                 finish()
                 true
             }
-            R.id.addMedia -> {
+            R.id.addMenu -> {
                 checkPermission()
                 true
             }

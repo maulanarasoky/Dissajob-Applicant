@@ -14,8 +14,9 @@
     <string name="txt_confirm_password">Confirm password</string>
 
     <!-- Update profile alert -->
-    <string name="txt_success_update">%1$s berhasil di update</string>
-    <string name="txt_failure_update">%1$s gagal di update</string>
+    <string name="txt_success_update">%1$s berhasil diubah</string>
+    <string name="txt_success_delete">%1$s berhasil dihapus</string>
+    <string name="txt_failure_update">%1$s gagal diubah</string>
     <string name="txt_failure_upload_profile_picture">Gagal upload foto profil</string>
     <string name="txt_wrong_password">Password salah</string>
 
@@ -145,6 +146,7 @@
     <string name="txt_education_level_field_of_study">%1$s, %2$s</string>
     <string name="txt_edit">Edit</string>
     <string name="txt_delete">Hapus</string>
+    <string name="txt_cancel">Batal</string>
 
 
     <string name="tv_success_adding_media">Media berhasil ditambahkan</string>
@@ -170,4 +172,5 @@
     <string name="txt_undergraduate_degree">S2</string>
     <string name="txt_postgraduate_degree">S3</string>
     <string name="txt_education_level">Tingkat pendidikan</string>
+    <string name="txt_education_delete_alert">Hapus riwayat pendidikan ?</string>
 </resources>

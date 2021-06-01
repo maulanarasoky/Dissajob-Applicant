@@ -21,7 +21,7 @@ import java.text.DateFormatSymbols
 import java.util.*
 
 class AddEditExperienceActivity : AppCompatActivity(), AddExperienceCallback, View.OnClickListener,
-    CompoundButton.OnCheckedChangeListener {
+    CompoundButton.OnCheckedChangeListener, UpdateExperienceCallback {
 
     companion object {
         const val EXPERIENCE_DATA = "experience_data"
@@ -79,9 +79,15 @@ class AddEditExperienceActivity : AppCompatActivity(), AddExperienceCallback, Vi
         activityAddEditExperienceBinding.cbCurrentWorking.isChecked = experience.isCurrentlyWorking
 
         val startMonth = DateFormatSymbols().months[experience.startMonth - 1]
-        val endMonth = DateFormatSymbols().months[experience.endMonth - 1]
         val startDate = "$startMonth ${experience.startYear}"
-        val endDate = "$endMonth ${experience.endYear}"
+
+        val endDate = if (experience.isCurrentlyWorking) {
+            activityAddEditExperienceBinding.etEndDate.isEnabled = false
+            resources.getString(R.string.txt_currently_working)
+        } else {
+            val endMonth = DateFormatSymbols().months[experience.endMonth - 1]
+            "$endMonth ${experience.endYear}"
+        }
 
         activityAddEditExperienceBinding.etStartDate.setText(startDate)
         activityAddEditExperienceBinding.etEndDate.setText(endDate)
@@ -132,7 +138,7 @@ class AddEditExperienceActivity : AppCompatActivity(), AddExperienceCallback, Vi
             val oldExperienceData = intent.getParcelableExtra<ExperienceEntity>(EXPERIENCE_DATA)
             experience.id = oldExperienceData?.id.toString()
             experience.applicantId = oldExperienceData?.applicantId.toString()
-//            viewModel.updateApplicantExperience(experience, this)
+            viewModel.updateApplicantExperience(experience, this)
         }
     }
 
@@ -379,6 +385,27 @@ class AddEditExperienceActivity : AppCompatActivity(), AddExperienceCallback, Vi
     }
 
     override fun onFailureAdding(messageId: Int) {
+        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(messageId, "Pengalaman kerja")
+        dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+        }
+        dialog.show()
+    }
+
+    override fun onSuccessUpdate() {
+        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_success_update, "Pengalaman kerja")
+        dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+            finish()
+        }
+        dialog.show()
+    }
+
+    override fun onFailureUpdate(messageId: Int) {
         dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
         dialog.titleText = resources.getString(messageId, "Pengalaman kerja")
         dialog.setCancelable(false)

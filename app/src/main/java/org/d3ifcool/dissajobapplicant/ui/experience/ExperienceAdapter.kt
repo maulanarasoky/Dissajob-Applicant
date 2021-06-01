@@ -10,7 +10,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.Experi
 import org.d3ifcool.dissajobapplicant.databinding.ExperienceItemBinding
 import java.text.DateFormatSymbols
 
-class ExperienceAdapter :
+class ExperienceAdapter(private val onClickCallback: OnExperienceItemClickListener) :
     PagedListAdapter<ExperienceEntity, ExperienceAdapter.ExperienceViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -66,6 +66,10 @@ class ExperienceAdapter :
 
                 tvJobRangeDate.text =
                     itemView.resources.getString(R.string.txt_range_date, startDate, endDate)
+
+                itemView.setOnClickListener {
+                    onClickCallback.onClickItem(items)
+                }
             }
         }
     }

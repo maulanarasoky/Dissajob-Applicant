@@ -6,6 +6,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.experience.AddExperienceCallback
 import org.d3ifcool.dissajobapplicant.ui.experience.LoadExperiencesCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.UpdateExperienceCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.database.ExperienceHelper
 
@@ -55,6 +56,24 @@ class RemoteExperienceSource private constructor(
 
             override fun onFailureAdding(messageId: Int) {
                 callback.onFailureAdding(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun updateApplicantExperience(
+        experience: ExperienceResponseEntity,
+        callback: UpdateExperienceCallback
+    ) {
+        EspressoIdlingResource.increment()
+        experienceHelper.updateApplicantExperience(experience, object : UpdateExperienceCallback {
+            override fun onSuccessUpdate() {
+                callback.onSuccessUpdate()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailureUpdate(messageId: Int) {
+                callback.onFailureUpdate(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

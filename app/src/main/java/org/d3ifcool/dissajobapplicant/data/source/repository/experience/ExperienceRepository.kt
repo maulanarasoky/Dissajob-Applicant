@@ -11,6 +11,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experie
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteExperienceSource
 import org.d3ifcool.dissajobapplicant.ui.experience.AddExperienceCallback
 import org.d3ifcool.dissajobapplicant.ui.experience.LoadExperiencesCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.UpdateExperienceCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -105,4 +106,11 @@ class ExperienceRepository private constructor(
     ) =
         appExecutors.diskIO()
             .execute { remoteExperienceSource.addApplicantExperience(experience, callback) }
+
+    override fun updateApplicantExperience(
+        experience: ExperienceResponseEntity,
+        callback: UpdateExperienceCallback
+    ) =
+        appExecutors.diskIO()
+            .execute { remoteExperienceSource.updateApplicantExperience(experience, callback) }
 }

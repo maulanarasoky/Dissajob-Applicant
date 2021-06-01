@@ -293,6 +293,10 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
                 dialog.setCancelable(false)
                 dialog.showCancelButton(true)
                 dialog.setConfirmClickListener {
+                    dialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE)
+                    dialog.titleText = resources.getString(R.string.txt_loading)
+                    dialog.setCancelable(false)
+                    dialog.showCancelButton(false)
                     viewModel.deleteApplicantEducation(educationId, this)
                 }.setCancelClickListener {
                     it.dismissWithAnimation()

@@ -16,4 +16,9 @@ class ExperienceViewModel(private val experienceRepository: ExperienceRepository
         experience: ExperienceResponseEntity,
         callback: AddExperienceCallback
     ) = experienceRepository.addApplicantExperience(experience, callback)
+
+    fun updateApplicantExperience(
+        experience: ExperienceResponseEntity,
+        callback: UpdateExperienceCallback
+    ) = experienceRepository.updateApplicantExperience(experience, callback)
 }

@@ -19,6 +19,7 @@ import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.databinding.FragmentProfileBinding
 import org.d3ifcool.dissajobapplicant.ui.education.AddEditEducationActivity
 import org.d3ifcool.dissajobapplicant.ui.education.EducationAdapter
@@ -27,13 +28,15 @@ import org.d3ifcool.dissajobapplicant.ui.education.callback.OnEducationItemClick
 import org.d3ifcool.dissajobapplicant.ui.experience.AddEditExperienceActivity
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceAdapter
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
+import org.d3ifcool.dissajobapplicant.ui.experience.OnExperienceItemClickListener
 import org.d3ifcool.dissajobapplicant.ui.media.MediaActivity
 import org.d3ifcool.dissajobapplicant.ui.settings.SettingsActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickListener {
+class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickListener,
+    OnExperienceItemClickListener {
 
     private lateinit var fragmentProfileBinding: FragmentProfileBinding
 
@@ -81,14 +84,16 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
                     }
                 }
 
-            experienceAdapter = ExperienceAdapter()
+            experienceAdapter = ExperienceAdapter(this)
             experienceViewModel.getApplicantExperiences(applicantId)
                 .observe(viewLifecycleOwner) { experiences ->
                     if (experiences != null) {
                         when (experiences.status) {
-                            Status.LOADING -> {
-                            }
+                            Status.LOADING -> fragmentProfileBinding.workExperienceSection.progressBar.visibility =
+                                View.VISIBLE
                             Status.SUCCESS -> {
+                                fragmentProfileBinding.workExperienceSection.progressBar.visibility =
+                                    View.GONE
                                 if (experiences.data?.isNotEmpty() == true) {
                                     experienceAdapter.submitList(experiences.data)
                                     experienceAdapter.notifyDataSetChanged()
@@ -98,6 +103,10 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
                                 }
                             }
                             Status.ERROR -> {
+                                fragmentProfileBinding.workExperienceSection.progressBar.visibility =
+                                    View.GONE
+                                fragmentProfileBinding.workExperienceSection.tvNoData.visibility =
+                                    View.VISIBLE
                                 Toast.makeText(context, "Error occurred", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -121,9 +130,11 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
                 .observe(viewLifecycleOwner) { educations ->
                     if (educations != null) {
                         when (educations.status) {
-                            Status.LOADING -> {
-                            }
+                            Status.LOADING -> fragmentProfileBinding.educationalBackgroundSection.progressBar.visibility =
+                                View.VISIBLE
                             Status.SUCCESS -> {
+                                fragmentProfileBinding.educationalBackgroundSection.progressBar.visibility =
+                                    View.GONE
                                 if (educations.data?.isNotEmpty() == true) {
                                     educationAdapter.submitList(educations.data)
                                     educationAdapter.notifyDataSetChanged()
@@ -133,6 +144,10 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
                                 }
                             }
                             Status.ERROR -> {
+                                fragmentProfileBinding.educationalBackgroundSection.progressBar.visibility =
+                                    View.GONE
+                                fragmentProfileBinding.educationalBackgroundSection.tvNoData.visibility =
+                                    View.VISIBLE
                                 Toast.makeText(context, "Error occurred", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -227,6 +242,12 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
     override fun onClickItem(educationData: EducationEntity) {
         val intent = Intent(activity, AddEditEducationActivity::class.java)
         intent.putExtra(AddEditEducationActivity.EDUCATION_DATA, educationData)
+        startActivity(intent)
+    }
+
+    override fun onClickItem(experienceData: ExperienceEntity) {
+        val intent = Intent(activity, AddEditExperienceActivity::class.java)
+        intent.putExtra(AddEditExperienceActivity.EXPERIENCE_DATA, experienceData)
         startActivity(intent)
     }
 }

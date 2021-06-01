@@ -80,7 +80,7 @@ class ApplicantRepository private constructor(
 
             public override fun saveCallResult(data: ApplicantResponseEntity) {
                 val applicant = ApplicantEntity(
-                    data.id.toString(),
+                    data.id,
                     data.firstName,
                     data.lastName,
                     data.fullName,

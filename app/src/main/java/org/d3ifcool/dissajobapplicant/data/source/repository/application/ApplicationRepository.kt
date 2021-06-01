@@ -114,7 +114,7 @@ class ApplicationRepository private constructor(
             public override fun saveCallResult(data: ApplicationResponseEntity) {
                 val applicationList = ArrayList<ApplicationEntity>()
                 val application = ApplicationEntity(
-                    data.id.toString(),
+                    data.id,
                     data.applicantId,
                     data.jobId,
                     data.applyDate,
@@ -160,7 +160,7 @@ class ApplicationRepository private constructor(
                 val applicationList = ArrayList<ApplicationEntity>()
                 for (response in data) {
                     val application = ApplicationEntity(
-                        response.id.toString(),
+                        response.id,
                         response.applicantId,
                         response.jobId,
                         response.applyDate,
@@ -208,7 +208,7 @@ class ApplicationRepository private constructor(
                 val applicationList = ArrayList<ApplicationEntity>()
                 for (response in data) {
                     val application = ApplicationEntity(
-                        response.id.toString(),
+                        response.id,
                         response.applicantId,
                         response.jobId,
                         response.applyDate,
@@ -255,7 +255,7 @@ class ApplicationRepository private constructor(
                 val applicationList = ArrayList<ApplicationEntity>()
                 for (response in data) {
                     val application = ApplicationEntity(
-                        response.id.toString(),
+                        response.id,
                         response.applicantId,
                         response.jobId,
                         response.applyDate,

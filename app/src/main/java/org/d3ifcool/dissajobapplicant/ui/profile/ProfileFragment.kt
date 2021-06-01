@@ -28,7 +28,7 @@ import org.d3ifcool.dissajobapplicant.ui.education.callback.OnEducationItemClick
 import org.d3ifcool.dissajobapplicant.ui.experience.AddEditExperienceActivity
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceAdapter
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
-import org.d3ifcool.dissajobapplicant.ui.experience.OnExperienceItemClickListener
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.OnExperienceItemClickListener
 import org.d3ifcool.dissajobapplicant.ui.media.MediaActivity
 import org.d3ifcool.dissajobapplicant.ui.settings.SettingsActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory

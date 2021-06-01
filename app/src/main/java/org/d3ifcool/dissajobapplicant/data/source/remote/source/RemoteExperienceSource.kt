@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.experience.AddExperienceCallback
-import org.d3ifcool.dissajobapplicant.ui.experience.LoadExperiencesCallback
-import org.d3ifcool.dissajobapplicant.ui.experience.UpdateExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.AddExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.DeleteExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.LoadExperiencesCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.UpdateExperienceCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.database.ExperienceHelper
 
@@ -74,6 +75,24 @@ class RemoteExperienceSource private constructor(
 
             override fun onFailureUpdate(messageId: Int) {
                 callback.onFailureUpdate(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun deleteApplicantExperience(
+        id: String,
+        callback: DeleteExperienceCallback
+    ) {
+        EspressoIdlingResource.increment()
+        experienceHelper.deleteApplicantExperience(id, object : DeleteExperienceCallback {
+            override fun onSuccessDelete() {
+                callback.onSuccessDelete()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailureDelete(messageId: Int) {
+                callback.onFailureDelete(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

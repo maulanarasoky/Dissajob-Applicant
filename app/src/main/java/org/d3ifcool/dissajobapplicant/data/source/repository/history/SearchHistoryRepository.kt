@@ -79,7 +79,7 @@ class SearchHistoryRepository private constructor(
                 val searchHistoryList = ArrayList<SearchHistoryEntity>()
                 for (response in data) {
                     val searchHistory = SearchHistoryEntity(
-                        response.id.toString(),
+                        response.id,
                         response.searchText,
                         response.searchDate,
                         response.applicantId

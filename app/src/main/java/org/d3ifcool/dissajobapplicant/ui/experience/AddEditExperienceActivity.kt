@@ -16,12 +16,15 @@ import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityAddEditExperienceBinding
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.AddExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.DeleteExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.UpdateExperienceCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import java.text.DateFormatSymbols
 import java.util.*
 
 class AddEditExperienceActivity : AppCompatActivity(), AddExperienceCallback, View.OnClickListener,
-    CompoundButton.OnCheckedChangeListener, UpdateExperienceCallback {
+    CompoundButton.OnCheckedChangeListener, UpdateExperienceCallback, DeleteExperienceCallback {
 
     companion object {
         const val EXPERIENCE_DATA = "experience_data"
@@ -310,18 +313,22 @@ class AddEditExperienceActivity : AppCompatActivity(), AddExperienceCallback, Vi
                 true
             }
             R.id.deleteMenu -> {
-//                dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-//                dialog.titleText = resources.getString(R.string.txt_education_delete_alert)
-//                dialog.confirmText = resources.getString(R.string.txt_delete)
-//                dialog.cancelText = resources.getString(R.string.txt_cancel)
-//                dialog.setCancelable(false)
-//                dialog.showCancelButton(true)
-//                dialog.setConfirmClickListener {
-//                    viewModel.deleteApplicantEducation(educationId, this)
-//                }.setCancelClickListener {
-//                    it.dismissWithAnimation()
-//                }
-//                dialog.show()
+                dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                dialog.titleText = resources.getString(R.string.txt_experience_delete_alert)
+                dialog.confirmText = resources.getString(R.string.txt_delete)
+                dialog.cancelText = resources.getString(R.string.txt_cancel)
+                dialog.setCancelable(false)
+                dialog.showCancelButton(true)
+                dialog.setConfirmClickListener {
+                    dialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE)
+                    dialog.titleText = resources.getString(R.string.txt_loading)
+                    dialog.setCancelable(false)
+                    dialog.showCancelButton(false)
+                    viewModel.deleteApplicantExperience(experienceId, this)
+                }.setCancelClickListener {
+                    it.dismissWithAnimation()
+                }
+                dialog.show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -409,6 +416,31 @@ class AddEditExperienceActivity : AppCompatActivity(), AddExperienceCallback, Vi
         dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
         dialog.titleText = resources.getString(messageId, "Pengalaman kerja")
         dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+        }
+        dialog.show()
+    }
+
+    override fun onSuccessDelete() {
+        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_success_delete, "Pengalaman kerja")
+        dialog.confirmText = resources.getString(R.string.dialog_ok)
+        dialog.setCancelable(false)
+        dialog.showCancelButton(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+            finish()
+        }
+        dialog.show()
+    }
+
+    override fun onFailureDelete(messageId: Int) {
+        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(messageId, "Pengalaman kerja")
+        dialog.confirmText = resources.getString(R.string.dialog_ok)
+        dialog.setCancelable(false)
+        dialog.showCancelButton(false)
         dialog.setConfirmClickListener {
             it.dismissWithAnimation()
         }

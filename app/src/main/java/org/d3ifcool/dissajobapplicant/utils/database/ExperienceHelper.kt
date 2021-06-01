@@ -3,9 +3,10 @@ package org.d3ifcool.dissajobapplicant.utils.database
 import com.google.firebase.database.*
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.experience.AddExperienceCallback
-import org.d3ifcool.dissajobapplicant.ui.experience.LoadExperiencesCallback
-import org.d3ifcool.dissajobapplicant.ui.experience.UpdateExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.AddExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.DeleteExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.LoadExperiencesCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.UpdateExperienceCallback
 
 object ExperienceHelper {
     private val database: DatabaseReference =
@@ -67,6 +68,17 @@ object ExperienceHelper {
             callback.onSuccessUpdate()
         }.addOnFailureListener {
             callback.onFailureUpdate(R.string.txt_failure_update)
+        }
+    }
+
+    fun deleteApplicantExperience(
+        id: String,
+        callback: DeleteExperienceCallback
+    ) {
+        database.child(id).removeValue().addOnSuccessListener {
+            callback.onSuccessDelete()
+        }.addOnFailureListener {
+            callback.onFailureDelete(R.string.txt_failure_delete)
         }
     }
 }

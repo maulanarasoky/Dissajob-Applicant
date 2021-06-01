@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.databinding.ExperienceItemBinding
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.OnExperienceItemClickListener
 import java.text.DateFormatSymbols
 
 class ExperienceAdapter(private val onClickCallback: OnExperienceItemClickListener) :

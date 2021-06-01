@@ -79,7 +79,7 @@ class EducationRepository private constructor(
                 val educationList = ArrayList<EducationEntity>()
                 for (response in data) {
                     val education = EducationEntity(
-                        response.id.toString(),
+                        response.id,
                         response.schoolName,
                         response.educationLevel,
                         response.fieldOfStudy,

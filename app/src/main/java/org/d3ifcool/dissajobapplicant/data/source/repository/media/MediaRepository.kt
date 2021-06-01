@@ -77,7 +77,7 @@ class MediaRepository private constructor(
                 val mediaList = ArrayList<MediaEntity>()
                 for (response in data) {
                     val media = MediaEntity(
-                        response.id.toString(),
+                        response.id,
                         response.mediaName,
                         response.mediaDescription,
                         response.applicantId,
@@ -113,7 +113,7 @@ class MediaRepository private constructor(
         appExecutors.diskIO()
             .execute {
                 localMediaSource.updateMedia(
-                    mediaData.id.toString(),
+                    mediaData.id,
                     mediaData.mediaName.toString(),
                     mediaData.mediaDescription.toString()
                 )

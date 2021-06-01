@@ -60,7 +60,7 @@ class RecruiterRepository private constructor(
 
             public override fun saveCallResult(data: RecruiterResponseEntity) {
                 val userProfile = RecruiterEntity(
-                    data.id.toString(),
+                    data.id,
                     data.firstName,
                     data.lastName,
                     data.fullName,

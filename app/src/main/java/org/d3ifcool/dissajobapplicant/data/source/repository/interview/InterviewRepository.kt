@@ -76,7 +76,7 @@ class InterviewRepository private constructor(
                 val interviewAnswerList = ArrayList<InterviewEntity>()
                 for (response in data) {
                     val interviewAnswer = InterviewEntity(
-                        response.id.toString(),
+                        response.id,
                         response.applicantId,
                         response.jobId,
                         response.firstAnswer,

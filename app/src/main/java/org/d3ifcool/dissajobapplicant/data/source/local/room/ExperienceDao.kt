@@ -14,4 +14,7 @@ interface ExperienceDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertApplicantExperiences(experiences: List<ExperienceEntity>)
+
+    @Query("DELETE FROM experiences WHERE id = :id")
+    fun deleteApplicantExperience(id: String)
 }

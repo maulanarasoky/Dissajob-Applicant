@@ -69,7 +69,7 @@ class JobRepository private constructor(
                 val jobList = ArrayList<JobEntity>()
                 for (response in data) {
                     val job = JobEntity(
-                        response.id.toString(),
+                        response.id,
                         response.title,
                         response.address,
                         response.postedBy,
@@ -113,7 +113,7 @@ class JobRepository private constructor(
                 val jobList = ArrayList<SavedJobEntity>()
                 for (response in data) {
                     val job = SavedJobEntity(
-                        response.id.toString(),
+                        response.id,
                         response.jobId
                     )
                     jobList.add(job)
@@ -145,7 +145,7 @@ class JobRepository private constructor(
             public override fun saveCallResult(data: JobResponseEntity) {
                 val jobList = ArrayList<JobEntity>()
                 val job = JobEntity(
-                    data.id.toString(),
+                    data.id,
                     data.title,
                     data.address,
                     data.postedBy,
@@ -167,7 +167,10 @@ class JobRepository private constructor(
                     .setInitialLoadSizeHint(4)
                     .setPageSize(4)
                     .build()
-                return LivePagedListBuilder(localJobSource.getJobsByRecruiter(recruiterId), config).build()
+                return LivePagedListBuilder(
+                    localJobSource.getJobsByRecruiter(recruiterId),
+                    config
+                ).build()
             }
 
             override fun shouldFetch(data: PagedList<JobEntity>?): Boolean =
@@ -185,7 +188,7 @@ class JobRepository private constructor(
                 val jobList = ArrayList<JobEntity>()
                 for (response in data) {
                     val job = JobEntity(
-                        response.id.toString(),
+                        response.id,
                         response.title,
                         response.address,
                         response.postedBy,
@@ -273,7 +276,7 @@ class JobRepository private constructor(
                 val jobList = ArrayList<JobEntity>()
                 for (response in data) {
                     val job = JobEntity(
-                        response.id.toString(),
+                        response.id,
                         response.title,
                         response.address,
                         response.postedBy,

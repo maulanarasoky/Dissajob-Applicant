@@ -9,9 +9,10 @@ import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalExperienceSo
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteExperienceSource
-import org.d3ifcool.dissajobapplicant.ui.experience.AddExperienceCallback
-import org.d3ifcool.dissajobapplicant.ui.experience.LoadExperiencesCallback
-import org.d3ifcool.dissajobapplicant.ui.experience.UpdateExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.AddExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.DeleteExperienceCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.LoadExperiencesCallback
+import org.d3ifcool.dissajobapplicant.ui.experience.callback.UpdateExperienceCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -79,7 +80,7 @@ class ExperienceRepository private constructor(
                 val experienceList = ArrayList<ExperienceEntity>()
                 for (response in data) {
                     val experience = ExperienceEntity(
-                        response.id.toString(),
+                        response.id,
                         response.title,
                         response.employmentType,
                         response.companyName,
@@ -113,4 +114,11 @@ class ExperienceRepository private constructor(
     ) =
         appExecutors.diskIO()
             .execute { remoteExperienceSource.updateApplicantExperience(experience, callback) }
+
+    override fun deleteApplicantExperience(id: String, callback: DeleteExperienceCallback) =
+        appExecutors.diskIO()
+            .execute {
+                localExperienceSource.deleteApplicantExperience(id)
+                remoteExperienceSource.deleteApplicantExperience(id, callback)
+            }
 }

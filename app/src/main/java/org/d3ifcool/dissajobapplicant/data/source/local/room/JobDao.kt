@@ -30,6 +30,9 @@ interface JobDao {
     @Query("SELECT * FROM jobs WHERE title LIKE '%' || :searchText || '%' OR address LIKE '%' || :searchText || '%'")
     fun searchJob(searchText: String): DataSource.Factory<Int, JobEntity>
 
+    @Query("SELECT * FROM jobs WHERE (title LIKE '%' || :searchText || '%' OR address LIKE '%' || :searchText || '%') AND is_open_for_disability = 1")
+    fun getFilteredJobs(searchText: String): DataSource.Factory<Int, JobEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertJobs(jobs: List<JobEntity>)
 

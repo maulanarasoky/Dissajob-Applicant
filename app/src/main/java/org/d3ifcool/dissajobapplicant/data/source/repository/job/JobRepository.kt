@@ -74,7 +74,8 @@ class JobRepository private constructor(
                         response.address,
                         response.postedBy,
                         response.postedDate,
-                        response.isOpen
+                        response.isOpen,
+                        response.isOpenForDisability
                     )
                     jobList.add(job)
                 }
@@ -150,7 +151,8 @@ class JobRepository private constructor(
                     data.address,
                     data.postedBy,
                     data.postedDate,
-                    data.isOpen
+                    data.isOpen,
+                    data.isOpenForDisability
                 )
                 jobList.add(job)
                 localJobSource.insertJobs(jobList)
@@ -193,7 +195,8 @@ class JobRepository private constructor(
                         response.address,
                         response.postedBy,
                         response.postedDate,
-                        response.isOpen
+                        response.isOpen,
+                        response.isOpenForDisability
                     )
                     jobList.add(job)
                 }
@@ -238,7 +241,8 @@ class JobRepository private constructor(
                     data.postedDate,
                     data.updatedDate,
                     data.closedDate,
-                    data.isOpen
+                    data.isOpen,
+                    data.isOpenForDisability
                 )
                 localJobSource.insertJobDetails(jobDetails)
             }
@@ -281,11 +285,58 @@ class JobRepository private constructor(
                         response.address,
                         response.postedBy,
                         response.postedDate,
-                        response.isOpen
+                        response.isOpen,
+                        response.isOpenForDisability
                     )
                     jobList.add(job)
                 }
 
+                localJobSource.insertJobs(jobList)
+            }
+        }.asLiveData()
+    }
+
+    override fun getFilteredJobs(searchText: String): LiveData<Resource<PagedList<JobEntity>>> {
+        return object :
+            NetworkBoundResource<PagedList<JobEntity>, List<JobResponseEntity>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<JobEntity>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(4)
+                    .setPageSize(4)
+                    .build()
+                return LivePagedListBuilder(
+                    localJobSource.getFilteredJobs(searchText),
+                    config
+                ).build()
+            }
+
+            override fun shouldFetch(data: PagedList<JobEntity>?): Boolean =
+                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+//                data == null || data.isEmpty()
+
+            public override fun createCall(): LiveData<ApiResponse<List<JobResponseEntity>>> =
+                remoteJobSource.searchJob(searchText, object : LoadJobsCallback {
+                    override fun onAllJobsReceived(jobResponse: List<JobResponseEntity>): List<JobResponseEntity> {
+                        return jobResponse
+                    }
+                })
+
+            public override fun saveCallResult(data: List<JobResponseEntity>) {
+                val jobList = ArrayList<JobEntity>()
+                for (response in data) {
+                    val job = JobEntity(
+                        response.id,
+                        response.title,
+                        response.address,
+                        response.postedBy,
+                        response.postedDate,
+                        response.isOpen,
+                        response.isOpenForDisability
+                    )
+                    jobList.add(job)
+                }
+                localJobSource.deleteAllJobs()
                 localJobSource.insertJobs(jobList)
             }
         }.asLiveData()

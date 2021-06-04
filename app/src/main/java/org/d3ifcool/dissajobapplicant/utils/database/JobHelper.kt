@@ -36,7 +36,8 @@ object JobHelper {
                                 data.child("address").value.toString(),
                                 data.child("postedBy").value.toString(),
                                 data.child("postedDate").value.toString(),
-                                data.child("open").value.toString().toBoolean()
+                                data.child("open").value.toString().toBoolean(),
+                                data.child("openForDisability").value.toString().toBoolean()
                             )
                             arrJob.add(job)
                         }
@@ -83,7 +84,8 @@ object JobHelper {
                         dataSnapshot.child("address").value.toString(),
                         dataSnapshot.child("postedBy").value.toString(),
                         dataSnapshot.child("postedDate").value.toString(),
-                        dataSnapshot.child("open").value.toString().toBoolean()
+                        dataSnapshot.child("open").value.toString().toBoolean(),
+                        dataSnapshot.child("openForDisability").value.toString().toBoolean()
                     )
                     callback.onJobDataReceived(job)
                 }
@@ -93,7 +95,7 @@ object JobHelper {
     }
 
     fun getJobsByRecruiter(recruiterId: String, callback: LoadJobsCallback) {
-        jobDatabase.orderByChild("posted_by").equalTo(recruiterId)
+        jobDatabase.orderByChild("postedBy").equalTo(recruiterId)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
                 }
@@ -108,7 +110,8 @@ object JobHelper {
                                 data.child("address").value.toString(),
                                 data.child("postedBy").value.toString(),
                                 data.child("postedDate").value.toString(),
-                                data.child("open").value.toString().toBoolean()
+                                data.child("open").value.toString().toBoolean(),
+                                data.child("openForDisability").value.toString().toBoolean()
                             )
                             arrJob.add(job)
                         }
@@ -140,7 +143,8 @@ object JobHelper {
                         dataSnapshot.child("postedDate").value.toString(),
                         dataSnapshot.child("updatedDate").value.toString(),
                         dataSnapshot.child("closedDate").value.toString(),
-                        dataSnapshot.child("open").value.toString().toBoolean()
+                        dataSnapshot.child("open").value.toString().toBoolean(),
+                        dataSnapshot.child("openForDisability").value.toString().toBoolean()
                     )
                     callback.onJobDetailsReceived(jobDetails)
                 }
@@ -173,7 +177,8 @@ object JobHelper {
                         data.child("address").value.toString(),
                         data.child("postedBy").value.toString(),
                         data.child("postedDate").value.toString(),
-                        data.child("open").value.toString().toBoolean()
+                        data.child("open").value.toString().toBoolean(),
+                        data.child("openForDisability").value.toString().toBoolean()
                     )
                     when {
                         job.title?.toLowerCase(Locale.ROOT)?.contains(text) == true -> {

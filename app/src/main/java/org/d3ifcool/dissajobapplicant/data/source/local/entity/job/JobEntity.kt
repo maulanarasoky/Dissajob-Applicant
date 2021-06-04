@@ -26,5 +26,8 @@ data class JobEntity(
     val postedDate: String? = "-",
 
     @ColumnInfo(name = "is_open")
-    val isOpen: Boolean? = true
+    val isOpen: Boolean,
+
+    @ColumnInfo(name = "is_open_for_disability")
+    val isOpenForDisability: Boolean
 )

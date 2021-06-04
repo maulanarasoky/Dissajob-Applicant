@@ -1,9 +1,11 @@
 package org.d3ifcool.dissajobapplicant.ui.job
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -15,12 +17,13 @@ import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityJobDetailsBinding
+import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterProfileActivity
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.DateUtils
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class JobDetailsActivity : AppCompatActivity() {
+class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val EXTRA_ID = "extra_id"
@@ -67,7 +70,7 @@ class JobDetailsActivity : AppCompatActivity() {
                     }
                     Status.SUCCESS -> {
                         jobData = jobDetails.data
-                        populateData(jobDetails.data)
+                        populateJobData(jobDetails.data)
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
@@ -77,7 +80,7 @@ class JobDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun populateData(jobDetails: JobDetailsEntity) {
+    private fun populateJobData(jobDetails: JobDetailsEntity) {
         //Title section
         activityJobDetailsBinding.jobDetailsTitleSection.tvJobTitle.text =
             jobDetails.title.toString()
@@ -130,6 +133,10 @@ class JobDetailsActivity : AppCompatActivity() {
                             .error(R.drawable.ic_image_gray_24dp)
                             .into(activityJobDetailsBinding.jobDetailsTitleSection.imgRecruiterPicture)
                     }
+
+                    activityJobDetailsBinding.jobDetailsTitleSection.tvJobRecruiterName.setOnClickListener(
+                        this
+                    )
                 }
             }
         }
@@ -142,6 +149,16 @@ class JobDetailsActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.tvJobRecruiterName -> {
+                val intent = Intent(this, RecruiterProfileActivity::class.java)
+                intent.putExtra(RecruiterProfileActivity.RECRUITER_ID, jobData.postedBy)
+                startActivity(intent)
+            }
         }
     }
 }

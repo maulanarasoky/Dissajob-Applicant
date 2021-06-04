@@ -9,5 +9,6 @@ data class JobResponseEntity(
     var address: String? = "-",
     var postedBy: String,
     var postedDate: String? = "-",
-    var isOpen: Boolean? = true
+    var isOpen: Boolean,
+    var isOpenForDisability: Boolean
 )

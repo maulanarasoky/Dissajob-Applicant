@@ -24,7 +24,7 @@ class EmploymentTypeActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(activityEmploymentTypeBinding.root)
 
         activityEmploymentTypeBinding.toolbar.title =
-            resources.getString(R.string.txt_work_experience)
+            resources.getString(R.string.txt_employment_type)
         setSupportActionBar(activityEmploymentTypeBinding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

@@ -33,6 +33,8 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cgFilter"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -40,8 +42,11 @@
                 android:id="@+id/chipFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checkable="true"
+                android:clickable="true"
+                android:focusable="true"
                 android:fontFamily="@font/roboto"
-                android:text="Difabel friendly"
+                android:text="@string/txt_difabel_friendly"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:chipBackgroundColor="@color/white"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".ui.settings.ChangePhoneNumberActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -41,8 +42,8 @@
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         android:hint="@string/txt_current_phone_number"
-        app:boxStrokeColor="@color/colorPrimary"
         android:visibility="gone"
+        app:boxStrokeColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvChangePhoneNumberTitle">

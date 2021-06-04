@@ -20,13 +20,13 @@ import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityMediaBinding
 import org.d3ifcool.dissajobapplicant.ui.media.callback.LoadPdfCallback
-import org.d3ifcool.dissajobapplicant.ui.media.callback.OnClickEditMediaListener
+import org.d3ifcool.dissajobapplicant.ui.media.callback.OnMediaClickListener
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback,
-    OnClickEditMediaListener {
+    OnMediaClickListener {
 
     companion object {
         //image pick code
@@ -249,7 +249,7 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
     override fun onPdfDataReceived(mediaFile: ByteArray) {
     }
 
-    override fun onClickBtnEdit(mediaData: MediaEntity) {
+    override fun onClickItem(mediaData: MediaEntity) {
         val intent = Intent(this, AddEditMediaActivity::class.java)
         intent.putExtra(AddEditMediaActivity.MEDIA_DATA, mediaData)
         startActivityForResult(intent, AddEditMediaActivity.REQUEST_UPDATE)

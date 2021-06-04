@@ -12,7 +12,7 @@ import org.d3ifcool.dissajobapplicant.databinding.EducationItemBinding
 import org.d3ifcool.dissajobapplicant.ui.education.callback.OnEducationItemClickListener
 import java.text.DateFormatSymbols
 
-class EducationAdapter(private val onClickCallback: OnEducationItemClickListener) :
+class EducationAdapter(private val onItemClickCallback: OnEducationItemClickListener) :
     PagedListAdapter<EducationEntity, EducationAdapter.EducationViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -75,7 +75,7 @@ class EducationAdapter(private val onClickCallback: OnEducationItemClickListener
                 }
 
                 itemView.setOnClickListener {
-                    onClickCallback.onClickItem(items)
+                    onItemClickCallback.onClickItem(items)
                 }
             }
         }

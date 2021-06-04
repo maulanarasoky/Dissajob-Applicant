@@ -11,7 +11,7 @@ import org.d3ifcool.dissajobapplicant.ui.search.callback.SearchHistoryDeleteClic
 import org.d3ifcool.dissajobapplicant.ui.search.callback.SearchHistoryItemClickCallback
 
 class SearchAdapter(
-    private val clickCallback: SearchHistoryItemClickCallback,
+    private val onItemClickCallback: SearchHistoryItemClickCallback,
     private val deleteCallback: SearchHistoryDeleteClickCallback
 ) :
     PagedListAdapter<SearchHistoryEntity, SearchAdapter.SearchHistoryViewHolder>(DIFF_CALLBACK) {
@@ -58,7 +58,7 @@ class SearchAdapter(
                 }
 
                 itemView.setOnClickListener {
-                    clickCallback.onItemClicked(items.searchText.toString())
+                    onItemClickCallback.onItemClicked(items.searchText.toString())
                 }
             }
         }

@@ -16,14 +16,14 @@ import org.d3ifcool.dissajobapplicant.databinding.FragmentHomeBinding
 import org.d3ifcool.dissajobapplicant.ui.job.JobAdapter
 import org.d3ifcool.dissajobapplicant.ui.job.JobDetailsActivity
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
-import org.d3ifcool.dissajobapplicant.ui.job.callback.ItemClickListener
+import org.d3ifcool.dissajobapplicant.ui.job.callback.OnJobClickListener
 import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.search.SearchActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class HomeFragment : Fragment(), ItemClickListener, LoadRecruiterDataCallback,
+class HomeFragment : Fragment(), OnJobClickListener, LoadRecruiterDataCallback,
     View.OnClickListener {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
@@ -96,12 +96,6 @@ class HomeFragment : Fragment(), ItemClickListener, LoadRecruiterDataCallback,
         }
     }
 
-    override fun onItemClicked(jobId: String) {
-        val intent = Intent(activity, JobDetailsActivity::class.java)
-        intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
-        startActivity(intent)
-    }
-
     override fun onLoadRecruiterData(
         recruiterId: String,
         callback: LoadRecruiterDataCallback
@@ -120,5 +114,11 @@ class HomeFragment : Fragment(), ItemClickListener, LoadRecruiterDataCallback,
         when (v?.id) {
             R.id.searchBar -> startActivity(Intent(activity, SearchActivity::class.java))
         }
+    }
+
+    override fun onItemClick(jobId: String) {
+        val intent = Intent(activity, JobDetailsActivity::class.java)
+        intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
+        startActivity(intent)
     }
 }

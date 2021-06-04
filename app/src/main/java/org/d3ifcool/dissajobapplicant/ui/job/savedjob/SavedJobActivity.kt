@@ -1,11 +1,11 @@
 package org.d3ifcool.dissajobapplicant.ui.job.savedjob
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,14 +15,14 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.Recruit
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySavedJobBinding
 import org.d3ifcool.dissajobapplicant.ui.job.JobDetailsActivity
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
-import org.d3ifcool.dissajobapplicant.ui.job.callback.ItemClickListener
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobByIdCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.OnJobClickListener
 import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class SavedJobActivity : AppCompatActivity(), ItemClickListener, LoadJobByIdCallback,
+class SavedJobActivity : AppCompatActivity(), OnJobClickListener, LoadJobByIdCallback,
     LoadRecruiterDataCallback {
 
     private lateinit var activitySavedJobBinding: ActivitySavedJobBinding
@@ -89,12 +89,6 @@ class SavedJobActivity : AppCompatActivity(), ItemClickListener, LoadJobByIdCall
         }
     }
 
-    override fun onItemClicked(jobId: String) {
-        val intent = Intent(this, JobDetailsActivity::class.java)
-        intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
-        startActivity(intent)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -125,5 +119,11 @@ class SavedJobActivity : AppCompatActivity(), ItemClickListener, LoadJobByIdCall
     }
 
     override fun onRecruiterDataReceived(recruiterData: RecruiterEntity) {
+    }
+
+    override fun onItemClick(jobId: String) {
+        val intent = Intent(this, JobDetailsActivity::class.java)
+        intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
+        startActivity(intent)
     }
 }

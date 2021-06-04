@@ -11,7 +11,7 @@ import org.d3ifcool.dissajobapplicant.databinding.ExperienceItemBinding
 import org.d3ifcool.dissajobapplicant.ui.experience.callback.OnExperienceItemClickListener
 import java.text.DateFormatSymbols
 
-class ExperienceAdapter(private val onClickCallback: OnExperienceItemClickListener) :
+class ExperienceAdapter(private val onItemClickCallback: OnExperienceItemClickListener) :
     PagedListAdapter<ExperienceEntity, ExperienceAdapter.ExperienceViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -69,7 +69,7 @@ class ExperienceAdapter(private val onClickCallback: OnExperienceItemClickListen
                     itemView.resources.getString(R.string.txt_range_date, startDate, endDate)
 
                 itemView.setOnClickListener {
-                    onClickCallback.onClickItem(items)
+                    onItemClickCallback.onClickItem(items)
                 }
             }
         }

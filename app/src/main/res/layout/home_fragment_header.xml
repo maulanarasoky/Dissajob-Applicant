@@ -7,7 +7,7 @@
     <View
         android:id="@+id/header"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="125dp"
         android:background="@drawable/home_fragment_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,20 +33,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/heading"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginTop="@dimen/margin_48dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/txt_home_fragment_heading"
-        android:textColor="@color/searchBarTextColor"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/header"
-        app:layout_constraintStart_toStartOf="@id/header"
-        app:layout_constraintTop_toBottomOf="@id/searchBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

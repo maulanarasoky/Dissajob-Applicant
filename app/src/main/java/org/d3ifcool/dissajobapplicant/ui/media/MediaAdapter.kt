@@ -6,15 +6,14 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.databinding.MediaItemBinding
 import org.d3ifcool.dissajobapplicant.ui.media.callback.LoadPdfCallback
-import org.d3ifcool.dissajobapplicant.ui.media.callback.OnClickEditMediaListener
+import org.d3ifcool.dissajobapplicant.ui.media.callback.OnMediaClickListener
 
 class MediaAdapter(
     private val loadPdfCallback: LoadPdfCallback,
-    private val onClickEditCallback: OnClickEditMediaListener
+    private val onItemClickCallback: OnMediaClickListener
 ) :
     PagedListAdapter<MediaEntity, MediaAdapter.MediaViewHolder>(DIFF_CALLBACK) {
 
@@ -54,33 +53,33 @@ class MediaAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bindItem(items: MediaEntity) {
             with(binding) {
-
                 progressBar.visibility = View.VISIBLE
-                tvMediaName.text = itemView.resources.getString(R.string.txt_loading)
-                tvMediaDescription.text = itemView.resources.getString(R.string.txt_loading)
-
                 loadPdfCallback.onLoadPdfData(items.fileId, object : LoadPdfCallback {
                     override fun onLoadPdfData(mediaId: String, callback: LoadPdfCallback) {
                     }
 
                     override fun onPdfDataReceived(mediaFile: ByteArray) {
                         progressBar.visibility = View.GONE
+                        imgDeleteHistory.visibility = View.VISIBLE
+
                         pdfViewer.fromBytes(mediaFile)
                             .enableSwipe(true)
                             .swipeHorizontal(true)
                             .load()
 
-                        tvMediaName.text = items.mediaName.toString()
-                        if (items.mediaDescription.toString() != "-") {
-                            tvMediaDescription.visibility = View.VISIBLE
-                            tvMediaDescription.text = items.mediaDescription.toString()
-                        }
 
-                        btnEditMedia.setOnClickListener {
-                            onClickEditCallback.onClickBtnEdit(items)
-                        }
                     }
                 })
+
+                tvMediaName.text = items.mediaName.toString()
+                if (items.mediaDescription.toString() != "-") {
+                    tvMediaDescription.visibility = View.VISIBLE
+                    tvMediaDescription.text = items.mediaDescription.toString()
+                }
+
+                itemView.setOnClickListener {
+                    onItemClickCallback.onClickItem(items)
+                }
             }
         }
     }

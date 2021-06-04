@@ -17,15 +17,15 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.Appli
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.JobItemBinding
-import org.d3ifcool.dissajobapplicant.ui.job.callback.ItemClickListener
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobByIdCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.OnJobClickListener
 import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ApplicationAdapter(
-    private val clickCallback: ItemClickListener,
+    private val onItemClickCallback: OnJobClickListener,
     private val loadJobDataCallback: LoadJobByIdCallback,
     private val loadRecruiterDataCallback: LoadRecruiterDataCallback
 ) : PagedListAdapter<ApplicationEntity, ApplicationAdapter.JobViewHolder>(DIFF_CALLBACK) {
@@ -50,7 +50,8 @@ class ApplicationAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
-        val itemsJobBinding = JobItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemsJobBinding =
+            JobItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return JobViewHolder(itemsJobBinding)
     }
 
@@ -82,7 +83,11 @@ class ApplicationAdapter(
                             val time: Long = sdf.parse(jobEntity.postedDate).time
                             val now = System.currentTimeMillis()
                             val ago =
-                                DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
+                                DateUtils.getRelativeTimeSpanString(
+                                    time,
+                                    now,
+                                    DateUtils.MINUTE_IN_MILLIS
+                                )
                             tvJobPostedDate.text = ago
                         } catch (e: ParseException) {
                             e.printStackTrace()
@@ -91,7 +96,7 @@ class ApplicationAdapter(
                         loadRecruiterData(jobEntity.postedBy.toString())
 
                         itemView.setOnClickListener {
-                            clickCallback.onItemClicked(jobId)
+                            onItemClickCallback.onItemClick(jobId)
                         }
                     }
                 }
@@ -113,7 +118,8 @@ class ApplicationAdapter(
                         tvJobRecruiterName.text = recruiterData.fullName.toString()
                         if (recruiterData.imagePath != "-") {
                             val storageRef = Firebase.storage.reference
-                            val circularProgressDrawable = CircularProgressDrawable(itemView.context)
+                            val circularProgressDrawable =
+                                CircularProgressDrawable(itemView.context)
                             circularProgressDrawable.strokeWidth = 5f
                             circularProgressDrawable.centerRadius = 30f
                             circularProgressDrawable.start()

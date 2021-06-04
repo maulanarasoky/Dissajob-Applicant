@@ -21,11 +21,12 @@ import org.d3ifcool.dissajobapplicant.databinding.ActivityRecruiterProfileBindin
 import org.d3ifcool.dissajobapplicant.ui.job.JobAdapter
 import org.d3ifcool.dissajobapplicant.ui.job.JobDetailsActivity
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
-import org.d3ifcool.dissajobapplicant.ui.job.callback.ItemClickListener
+import org.d3ifcool.dissajobapplicant.ui.job.callback.OnJobClickListener
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class RecruiterProfileActivity : AppCompatActivity(), ItemClickListener, LoadRecruiterDataCallback {
+class RecruiterProfileActivity : AppCompatActivity(), OnJobClickListener,
+    LoadRecruiterDataCallback {
 
     companion object {
         const val RECRUITER_ID = "recruiter_id"
@@ -139,12 +140,6 @@ class RecruiterProfileActivity : AppCompatActivity(), ItemClickListener, LoadRec
         }
     }
 
-    override fun onItemClicked(jobId: String) {
-        val intent = Intent(this, JobDetailsActivity::class.java)
-        intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
-        startActivity(intent)
-    }
-
     override fun onLoadRecruiterData(recruiterId: String, callback: LoadRecruiterDataCallback) {
         recruiterViewModel.getRecruiterData(recruiterId).observe(this) { recruiterDetails ->
             if (recruiterDetails != null) {
@@ -165,5 +160,11 @@ class RecruiterProfileActivity : AppCompatActivity(), ItemClickListener, LoadRec
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onItemClick(jobId: String) {
+        val intent = Intent(this, JobDetailsActivity::class.java)
+        intent.putExtra(JobDetailsActivity.EXTRA_ID, jobId)
+        startActivity(intent)
     }
 }

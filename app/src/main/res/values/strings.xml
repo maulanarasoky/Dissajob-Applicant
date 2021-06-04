@@ -69,9 +69,6 @@
     <string name="txt_send">Kirim</string>
     <string name="txt_success_alert_reset_password">Email reset password telah dikirimkan</string>
 
-    <!-- Home fragment -->
-    <string name="txt_home_fragment_heading">Direkomendasikan untuk Anda</string>
-
     <!-- Change email -->
     <string name="txt_change_email_title">Ganti Email</string>
     <string name="txt_change_email_description">Masukkan alamat email aktif</string>

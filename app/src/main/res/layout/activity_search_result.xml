@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".ui.search.SearchResultActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -34,9 +35,9 @@
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/cgFilter"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipFilter"

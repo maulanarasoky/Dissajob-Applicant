@@ -16,13 +16,16 @@ import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.JobItemBinding
-import org.d3ifcool.dissajobapplicant.ui.job.callback.ItemClickListener
+import org.d3ifcool.dissajobapplicant.ui.job.callback.OnJobClickListener
 import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class JobAdapter(private val clickCallback: ItemClickListener, private val loadCallback: LoadRecruiterDataCallback) : PagedListAdapter<JobEntity, JobAdapter.JobViewHolder>(DIFF_CALLBACK) {
+class JobAdapter(
+    private val onItemClickCallback: OnJobClickListener,
+    private val loadCallback: LoadRecruiterDataCallback
+) : PagedListAdapter<JobEntity, JobAdapter.JobViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<JobEntity>() {
@@ -55,49 +58,56 @@ class JobAdapter(private val clickCallback: ItemClickListener, private val loadC
         fun bindItem(items: JobEntity) {
             with(binding) {
 
-                loadCallback.onLoadRecruiterData(items.postedBy.toString(), object : LoadRecruiterDataCallback {
-                    override fun onLoadRecruiterData(
-                        recruiterId: String,
-                        callback: LoadRecruiterDataCallback
-                    ) {
-                        TODO("Not yet implemented")
-                    }
-
-                    override fun onRecruiterDataReceived(recruiterData: RecruiterEntity) {
-                        tvJobTitle.text = items.title.toString()
-                        tvJobRecruiterName.text = recruiterData.fullName.toString()
-                        tvJobAddress.text = items.address.toString()
-                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                        sdf.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
-                        try {
-                            val time: Long = sdf.parse(items.postedDate).time
-                            val now = System.currentTimeMillis()
-                            val ago =
-                                DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
-                            tvJobPostedDate.text = ago
-                        } catch (e: ParseException) {
-                            e.printStackTrace()
+                loadCallback.onLoadRecruiterData(
+                    items.postedBy.toString(),
+                    object : LoadRecruiterDataCallback {
+                        override fun onLoadRecruiterData(
+                            recruiterId: String,
+                            callback: LoadRecruiterDataCallback
+                        ) {
+                            TODO("Not yet implemented")
                         }
 
-                        if (recruiterData.imagePath != "-") {
-                            val storageRef = Firebase.storage.reference
-                            val circularProgressDrawable = CircularProgressDrawable(itemView.context)
-                            circularProgressDrawable.strokeWidth = 5f
-                            circularProgressDrawable.centerRadius = 30f
-                            circularProgressDrawable.start()
-                            Glide.with(itemView.context)
-                                .load(storageRef.child("recruiter/profile/images/${recruiterData.imagePath}"))
-                                .transform(RoundedCorners(20))
-                                .apply(RequestOptions.placeholderOf(circularProgressDrawable))
-                                .error(R.drawable.ic_image_gray_24dp)
-                                .into(imgRecruiterPicture)
-                        }
+                        override fun onRecruiterDataReceived(recruiterData: RecruiterEntity) {
+                            tvJobTitle.text = items.title.toString()
+                            tvJobRecruiterName.text = recruiterData.fullName.toString()
+                            tvJobAddress.text = items.address.toString()
+                            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                            sdf.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
+                            try {
+                                val time: Long = sdf.parse(items.postedDate).time
+                                val now = System.currentTimeMillis()
+                                val ago =
+                                    DateUtils.getRelativeTimeSpanString(
+                                        time,
+                                        now,
+                                        DateUtils.MINUTE_IN_MILLIS
+                                    )
+                                tvJobPostedDate.text = ago
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
+                            }
 
-                        itemView.setOnClickListener {
-                            clickCallback.onItemClicked(items.id)
+                            if (recruiterData.imagePath != "-") {
+                                val storageRef = Firebase.storage.reference
+                                val circularProgressDrawable =
+                                    CircularProgressDrawable(itemView.context)
+                                circularProgressDrawable.strokeWidth = 5f
+                                circularProgressDrawable.centerRadius = 30f
+                                circularProgressDrawable.start()
+                                Glide.with(itemView.context)
+                                    .load(storageRef.child("recruiter/profile/images/${recruiterData.imagePath}"))
+                                    .transform(RoundedCorners(20))
+                                    .apply(RequestOptions.placeholderOf(circularProgressDrawable))
+                                    .error(R.drawable.ic_image_gray_24dp)
+                                    .into(imgRecruiterPicture)
+                            }
+
+                            itemView.setOnClickListener {
+                                onItemClickCallback.onItemClick(items.id)
+                            }
                         }
-                    }
-                })
+                    })
             }
         }
     }

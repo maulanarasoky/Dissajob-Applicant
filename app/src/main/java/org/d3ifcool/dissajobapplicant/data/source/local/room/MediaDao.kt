@@ -15,6 +15,9 @@ interface MediaDao {
     @Query("UPDATE media SET media_name = :mediaName, media_description = :mediaDescription WHERE id = :id")
     fun updateMedia(id: String, mediaName: String, mediaDescription: String)
 
+    @Query("DELETE FROM media WHERE id = :id")
+    fun deleteMedia(id: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMedia(media: List<MediaEntity>)
 }

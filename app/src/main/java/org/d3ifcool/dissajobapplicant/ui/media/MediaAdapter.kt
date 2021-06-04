@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.databinding.MediaItemBinding
 import org.d3ifcool.dissajobapplicant.ui.media.callback.LoadPdfCallback
+import org.d3ifcool.dissajobapplicant.ui.media.callback.OnDeleteBtnClickListener
 import org.d3ifcool.dissajobapplicant.ui.media.callback.OnMediaClickListener
 
 class MediaAdapter(
     private val loadPdfCallback: LoadPdfCallback,
-    private val onItemClickCallback: OnMediaClickListener
+    private val onItemClickCallback: OnMediaClickListener,
+    private val onDeleteBtnClickCallback: OnDeleteBtnClickListener
 ) :
     PagedListAdapter<MediaEntity, MediaAdapter.MediaViewHolder>(DIFF_CALLBACK) {
 
@@ -75,6 +77,14 @@ class MediaAdapter(
                 if (items.mediaDescription.toString() != "-") {
                     tvMediaDescription.visibility = View.VISIBLE
                     tvMediaDescription.text = items.mediaDescription.toString()
+                }
+
+                imgDeleteHistory.setOnClickListener {
+                    onDeleteBtnClickCallback.onDeleteBtnClick(
+                        items.id,
+                        items.mediaName,
+                        items.fileId
+                    )
                 }
 
                 itemView.setOnClickListener {

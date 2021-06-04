@@ -21,5 +21,7 @@ class LocalMediaSource private constructor(
     fun updateMedia(id: String, mediaName: String, mediaDescription: String) =
         mMediaDao.updateMedia(id, mediaName, mediaDescription)
 
+    fun deleteMedia(id: String) = mMediaDao.deleteMedia(id)
+
     fun insertMedia(media: List<MediaEntity>) = mMediaDao.insertMedia(media)
 }

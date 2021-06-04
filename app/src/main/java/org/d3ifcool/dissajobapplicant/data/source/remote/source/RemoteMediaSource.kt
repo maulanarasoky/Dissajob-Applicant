@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.media.MediaResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.media.callback.AddMediaCallback
-import org.d3ifcool.dissajobapplicant.ui.media.callback.LoadMediaDataCallback
-import org.d3ifcool.dissajobapplicant.ui.media.callback.LoadMediaFileCallback
-import org.d3ifcool.dissajobapplicant.ui.media.callback.UpdateMediaCallback
+import org.d3ifcool.dissajobapplicant.ui.media.callback.*
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.database.MediaHelper
@@ -94,6 +91,25 @@ class RemoteMediaSource private constructor(
 
             override fun onFailureUpdate(messageId: Int) {
                 callback.onFailureUpdate(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun deleteMedia(
+        id: String,
+        fileId: String,
+        callback: DeleteMediaCallback
+    ) {
+        EspressoIdlingResource.increment()
+        mediaHelper.deleteMedia(id, fileId, object : DeleteMediaCallback {
+            override fun onSuccessDelete() {
+                callback.onSuccessDelete()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailureDelete(messageId: Int) {
+                callback.onFailureDelete(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

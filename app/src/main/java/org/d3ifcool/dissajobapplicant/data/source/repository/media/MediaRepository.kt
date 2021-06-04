@@ -10,10 +10,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalMediaSource
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.media.MediaResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteMediaSource
-import org.d3ifcool.dissajobapplicant.ui.media.callback.AddMediaCallback
-import org.d3ifcool.dissajobapplicant.ui.media.callback.LoadMediaDataCallback
-import org.d3ifcool.dissajobapplicant.ui.media.callback.LoadMediaFileCallback
-import org.d3ifcool.dissajobapplicant.ui.media.callback.UpdateMediaCallback
+import org.d3ifcool.dissajobapplicant.ui.media.callback.*
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
@@ -114,13 +111,20 @@ class MediaRepository private constructor(
             .execute {
                 localMediaSource.updateMedia(
                     mediaData.id,
-                    mediaData.mediaName.toString(),
+                    mediaData.mediaName,
                     mediaData.mediaDescription.toString()
                 )
                 remoteMediaSource.updateMedia(
                     mediaData,
                     callback
                 )
+            }
+
+    override fun deleteMedia(id: String, fileId: String, callback: DeleteMediaCallback) =
+        appExecutors.diskIO()
+            .execute {
+                localMediaSource.deleteMedia(id)
+                remoteMediaSource.deleteMedia(id, fileId, callback)
             }
 
     override fun getMediaById(fileId: String): LiveData<ByteArray> =

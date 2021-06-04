@@ -16,17 +16,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import cn.pedant.SweetAlert.SweetAlertDialog
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityMediaBinding
+import org.d3ifcool.dissajobapplicant.ui.media.callback.DeleteMediaCallback
 import org.d3ifcool.dissajobapplicant.ui.media.callback.LoadPdfCallback
+import org.d3ifcool.dissajobapplicant.ui.media.callback.OnDeleteBtnClickListener
 import org.d3ifcool.dissajobapplicant.ui.media.callback.OnMediaClickListener
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback,
-    OnMediaClickListener {
+    OnMediaClickListener, OnDeleteBtnClickListener, DeleteMediaCallback {
 
     companion object {
         //image pick code
@@ -44,6 +47,8 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
 
     private lateinit var mediaAdapter: MediaAdapter
 
+    private lateinit var dialog: SweetAlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMediaBinding = ActivityMediaBinding.inflate(layoutInflater)
@@ -58,7 +63,7 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
         val factory = ViewModelFactory.getInstance(this)
         mediaViewModel = ViewModelProvider(this, factory)[MediaViewModel::class.java]
 
-        mediaAdapter = MediaAdapter(this, this)
+        mediaAdapter = MediaAdapter(this, this, this)
         showMedia(applicantId)
         with(activityMediaBinding.rvMedia) {
             recycledViewPool.setMaxRecycledViews(0, 0)
@@ -208,6 +213,10 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
             if (resultCode == AddEditMediaActivity.RESULT_UPDATE) {
                 showMedia(AuthHelper.currentUser?.uid.toString())
             }
+        } else if (requestCode == AddEditMediaActivity.REQUEST_DELETE) {
+            if (resultCode == AddEditMediaActivity.RESULT_DELETE) {
+                showMedia(AuthHelper.currentUser?.uid.toString())
+            }
         }
     }
 
@@ -253,5 +262,34 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
         val intent = Intent(this, AddEditMediaActivity::class.java)
         intent.putExtra(AddEditMediaActivity.MEDIA_DATA, mediaData)
         startActivityForResult(intent, AddEditMediaActivity.REQUEST_UPDATE)
+    }
+
+    override fun onDeleteBtnClick(mediaId: String, mediaName: String, fileId: String) {
+        dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_media_delete_alert_dynamic, mediaName)
+        dialog.confirmText = resources.getString(R.string.txt_delete)
+        dialog.cancelText = resources.getString(R.string.txt_cancel)
+        dialog.setCancelable(false)
+        dialog.showCancelButton(true)
+        dialog.setConfirmClickListener {
+            dialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE)
+            dialog.titleText = resources.getString(R.string.txt_loading)
+            dialog.setCancelable(false)
+            dialog.showCancelButton(false)
+            mediaViewModel.deleteMedia(mediaId, fileId, this)
+        }.setCancelClickListener {
+            it.dismissWithAnimation()
+        }
+        dialog.show()
+    }
+
+    override fun onSuccessDelete() {
+        dialog.dismissWithAnimation()
+        mediaAdapter.notifyDataSetChanged()
+    }
+
+    override fun onFailureDelete(messageId: Int) {
+        dialog.dismissWithAnimation()
+        Toast.makeText(this, resources.getString(messageId, "Media"), Toast.LENGTH_SHORT).show()
     }
 }

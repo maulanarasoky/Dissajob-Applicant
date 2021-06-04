@@ -16,7 +16,7 @@ data class MediaEntity(
     var id: String,
 
     @ColumnInfo(name = "media_name")
-    var mediaName: String? = "-",
+    var mediaName: String,
 
     @ColumnInfo(name = "media_description")
     var mediaDescription: String? = "-",

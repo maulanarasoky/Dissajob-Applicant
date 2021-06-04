@@ -6,6 +6,7 @@ import androidx.paging.PagedList
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.media.MediaResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.media.callback.AddMediaCallback
+import org.d3ifcool.dissajobapplicant.ui.media.callback.DeleteMediaCallback
 import org.d3ifcool.dissajobapplicant.ui.media.callback.UpdateMediaCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -15,5 +16,6 @@ interface MediaDataSource {
     fun uploadMedia(media: Uri, callback: UploadFileCallback)
     fun addMedia(mediaData: MediaResponseEntity, callback: AddMediaCallback)
     fun updateMedia(mediaData: MediaResponseEntity, callback: UpdateMediaCallback)
+    fun deleteMedia(id: String, fileId: String, callback: DeleteMediaCallback)
     fun getMediaById(fileId: String): LiveData<ByteArray>
 }

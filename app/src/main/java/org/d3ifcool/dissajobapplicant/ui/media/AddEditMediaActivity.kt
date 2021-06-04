@@ -3,6 +3,7 @@ package org.d3ifcool.dissajobapplicant.ui.media
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -14,12 +15,13 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.media.MediaResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityAddEditMediaBinding
 import org.d3ifcool.dissajobapplicant.ui.media.callback.AddMediaCallback
+import org.d3ifcool.dissajobapplicant.ui.media.callback.DeleteMediaCallback
 import org.d3ifcool.dissajobapplicant.ui.media.callback.UpdateMediaCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 
 class AddEditMediaActivity : AppCompatActivity(), View.OnClickListener, UploadFileCallback,
-    AddMediaCallback, UpdateMediaCallback {
+    AddMediaCallback, UpdateMediaCallback, DeleteMediaCallback {
 
     companion object {
         const val MEDIA_FILE = "media_file"
@@ -29,6 +31,8 @@ class AddEditMediaActivity : AppCompatActivity(), View.OnClickListener, UploadFi
         const val RESULT_ADD = 101
         const val REQUEST_UPDATE = 102
         const val RESULT_UPDATE = 103
+        const val REQUEST_DELETE = 104
+        const val RESULT_DELETE = 105
     }
 
     private lateinit var activityAddEditMediaBinding: ActivityAddEditMediaBinding
@@ -36,6 +40,11 @@ class AddEditMediaActivity : AppCompatActivity(), View.OnClickListener, UploadFi
     private lateinit var viewModel: MediaViewModel
 
     private lateinit var dialog: SweetAlertDialog
+
+    private var isEdit = false
+
+    private lateinit var mediaId: String
+    private lateinit var fileId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +79,10 @@ class AddEditMediaActivity : AppCompatActivity(), View.OnClickListener, UploadFi
                 activityAddEditMediaBinding.etMediaDescription.setText(oldMediaData.mediaDescription)
                 activityAddEditMediaBinding.btnUpload.text =
                     resources.getString(R.string.txt_update)
+
+                mediaId = oldMediaData.id
+                fileId = oldMediaData.fileId
+                isEdit = true
             } else {
                 val mediaFile = Uri.parse(intent.getStringExtra(MEDIA_FILE))
                 val mediaName = intent.getStringExtra(MEDIA_NAME)
@@ -134,10 +147,36 @@ class AddEditMediaActivity : AppCompatActivity(), View.OnClickListener, UploadFi
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (isEdit) {
+            menuInflater.inflate(R.menu.top_toolbar_delete_menu, menu)
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 finish()
+                true
+            }
+            R.id.deleteMenu -> {
+                dialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                dialog.titleText = resources.getString(R.string.txt_media_delete_alert_static)
+                dialog.confirmText = resources.getString(R.string.txt_delete)
+                dialog.cancelText = resources.getString(R.string.txt_cancel)
+                dialog.setCancelable(false)
+                dialog.showCancelButton(true)
+                dialog.setConfirmClickListener {
+                    dialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE)
+                    dialog.titleText = resources.getString(R.string.txt_loading)
+                    dialog.setCancelable(false)
+                    dialog.showCancelButton(false)
+                    viewModel.deleteMedia(mediaId, fileId, this)
+                }.setCancelClickListener {
+                    it.dismissWithAnimation()
+                }
+                dialog.show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -202,6 +241,32 @@ class AddEditMediaActivity : AppCompatActivity(), View.OnClickListener, UploadFi
         dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
         dialog.titleText = resources.getString(messageId, "Media")
         dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+        }
+        dialog.show()
+    }
+
+    override fun onSuccessDelete() {
+        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_success_delete, "Media")
+        dialog.confirmText = resources.getString(R.string.dialog_ok)
+        dialog.setCancelable(false)
+        dialog.showCancelButton(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+            setResult(RESULT_DELETE)
+            finish()
+        }
+        dialog.show()
+    }
+
+    override fun onFailureDelete(messageId: Int) {
+        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(messageId, "Media")
+        dialog.confirmText = resources.getString(R.string.dialog_ok)
+        dialog.setCancelable(false)
+        dialog.showCancelButton(false)
         dialog.setConfirmClickListener {
             it.dismissWithAnimation()
         }

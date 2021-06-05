@@ -56,5 +56,8 @@ data class JobDetailsEntity(
     val isOpen: Boolean,
 
     @ColumnInfo(name = "is_open_for_disability")
-    var isOpenForDisability: Boolean
+    var isOpenForDisability: Boolean,
+
+    @ColumnInfo(name = "additional_information")
+    var additionalInformation: String? = "-"
 ) : Parcelable

@@ -144,7 +144,8 @@ object JobHelper {
                         dataSnapshot.child("updatedDate").value.toString(),
                         dataSnapshot.child("closedDate").value.toString(),
                         dataSnapshot.child("open").value.toString().toBoolean(),
-                        dataSnapshot.child("openForDisability").value.toString().toBoolean()
+                        dataSnapshot.child("openForDisability").value.toString().toBoolean(),
+                        dataSnapshot.child("additionalInformation").value.toString()
                     )
                     callback.onJobDetailsReceived(jobDetails)
                 }

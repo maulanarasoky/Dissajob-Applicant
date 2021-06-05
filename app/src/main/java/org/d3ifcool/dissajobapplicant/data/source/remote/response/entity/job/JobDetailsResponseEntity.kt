@@ -18,5 +18,6 @@ data class JobDetailsResponseEntity(
     var updatedDate: String? = "-",
     var closedDate: String? = "-",
     var isOpen: Boolean,
-    var isOpenForDisability: Boolean
+    var isOpenForDisability: Boolean,
+    var additionalInformation: String? = "-"
 )

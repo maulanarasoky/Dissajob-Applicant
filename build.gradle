@@ -25,7 +25,7 @@ buildscript {
 
         pagingVersion = '2.1.2'
 
-        intentVersion = '3.1.0'
+        intentVersion = '3.3.0'
     }
     repositories {
         google()

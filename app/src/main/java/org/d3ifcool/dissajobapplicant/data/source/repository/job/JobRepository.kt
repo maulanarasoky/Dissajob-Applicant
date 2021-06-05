@@ -242,7 +242,8 @@ class JobRepository private constructor(
                     data.updatedDate,
                     data.closedDate,
                     data.isOpen,
-                    data.isOpenForDisability
+                    data.isOpenForDisability,
+                    data.additionalInformation
                 )
                 localJobSource.insertJobDetails(jobDetails)
             }

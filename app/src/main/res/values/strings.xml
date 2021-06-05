@@ -188,7 +188,7 @@
     <string name="txt_internship">Magang</string>
     <string name="txt_currently_working">Sedang bekerja di posisi ini</string>
     <string name="txt_present">Saat ini</string>
-    <string name="txt_difabel_friendly">Terbuka untuk penyandang disabilitas</string>
+    <string name="txt_open_for_disability">Terbuka untuk penyandang disabilitas</string>
     <string name="txt_media_delete_alert_dynamic">Hapus %1$s ?</string>
     <string name="txt_media_delete_alert_static">Hapus media ?</string>
 </resources>

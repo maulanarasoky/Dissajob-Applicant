@@ -10,9 +10,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.d3ifcool.dissajobapplicant.R
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.history.SearchHistoryResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySearchResultBinding
@@ -47,6 +49,8 @@ class SearchResultActivity : AppCompatActivity(), OnJobClickListener, LoadRecrui
 
     private lateinit var searchText: String
 
+    private lateinit var searchedJobs: PagedList<JobEntity>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activitySearchResultBinding = ActivitySearchResultBinding.inflate(layoutInflater)
@@ -70,27 +74,47 @@ class SearchResultActivity : AppCompatActivity(), OnJobClickListener, LoadRecrui
         activitySearchResultBinding.chipFilter.setOnCheckedChangeListener(this)
     }
 
-    fun searchJob(searchText: String) {
-        jobViewModel.searchJob(searchText).observe(this) { jobs ->
-            if (jobs != null) {
-                when (jobs.status) {
-                    Status.LOADING -> showLoading(true)
-                    Status.SUCCESS -> {
-                        showLoading(false)
-                        if (jobs.data?.isNotEmpty() == true) {
-                            jobAdapter.submitList(jobs.data)
-                            jobAdapter.notifyDataSetChanged()
-                            activitySearchResultBinding.cgFilter.visibility = View.VISIBLE
-                        } else {
-                            activitySearchResultBinding.linearSearchResult.visibility = View.GONE
-                            activitySearchResultBinding.tvNoData.visibility = View.VISIBLE
+    fun searchJob(searchText: String, unFilter: Boolean) {
+        if (unFilter) {
+            jobAdapter.submitList(searchedJobs)
+            jobAdapter.notifyDataSetChanged()
+        } else {
+            jobViewModel.searchJob(searchText).observe(this) { jobs ->
+                if (jobs != null) {
+                    when (jobs.status) {
+                        Status.LOADING -> showLoading(true)
+                        Status.SUCCESS -> {
+                            showLoading(false)
+                            if (jobs.data?.isNotEmpty() == true) {
+                                searchedJobs = jobs.data
+                                jobAdapter.submitList(jobs.data)
+                                jobAdapter.notifyDataSetChanged()
+                            } else {
+                                activitySearchResultBinding.linearSearchResult.visibility =
+                                    View.GONE
+                                activitySearchResultBinding.tvNoData.visibility = View.VISIBLE
+                            }
+                        }
+                        Status.ERROR -> {
+                            showLoading(false)
+                            Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    Status.ERROR -> {
-                        showLoading(false)
-                        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
-                    }
                 }
+            }
+        }
+    }
+
+    private fun filterJob(searchText: String) {
+        showLoading(true)
+        jobViewModel.getFilteredJobs(searchText).observe(this) { jobs ->
+            if (jobs != null) {
+                showLoading(false)
+                jobAdapter.submitList(jobs)
+                jobAdapter.notifyDataSetChanged()
+            } else {
+                activitySearchResultBinding.linearSearchResult.visibility = View.GONE
+                activitySearchResultBinding.tvNoData.visibility = View.VISIBLE
             }
         }
     }
@@ -118,7 +142,7 @@ class SearchResultActivity : AppCompatActivity(), OnJobClickListener, LoadRecrui
     }
 
     override fun onSuccessAdding() {
-        searchJob(searchText)
+        searchJob(searchText, false)
 
         with(activitySearchResultBinding.rvJob) {
             layoutManager = LinearLayoutManager(this@SearchResultActivity)
@@ -178,29 +202,7 @@ class SearchResultActivity : AppCompatActivity(), OnJobClickListener, LoadRecrui
                 )
             )
 
-            jobViewModel.getFilteredJobs(searchText).observe(this) { jobs ->
-                if (jobs != null) {
-                    when (jobs.status) {
-                        Status.LOADING -> showLoading(true)
-                        Status.SUCCESS -> {
-                            showLoading(false)
-                            if (jobs.data?.isNotEmpty() == true) {
-                                jobAdapter.submitList(jobs.data)
-                                jobAdapter.notifyDataSetChanged()
-                                activitySearchResultBinding.cgFilter.visibility = View.VISIBLE
-                            } else {
-                                activitySearchResultBinding.linearSearchResult.visibility =
-                                    View.GONE
-                                activitySearchResultBinding.tvNoData.visibility = View.VISIBLE
-                            }
-                        }
-                        Status.ERROR -> {
-                            showLoading(false)
-                            Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }
+            filterJob(searchText)
         } else {
             activitySearchResultBinding.chipFilter.chipBackgroundColor = ColorStateList.valueOf(
                 ContextCompat.getColor(
@@ -218,7 +220,7 @@ class SearchResultActivity : AppCompatActivity(), OnJobClickListener, LoadRecrui
                 )
             )
 
-            searchJob(searchText)
+            searchJob(searchText, true)
         }
     }
 

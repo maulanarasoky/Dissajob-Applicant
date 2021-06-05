@@ -28,6 +28,7 @@
         android:paddingEnd="@dimen/margin_16dp"
         android:paddingBottom="@dimen/margin_16dp"
         android:showDividers="middle"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,8 +37,7 @@
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/cgFilter"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipFilter"
@@ -47,7 +47,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/roboto"
-                android:text="@string/txt_difabel_friendly"
+                android:text="@string/txt_open_for_disability"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:chipBackgroundColor="@color/white"

@@ -88,7 +88,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
         activityJobDetailsBinding.jobDetailsTitleSection.tvJobAddress.text =
             jobDetails.address.toString()
 
-        populateRecruiterData(jobDetails.postedBy.toString())
+        populateRecruiterData(jobDetails.postedBy)
 
         val postedDate = DateUtils.getPostedDate(jobDetails.postedDate.toString())
         activityJobDetailsBinding.jobDetailsTitleSection.tvJobType.text = resources.getString(
@@ -97,6 +97,11 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
             jobDetails.type.toString()
         )
         activityJobDetailsBinding.jobDetailsTitleSection.tvJobPostedDate.text = postedDate
+
+        if (jobDetails.isOpenForDisability) {
+            activityJobDetailsBinding.jobDetailsTitleSection.tvOpenForDisability.visibility =
+                View.VISIBLE
+        }
 
         //Description section
         activityJobDetailsBinding.jobDetailsDescriptionSection.tvJobDescription.text =

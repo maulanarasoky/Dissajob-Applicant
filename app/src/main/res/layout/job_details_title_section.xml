@@ -43,7 +43,7 @@
         android:layout_marginTop="@dimen/margin_4dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
-        android:textColor="@color/gray"
+        android:textColor="@color/black"
         android:textSize="13.5sp"
         app:layout_constraintEnd_toStartOf="@id/imgRecruiterPicture"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
         android:id="@+id/tvJobType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_4dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
         android:textColor="@color/colorPrimary"
@@ -82,11 +82,26 @@
         android:fontFamily="@font/roboto"
         android:textColor="@color/colorPrimary"
         android:textSize="13.5sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/imgRecruiterPicture"
         app:layout_constraintStart_toStartOf="@id/imgRecruiterPicture"
         app:layout_constraintTop_toBottomOf="@id/imgRecruiterPicture"
         app:layout_constraintTop_toTopOf="@id/tvJobType"
         tools:text="12 April 2021" />
+
+    <TextView
+        android:id="@+id/tvOpenForDisability"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_open_for_disability"
+        android:textColor="@color/colorPrimary"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imgRecruiterPicture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJobType" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package org.d3ifcool.dissajobapplicant.ui.job
 
 import android.text.format.DateUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -86,6 +87,10 @@ class JobAdapter(
                                 tvJobPostedDate.text = ago
                             } catch (e: ParseException) {
                                 e.printStackTrace()
+                            }
+
+                            if (items.isOpenForDisability) {
+                                tvOpenForDisability.visibility = View.VISIBLE
                             }
 
                             if (recruiterData.imagePath != "-") {

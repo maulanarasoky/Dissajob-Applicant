@@ -84,7 +84,7 @@
 
     <!-- Change password -->
     <string name="txt_change_password_title">Ganti kata sandi</string>
-    <string name="txt_change_password_description">Buat kata sandi yang kuat</string>
+    <string name="txt_change_password_description">Masukkan kata sandi yang kuat</string>
     <string name="txt_new_password">Password baru</string>
     <string name="txt_change_password_note">*Mohon tidak menggunakan password yang lama</string>
     <string name="txt_change_password_first_rule">8 karakter atau lebih</string>

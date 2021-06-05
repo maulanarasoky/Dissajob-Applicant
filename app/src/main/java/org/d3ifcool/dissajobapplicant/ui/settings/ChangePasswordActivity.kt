@@ -1,15 +1,14 @@
 package org.d3ifcool.dissajobapplicant.ui.settings
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import cn.pedant.SweetAlert.SweetAlertDialog
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivityChangePasswordBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
@@ -23,6 +22,11 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Update
     private lateinit var activityChangePasswordBinding: ActivityChangePasswordBinding
 
     private lateinit var viewModel: ApplicantViewModel
+
+    private lateinit var dialog: SweetAlertDialog
+
+    private var isFirstRuleValid = false
+    private var isSecondRuleValid = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,11 +71,20 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Update
 
         if (newPassword != confirmPassword) {
             activityChangePasswordBinding.etNewPassword.error =
-                getString(R.string.edit_text_alert_password_not_match)
+                getString(R.string.edit_text_alert_password_not_match, "Password")
             activityChangePasswordBinding.etConfirmPassword.error =
-                getString(R.string.edit_text_alert_password_not_match)
+                getString(R.string.edit_text_alert_password_not_match, "Password")
             return
         }
+
+        if (!isFirstRuleValid || !isSecondRuleValid) {
+            return
+        }
+
+        dialog = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_loading)
+        dialog.setCancelable(false)
+        dialog.show()
 
         updatePassword(oldPassword, newPassword)
     }
@@ -105,15 +118,21 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Update
             override fun afterTextChanged(s: Editable?) {
                 if (activityChangePasswordBinding.etNewPassword.text.trim().length >= 8) {
                     activityChangePasswordBinding.imgPasswordFirstRule.setImageResource(R.drawable.ic_check_circle_color_primary_24dp)
+                    isFirstRuleValid = true
                 } else {
                     activityChangePasswordBinding.imgPasswordFirstRule.setImageResource(R.drawable.ic_check_circle_gray_24dp)
+                    isFirstRuleValid = false
                 }
 
-                if (isValidPassword(activityChangePasswordBinding.etNewPassword.text.toString().trim())) {
+                if (isValidPassword(
+                        activityChangePasswordBinding.etNewPassword.text.toString().trim()
+                    )
+                ) {
                     activityChangePasswordBinding.imgPasswordSecondRule.setImageResource(R.drawable.ic_check_circle_color_primary_24dp)
-                    Log.d("SUCCESS", "SUCCESS RULE SECOND")
+                    isSecondRuleValid = true
                 } else {
                     activityChangePasswordBinding.imgPasswordSecondRule.setImageResource(R.drawable.ic_check_circle_gray_24dp)
+                    isSecondRuleValid = false
                 }
             }
 
@@ -139,16 +158,22 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Update
     }
 
     override fun onSuccess() {
-        Toast.makeText(
-            this,
-            resources.getString(R.string.txt_success_update, "Password"),
-            Toast.LENGTH_SHORT
-        ).show()
-        finish()
+        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_success_update, "Password")
+        dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+            finish()
+        }
+        dialog.show()
     }
 
     override fun onFailure(messageId: Int) {
-        Toast.makeText(this, resources.getString(messageId, "Email"), Toast.LENGTH_SHORT).show()
+        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(messageId, "Password")
+        dialog.setCancelable(false)
+        dialog.show()
+
         isEnable(true)
     }
 }

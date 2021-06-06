@@ -94,7 +94,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/margin_16dp"
-            android:background="@drawable/button_radius_color_primary"
+            android:background="@drawable/bg_oval_color_primary"
             android:fontFamily="@font/roboto"
             android:paddingTop="@dimen/margin_16dp"
             android:paddingBottom="@dimen/margin_16dp"

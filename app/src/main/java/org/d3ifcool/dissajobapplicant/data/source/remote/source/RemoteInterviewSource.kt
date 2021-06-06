@@ -49,13 +49,13 @@ class RemoteInterviewSource private constructor(
         mInterviewHelper.insertInterviewAnswer(
             interviewAnswers,
             object : InsertInterviewAnswersCallback {
-                override fun onSuccess() {
-                    callback.onSuccess()
+                override fun onSuccessAdding() {
+                    callback.onSuccessAdding()
                     EspressoIdlingResource.decrement()
                 }
 
-                override fun onFailure(messageId: Int) {
-                    callback.onFailure(messageId)
+                override fun onFailureAdding(messageId: Int) {
+                    callback.onFailureAdding(messageId)
                     EspressoIdlingResource.decrement()
                 }
             })

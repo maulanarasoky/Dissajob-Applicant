@@ -107,23 +107,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvThirdQuestion" />
 
-    <Button
-        android:id="@+id/btnSendApplication"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/bg_oval_color_primary"
         android:fontFamily="@font/roboto"
-        android:paddingStart="@dimen/margin_40dp"
         android:paddingTop="@dimen/margin_16dp"
-        android:paddingEnd="@dimen/margin_40dp"
         android:paddingBottom="@dimen/margin_16dp"
-        android:text="@string/txt_send"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etThirdQuestion" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etThirdQuestion" />
+
+    <View
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_arrow_next_white_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnSubmit"
+        app:layout_constraintEnd_toEndOf="@id/btnSubmit"
+        app:layout_constraintStart_toStartOf="@id/btnSubmit"
+        app:layout_constraintTop_toTopOf="@id/btnSubmit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

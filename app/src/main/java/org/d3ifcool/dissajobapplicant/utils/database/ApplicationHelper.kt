@@ -121,11 +121,13 @@ object ApplicationHelper {
     }
 
     fun insertApplication(application: ApplicationResponseEntity, callback: ApplyJobCallback) {
+        application.id = database.push().key.toString()
+        application.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(application.id)
             .setValue(application).addOnSuccessListener {
-                callback.onSuccess()
+                callback.onSuccessApply()
             }.addOnFailureListener {
-                callback.onFailure(R.string.txt_failure_update)
+                callback.onFailureApply(R.string.txt_success_apply)
             }
     }
 }

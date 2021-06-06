@@ -191,4 +191,9 @@
     <string name="txt_open_for_disability">Terbuka untuk penyandang disabilitas</string>
     <string name="txt_media_delete_alert_dynamic">Hapus %1$s ?</string>
     <string name="txt_media_delete_alert_static">Hapus media ?</string>
+    <string name="txt_alert_apply">Masukkan lamaran ?</string>
+    <string name="txt_success_apply">Pekerjaan berhasil dilamar</string>
+    <string name="txt_failure_apply">Gagal melamar pekerjaan</string>
+    <string name="txt_apply">Lamar</string>
+    <string name="txt_submit">Submit</string>
 </resources>

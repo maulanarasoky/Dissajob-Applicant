@@ -17,6 +17,7 @@ import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityJobDetailsBinding
+import org.d3ifcool.dissajobapplicant.ui.question.QuestionActivity
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterProfileActivity
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
@@ -60,6 +61,8 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 showJobDetails(jobId)
             }
         }
+
+        activityJobDetailsBinding.jobDetailsFooterSection.btnApply.setOnClickListener(this)
     }
 
     private fun showJobDetails(jobId: String) {
@@ -163,6 +166,20 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, RecruiterProfileActivity::class.java)
                 intent.putExtra(RecruiterProfileActivity.RECRUITER_ID, jobData.postedBy)
                 startActivity(intent)
+            }
+            R.id.btnApply -> {
+                val intent = Intent(this, QuestionActivity::class.java)
+                intent.putExtra(QuestionActivity.JOB_ID, jobData.id)
+                startActivityForResult(intent, QuestionActivity.REQUEST_ADD)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == QuestionActivity.REQUEST_ADD) {
+            if (resultCode == QuestionActivity.RESULT_ADD) {
+                activityJobDetailsBinding.jobDetailsFooterSection.btnApply.isEnabled = false
             }
         }
     }

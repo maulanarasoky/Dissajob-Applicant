@@ -43,11 +43,13 @@ object InterviewHelper {
         interviewAnswers: InterviewResponseEntity,
         callback: InsertInterviewAnswersCallback
     ) {
+        interviewAnswers.id = database.push().key.toString()
+        interviewAnswers.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(interviewAnswers.id)
             .setValue(interviewAnswers).addOnSuccessListener {
-                callback.onSuccess()
+                callback.onSuccessAdding()
             }.addOnFailureListener {
-                callback.onFailure(R.string.txt_failure_update)
+                callback.onFailureAdding(R.string.txt_failure_apply)
             }
     }
 

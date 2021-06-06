@@ -116,13 +116,13 @@ class RemoteApplicationSource private constructor(
     ) {
         EspressoIdlingResource.increment()
         applicationHelper.insertApplication(application, object : ApplyJobCallback {
-            override fun onSuccess() {
-                callback.onSuccess()
+            override fun onSuccessApply() {
+                callback.onSuccessApply()
                 EspressoIdlingResource.decrement()
             }
 
-            override fun onFailure(messageId: Int) {
-                callback.onFailure(messageId)
+            override fun onFailureApply(messageId: Int) {
+                callback.onFailureApply(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

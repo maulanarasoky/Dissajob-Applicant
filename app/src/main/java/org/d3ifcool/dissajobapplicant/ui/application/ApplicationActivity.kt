@@ -41,7 +41,7 @@ class ApplicationActivity : AppCompatActivity(), OnJobClickListener, LoadJobById
         setContentView(activityApplicationBinding.root)
 
         activityApplicationBinding.toolbar.title =
-            resources.getString(R.string.txt_application_details)
+            resources.getString(R.string.txt_list_application)
         setSupportActionBar(activityApplicationBinding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

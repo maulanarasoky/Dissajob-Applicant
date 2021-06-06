@@ -154,6 +154,7 @@
     <string name="txt_end_date_experience">Tanggal selesai</string>
     <string name="txt_description">Deskripsi</string>
     <string name="txt_save">Simpan</string>
+    <string name="txt_saved">Disimpan</string>
     <string name="txt_start_end_date_value">%1$s %2$s</string>
     <string name="txt_invalid_start_date">Tanggal mulai tidak boleh setelah tanggal selesai</string>
     <string name="txt_invalid_end_date">Tanggal selesai tidak boleh sebelum tanggal mulai</string>

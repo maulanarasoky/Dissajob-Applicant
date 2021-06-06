@@ -49,7 +49,7 @@ object JobHelper {
     }
 
     fun getSavedJobs(callback: LoadSavedJobsCallback) {
-        savedJobDatabase.child(AuthHelper.currentUser?.uid.toString())
+        savedJobDatabase.orderByChild("applicantId").equalTo(AuthHelper.currentUser?.uid.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
                 }
@@ -60,7 +60,8 @@ object JobHelper {
                         for (data in dataSnapshot.children.reversed()) {
                             val job = SavedJobResponseEntity(
                                 data.key.toString(),
-                                data.child("jobId").value.toString()
+                                data.child("jobId").value.toString(),
+                                data.child("applicantId").value.toString()
                             )
                             arrSavedJob.add(job)
                         }
@@ -155,12 +156,13 @@ object JobHelper {
     }
 
     fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback) {
-        savedJobDatabase.child(AuthHelper.currentUser?.uid.toString()).child(savedJob.id)
-            .setValue(savedJob).addOnSuccessListener {
-                callback.onSuccess()
-            }.addOnFailureListener {
-                callback.onFailure(R.string.txt_failure_update)
-            }
+        savedJob.id = savedJobDatabase.push().key.toString()
+        savedJob.applicantId = AuthHelper.currentUser?.uid.toString()
+        savedJobDatabase.child(savedJob.id).setValue(savedJob).addOnSuccessListener {
+            callback.onSuccessSave()
+        }.addOnFailureListener {
+            callback.onFailureSave(R.string.txt_failure_update)
+        }
     }
 
     fun searchJob(searchText: String, callback: LoadJobsCallback) {

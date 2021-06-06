@@ -115,7 +115,8 @@ class JobRepository private constructor(
                 for (response in data) {
                     val job = SavedJobEntity(
                         response.id,
-                        response.jobId
+                        response.jobId,
+                        response.applicantId
                     )
                     jobList.add(job)
                 }

@@ -118,13 +118,13 @@ class RemoteJobSource private constructor(
     ) {
         EspressoIdlingResource.increment()
         jobHelper.saveJob(savedJob, object : SaveJobCallback {
-            override fun onSuccess() {
-                callback.onSuccess()
+            override fun onSuccessSave() {
+                callback.onSuccessSave()
                 EspressoIdlingResource.decrement()
             }
 
-            override fun onFailure(messageId: Int) {
-                callback.onFailure(messageId)
+            override fun onFailureSave(messageId: Int) {
+                callback.onFailureSave(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

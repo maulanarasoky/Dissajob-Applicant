@@ -16,15 +16,18 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
+import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityJobDetailsBinding
+import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
 import org.d3ifcool.dissajobapplicant.ui.question.QuestionActivity
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterProfileActivity
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.DateUtils
+import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
+class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCallback {
 
     companion object {
         const val EXTRA_ID = "extra_id"
@@ -63,6 +66,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         activityJobDetailsBinding.jobDetailsFooterSection.btnApply.setOnClickListener(this)
+        activityJobDetailsBinding.jobDetailsFooterSection.btnSave.setOnClickListener(this)
     }
 
     private fun showJobDetails(jobId: String) {
@@ -150,6 +154,15 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun saveJob() {
+        val jobData = SavedJobResponseEntity(
+            "",
+            jobData.id,
+            ""
+        )
+        jobViewModel.saveJob(jobData, this)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -172,6 +185,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 intent.putExtra(QuestionActivity.JOB_ID, jobData.id)
                 startActivityForResult(intent, QuestionActivity.REQUEST_ADD)
             }
+            R.id.btnSave -> saveJob()
         }
     }
 
@@ -182,5 +196,14 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 activityJobDetailsBinding.jobDetailsFooterSection.btnApply.isEnabled = false
             }
         }
+    }
+
+    override fun onSuccessSave() {
+        activityJobDetailsBinding.jobDetailsFooterSection.btnSave.text =
+            resources.getString(R.string.txt_saved)
+    }
+
+    override fun onFailureSave(messageId: Int) {
+        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
     }
 }

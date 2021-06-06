@@ -15,4 +15,8 @@ data class SavedJobEntity(
     @NonNull
     @ColumnInfo(name = "job_id")
     val jobId: String,
+
+    @NonNull
+    @ColumnInfo(name = "applicant_id")
+    val applicantId: String
 )

@@ -1,6 +1,6 @@
 package org.d3ifcool.dissajobapplicant.ui.job.callback
 
 interface SaveJobCallback {
-    fun onSuccess()
-    fun onFailure(messageId: Int)
+    fun onSuccessSave()
+    fun onFailureSave(messageId: Int)
 }

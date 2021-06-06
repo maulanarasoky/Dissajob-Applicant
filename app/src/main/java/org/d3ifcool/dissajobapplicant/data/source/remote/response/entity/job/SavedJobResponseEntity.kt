@@ -6,4 +6,5 @@ data class SavedJobResponseEntity(
     @get:Exclude
     var id: String,
     var jobId: String,
+    var applicantId: String
 )

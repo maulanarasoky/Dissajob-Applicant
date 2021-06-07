@@ -195,6 +195,7 @@
     <string name="txt_alert_apply">Masukkan lamaran ?</string>
     <string name="txt_success_apply">Pekerjaan berhasil dilamar</string>
     <string name="txt_failure_apply">Gagal melamar pekerjaan</string>
+    <string name="txt_success_save_job">Pekerjaan berhasil disimpan</string>
     <string name="txt_apply">Lamar</string>
     <string name="txt_submit">Submit</string>
 </resources>

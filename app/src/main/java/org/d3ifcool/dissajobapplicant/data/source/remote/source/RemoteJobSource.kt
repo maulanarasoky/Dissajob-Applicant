@@ -6,10 +6,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobDetailsResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.*
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.database.JobHelper
 
@@ -121,13 +118,31 @@ class RemoteJobSource private constructor(
     ) {
         EspressoIdlingResource.increment()
         jobHelper.saveJob(savedJob, object : SaveJobCallback {
-            override fun onSuccessSave() {
-                callback.onSuccessSave()
+            override fun onSuccessSave(saveJobId: String) {
+                callback.onSuccessSave(saveJobId)
                 EspressoIdlingResource.decrement()
             }
 
             override fun onFailureSave(messageId: Int) {
                 callback.onFailureSave(messageId)
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun unSaveJob(
+        id: String,
+        callback: UnSaveJobCallback
+    ) {
+        EspressoIdlingResource.increment()
+        jobHelper.unSaveJob(id, object : UnSaveJobCallback {
+            override fun onSuccessUnSave() {
+                callback.onSuccessUnSave()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun onFailureUnSave(messageId: Int) {
+                callback.onFailureUnSave(messageId)
                 EspressoIdlingResource.decrement()
             }
         })

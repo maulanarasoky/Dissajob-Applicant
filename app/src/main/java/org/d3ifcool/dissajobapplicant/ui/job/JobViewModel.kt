@@ -9,6 +9,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntit
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
 import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.UnSaveJobCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 class JobViewModel(private val jobRepository: JobRepository) : ViewModel() {
@@ -35,4 +36,9 @@ class JobViewModel(private val jobRepository: JobRepository) : ViewModel() {
         savedJob: SavedJobResponseEntity,
         callback: SaveJobCallback
     ) = jobRepository.saveJob(savedJob, callback)
+
+    fun unSaveJob(
+        id: String,
+        callback: UnSaveJobCallback
+    ) = jobRepository.unSaveJob(id, callback)
 }

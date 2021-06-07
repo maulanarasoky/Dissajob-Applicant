@@ -13,10 +13,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.Job
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteJobSource
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.*
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -257,6 +254,13 @@ class JobRepository private constructor(
     override fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback) =
         appExecutors.diskIO()
             .execute { remoteJobSource.saveJob(savedJob, callback) }
+
+    override fun unSaveJob(id: String, callback: UnSaveJobCallback) =
+        appExecutors.diskIO()
+            .execute {
+                localJobSource.unSaveJob(id)
+                remoteJobSource.unSaveJob(id, callback)
+            }
 
     override fun searchJob(searchText: String): LiveData<Resource<PagedList<JobEntity>>> {
         return object :

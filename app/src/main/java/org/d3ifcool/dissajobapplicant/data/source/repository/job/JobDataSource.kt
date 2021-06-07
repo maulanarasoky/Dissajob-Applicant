@@ -7,6 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.UnSaveJobCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 interface JobDataSource {
@@ -16,6 +17,7 @@ interface JobDataSource {
     fun getJobsByRecruiter(recruiterId: String): LiveData<Resource<PagedList<JobEntity>>>
     fun getJobDetails(jobId: String): LiveData<Resource<JobDetailsEntity>>
     fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback)
+    fun unSaveJob(id: String, callback: UnSaveJobCallback)
     fun searchJob(searchText: String): LiveData<Resource<PagedList<JobEntity>>>
     fun getFilteredJobs(searchText: String): LiveData<PagedList<JobEntity>>
 }

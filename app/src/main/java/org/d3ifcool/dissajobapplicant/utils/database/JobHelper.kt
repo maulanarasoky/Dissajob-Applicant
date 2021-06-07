@@ -6,10 +6,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.Job
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteJobSource
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobDetailsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadSavedJobsCallback
-import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.*
 import java.util.*
 
 object JobHelper {
@@ -159,9 +156,17 @@ object JobHelper {
         savedJob.id = savedJobDatabase.push().key.toString()
         savedJob.applicantId = AuthHelper.currentUser?.uid.toString()
         savedJobDatabase.child(savedJob.id).setValue(savedJob).addOnSuccessListener {
-            callback.onSuccessSave()
+            callback.onSuccessSave(savedJob.id)
         }.addOnFailureListener {
             callback.onFailureSave(R.string.txt_failure_update)
+        }
+    }
+
+    fun unSaveJob(id: String, callback: UnSaveJobCallback) {
+        savedJobDatabase.child(id).removeValue().addOnSuccessListener {
+            callback.onSuccessUnSave()
+        }.addOnFailureListener {
+            callback.onFailureUnSave(R.string.txt_failure_delete)
         }
     }
 

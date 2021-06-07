@@ -8,26 +8,27 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityJobDetailsBinding
 import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
+import org.d3ifcool.dissajobapplicant.ui.job.callback.UnSaveJobCallback
 import org.d3ifcool.dissajobapplicant.ui.question.QuestionActivity
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterProfileActivity
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.DateUtils
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
-class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCallback {
+class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCallback,
+    UnSaveJobCallback {
 
     companion object {
         const val EXTRA_ID = "extra_id"
@@ -41,7 +42,10 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
 
     private lateinit var jobData: JobDetailsEntity
 
-    private lateinit var dialog: SweetAlertDialog
+    private var isJobApplied = false
+    private var isJobSaved = false
+
+    lateinit var saveJobId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,6 +158,25 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
         }
     }
 
+    private fun checkApplyCondition() {
+        if (isJobApplied) {
+            val intent = Intent(this, ApplicationEntity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, QuestionActivity::class.java)
+            intent.putExtra(QuestionActivity.JOB_ID, jobData.id)
+            startActivityForResult(intent, QuestionActivity.REQUEST_ADD)
+        }
+    }
+
+    private fun checkSaveCondition() {
+        if (isJobSaved) {
+            unSaveJob()
+        } else {
+            saveJob()
+        }
+    }
+
     private fun saveJob() {
         val jobData = SavedJobResponseEntity(
             "",
@@ -161,6 +184,10 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
             ""
         )
         jobViewModel.saveJob(jobData, this)
+    }
+
+    private fun unSaveJob() {
+        jobViewModel.unSaveJob(saveJobId, this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -180,12 +207,8 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
                 intent.putExtra(RecruiterProfileActivity.RECRUITER_ID, jobData.postedBy)
                 startActivity(intent)
             }
-            R.id.btnApply -> {
-                val intent = Intent(this, QuestionActivity::class.java)
-                intent.putExtra(QuestionActivity.JOB_ID, jobData.id)
-                startActivityForResult(intent, QuestionActivity.REQUEST_ADD)
-            }
-            R.id.btnSave -> saveJob()
+            R.id.btnApply -> checkApplyCondition()
+            R.id.btnSave -> checkSaveCondition()
         }
     }
 
@@ -194,16 +217,34 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
         if (requestCode == QuestionActivity.REQUEST_ADD) {
             if (resultCode == QuestionActivity.RESULT_ADD) {
                 activityJobDetailsBinding.jobDetailsFooterSection.btnApply.isEnabled = false
+                isJobApplied = true
             }
         }
     }
 
-    override fun onSuccessSave() {
+    override fun onSuccessSave(saveJobId: String) {
+        this.saveJobId = saveJobId
         activityJobDetailsBinding.jobDetailsFooterSection.btnSave.text =
             resources.getString(R.string.txt_saved)
+        Toast.makeText(this, resources.getString(R.string.txt_success_save_job), Toast.LENGTH_SHORT)
+            .show()
+        isJobSaved = true
     }
 
     override fun onFailureSave(messageId: Int) {
         Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+        isJobSaved = false
+    }
+
+    override fun onSuccessUnSave() {
+        activityJobDetailsBinding.jobDetailsFooterSection.btnSave.text =
+            resources.getString(R.string.txt_save)
+
+        isJobSaved = false
+    }
+
+    override fun onFailureUnSave(messageId: Int) {
+        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+        isJobSaved = true
     }
 }

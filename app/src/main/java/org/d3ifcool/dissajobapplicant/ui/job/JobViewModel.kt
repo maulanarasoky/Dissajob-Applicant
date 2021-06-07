@@ -14,7 +14,8 @@ import org.d3ifcool.dissajobapplicant.vo.Resource
 class JobViewModel(private val jobRepository: JobRepository) : ViewModel() {
     fun getJobs(): LiveData<Resource<PagedList<JobEntity>>> = jobRepository.getJobs()
 
-    fun getSavedJobs(): LiveData<Resource<PagedList<SavedJobEntity>>> = jobRepository.getSavedJobs()
+    fun getSavedJobs(applicantId: String): LiveData<Resource<PagedList<SavedJobEntity>>> =
+        jobRepository.getSavedJobs(applicantId)
 
     fun getJobById(jobId: String): LiveData<Resource<JobEntity>> = jobRepository.getJobById(jobId)
 

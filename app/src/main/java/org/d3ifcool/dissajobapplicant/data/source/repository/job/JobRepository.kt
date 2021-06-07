@@ -85,7 +85,7 @@ class JobRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getSavedJobs(): LiveData<Resource<PagedList<SavedJobEntity>>> {
+    override fun getSavedJobs(applicantId: String): LiveData<Resource<PagedList<SavedJobEntity>>> {
         return object :
             NetworkBoundResource<PagedList<SavedJobEntity>, List<SavedJobResponseEntity>>(
                 appExecutors
@@ -96,7 +96,10 @@ class JobRepository private constructor(
                     .setInitialLoadSizeHint(4)
                     .setPageSize(4)
                     .build()
-                return LivePagedListBuilder(localJobSource.getSavedJobs(), config).build()
+                return LivePagedListBuilder(
+                    localJobSource.getSavedJobs(applicantId),
+                    config
+                ).build()
             }
 
             override fun shouldFetch(data: PagedList<SavedJobEntity>?): Boolean =
@@ -104,7 +107,7 @@ class JobRepository private constructor(
 //                data == null || data.isEmpty()
 
             public override fun createCall(): LiveData<ApiResponse<List<SavedJobResponseEntity>>> =
-                remoteJobSource.getSavedJobs(object : LoadSavedJobsCallback {
+                remoteJobSource.getSavedJobs(applicantId, object : LoadSavedJobsCallback {
                     override fun onAllJobsReceived(jobResponse: List<SavedJobResponseEntity>): List<SavedJobResponseEntity> {
                         return jobResponse
                     }

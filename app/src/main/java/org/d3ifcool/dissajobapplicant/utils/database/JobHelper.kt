@@ -48,8 +48,8 @@ object JobHelper {
             })
     }
 
-    fun getSavedJobs(callback: LoadSavedJobsCallback) {
-        savedJobDatabase.orderByChild("applicantId").equalTo(AuthHelper.currentUser?.uid.toString())
+    fun getSavedJobs(applicantId: String, callback: LoadSavedJobsCallback) {
+        savedJobDatabase.orderByChild("applicantId").equalTo(applicantId)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
                 }

@@ -20,7 +20,8 @@ class LocalJobSource private constructor(
 
     fun getJobs(): DataSource.Factory<Int, JobEntity> = mJobDao.getJobs()
 
-    fun getSavedJobs(): DataSource.Factory<Int, SavedJobEntity> = mJobDao.getSavedJobs()
+    fun getSavedJobs(applicantId: String): DataSource.Factory<Int, SavedJobEntity> =
+        mJobDao.getSavedJobs(applicantId)
 
     fun getJobById(jobId: String): LiveData<JobEntity> = mJobDao.getJobById(jobId)
 

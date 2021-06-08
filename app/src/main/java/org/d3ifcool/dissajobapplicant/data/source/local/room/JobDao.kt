@@ -18,6 +18,9 @@ interface JobDao {
     @Query("SELECT * FROM saved_jobs WHERE applicant_id = :applicantId")
     fun getSavedJobs(applicantId: String): DataSource.Factory<Int, SavedJobEntity>
 
+    @Query("SELECT * FROM saved_jobs WHERE job_id = :jobId AND applicant_id = :applicantId")
+    fun getSavedJobByJob(jobId: String, applicantId: String): LiveData<SavedJobEntity>
+
     @Query("SELECT * FROM jobs WHERE id = :jobId")
     fun getJobById(jobId: String): LiveData<JobEntity>
 

@@ -15,8 +15,8 @@ class LocalInterviewSource private constructor(
             INSTANCE ?: LocalInterviewSource(interviewDao)
     }
 
-    fun getInterviewAnswers(jobId: String): DataSource.Factory<Int, InterviewEntity> =
-        mInterviewDao.getInterviewAnswers(jobId)
+    fun getInterviewAnswers(applicationId: String): DataSource.Factory<Int, InterviewEntity> =
+        mInterviewDao.getInterviewAnswers(applicationId)
 
     fun insertInterviewAnswers(answers: List<InterviewEntity>) =
         mInterviewDao.insertInterviewAnswers(answers)

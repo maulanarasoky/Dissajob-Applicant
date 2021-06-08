@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
     android:padding="@dimen/margin_16dp">
 
     <TextView
-        android:id="@+id/tvApplicationStatusTitle"
+        android:id="@+id/tvApplyDateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto"
-        android:text="@string/txt_application_status"
+        android:text="@string/txt_apply_at"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -19,16 +20,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tvApplyDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvApplyDateTitle"
+        tools:text="Apply date" />
+
+    <TextView
+        android:id="@+id/tvApplicationStatusTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_application_status"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvApplyDate" />
+
+    <TextView
         android:id="@+id/tvApplicationStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8dp"
-        android:background="@drawable/bg_waiting_status"
         android:fontFamily="@font/roboto"
-        android:paddingStart="@dimen/margin_8dp"
-        android:paddingTop="@dimen/margin_4dp"
-        android:paddingEnd="@dimen/margin_8dp"
-        android:paddingBottom="@dimen/margin_4dp"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"

@@ -23,12 +23,12 @@ class RemoteInterviewSource private constructor(
     }
 
     fun getInterviewAnswers(
-        jobId: String,
+        applicationId: String,
         callback: LoadInterviewAnswersCallback
     ): LiveData<ApiResponse<List<InterviewResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultAnswer = MutableLiveData<ApiResponse<List<InterviewResponseEntity>>>()
-        mInterviewHelper.getInterviewAnswers(jobId, object : LoadInterviewAnswersCallback {
+        mInterviewHelper.getInterviewAnswers(applicationId, object : LoadInterviewAnswersCallback {
             override fun onAllInterviewAnswersReceived(interviewAnswers: List<InterviewResponseEntity>): List<InterviewResponseEntity> {
                 resultAnswer.value =
                     ApiResponse.success(callback.onAllInterviewAnswersReceived(interviewAnswers))

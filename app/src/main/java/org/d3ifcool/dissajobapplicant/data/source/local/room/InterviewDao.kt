@@ -9,8 +9,8 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.interview.Intervi
 
 @Dao
 interface InterviewDao {
-    @Query("SELECT * FROM interview WHERE job_id = :jobId")
-    fun getInterviewAnswers(jobId: String): DataSource.Factory<Int, InterviewEntity>
+    @Query("SELECT * FROM interview WHERE application_id = :applicationId")
+    fun getInterviewAnswers(applicationId: String): DataSource.Factory<Int, InterviewEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertInterviewAnswers(answers: List<InterviewEntity>)

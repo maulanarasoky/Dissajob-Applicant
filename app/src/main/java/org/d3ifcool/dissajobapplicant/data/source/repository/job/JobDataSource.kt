@@ -13,6 +13,7 @@ import org.d3ifcool.dissajobapplicant.vo.Resource
 interface JobDataSource {
     fun getJobs(): LiveData<Resource<PagedList<JobEntity>>>
     fun getSavedJobs(applicantId: String): LiveData<Resource<PagedList<SavedJobEntity>>>
+    fun getSavedJobByJob(jobId: String, applicantId: String): LiveData<Resource<SavedJobEntity>>
     fun getJobById(jobId: String): LiveData<Resource<JobEntity>>
     fun getJobsByRecruiter(recruiterId: String): LiveData<Resource<PagedList<JobEntity>>>
     fun getJobDetails(jobId: String): LiveData<Resource<JobDetailsEntity>>

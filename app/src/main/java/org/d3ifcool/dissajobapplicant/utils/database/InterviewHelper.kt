@@ -12,8 +12,8 @@ object InterviewHelper {
         FirebaseDatabase.getInstance().getReference("interview")
     private val arr_interview: MutableList<InterviewResponseEntity> = mutableListOf()
 
-    fun getInterviewAnswers(jobId: String, callback: LoadInterviewAnswersCallback) {
-        database.orderByChild("jobId").equalTo(jobId)
+    fun getInterviewAnswers(applicationId: String, callback: LoadInterviewAnswersCallback) {
+        database.orderByChild("applicationId").equalTo(applicationId)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     arr_interview.clear()
@@ -21,8 +21,8 @@ object InterviewHelper {
                         for (data in snapshot.children.reversed()) {
                             val interviewAnswer = InterviewResponseEntity(
                                 data.key.toString(),
+                                data.child("applicationId").value.toString(),
                                 data.child("applicantId").value.toString(),
-                                data.child("jobId").value.toString(),
                                 data.child("firstAnswer").value.toString(),
                                 data.child("secondAnswer").value.toString(),
                                 data.child("thirdAnswer").value.toString()

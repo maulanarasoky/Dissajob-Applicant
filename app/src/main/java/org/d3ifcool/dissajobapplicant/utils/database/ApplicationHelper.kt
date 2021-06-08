@@ -64,6 +64,39 @@ object ApplicationHelper {
         })
     }
 
+    fun getApplicationByJob(
+        jobId: String,
+        applicantId: String,
+        callback: LoadApplicationDataCallback
+    ) {
+        database.orderByChild("applicantId").equalTo(applicantId)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(dataSnapshot: DatabaseError) {
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (data in dataSnapshot.children.reversed()) {
+                            if (data.child("jobId").value.toString() == jobId) {
+                                val application = ApplicationResponseEntity(
+                                    data.key.toString(),
+                                    data.child("applicantId").value.toString(),
+                                    data.child("jobId").value.toString(),
+                                    data.child("applyDate").value.toString(),
+                                    data.child("updatedDate").value.toString(),
+                                    data.child("status").value.toString(),
+                                    data.child("marked").value.toString().toBoolean()
+                                )
+                                callback.onApplicationDataReceived(application)
+                                return
+                            }
+                        }
+                    }
+                }
+
+            })
+    }
+
     fun getAllApplicationsByStatus(status: String, callback: LoadAllApplicationsCallback) {
         database.orderByChild("status").equalTo(status)
             .addValueEventListener(object : ValueEventListener {
@@ -125,7 +158,7 @@ object ApplicationHelper {
         application.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(application.id)
             .setValue(application).addOnSuccessListener {
-                callback.onSuccessApply()
+                callback.onSuccessApply(application.id)
             }.addOnFailureListener {
                 callback.onFailureApply(R.string.txt_success_apply)
             }

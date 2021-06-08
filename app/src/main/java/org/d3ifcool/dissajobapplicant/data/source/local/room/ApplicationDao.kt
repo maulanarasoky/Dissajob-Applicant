@@ -7,7 +7,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
-import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 
 @Dao
 interface ApplicationDao {
@@ -16,6 +15,9 @@ interface ApplicationDao {
 
     @Query("SELECT * FROM applications WHERE id = :applicationId")
     fun getApplicationById(applicationId: String): LiveData<ApplicationEntity>
+
+    @Query("SELECT * FROM applications WHERE job_id = :jobId AND applicant_id = :applicantId")
+    fun getApplicationByJob(jobId: String, applicantId: String): LiveData<ApplicationEntity>
 
     @Query("SELECT * FROM applications WHERE status = :status")
     fun getApplicationsByStatus(status: String): DataSource.Factory<Int, ApplicationEntity>

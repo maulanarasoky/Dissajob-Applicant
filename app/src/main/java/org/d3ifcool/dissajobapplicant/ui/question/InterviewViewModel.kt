@@ -9,10 +9,10 @@ import org.d3ifcool.dissajobapplicant.data.source.repository.interview.Interview
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 class InterviewViewModel(private val interviewRepository: InterviewRepository) : ViewModel() {
-    fun getInterviewAnswers(jobId: String): LiveData<Resource<PagedList<InterviewEntity>>> =
-        interviewRepository.getInterviewAnswers(jobId)
+    fun getInterviewAnswers(applicationId: String): LiveData<Resource<PagedList<InterviewEntity>>> =
+        interviewRepository.getInterviewAnswers(applicationId)
 
-    fun insertApplication(
+    fun insertInterviewAnswers(
         interviewAnswer: InterviewResponseEntity,
         callback: InsertInterviewAnswersCallback
     ) =

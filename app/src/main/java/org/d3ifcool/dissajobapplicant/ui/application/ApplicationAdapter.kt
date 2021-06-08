@@ -93,7 +93,7 @@ class ApplicationAdapter(
                             e.printStackTrace()
                         }
 
-                        loadRecruiterData(jobEntity.postedBy.toString())
+                        loadRecruiterData(jobEntity.postedBy)
 
                         itemView.setOnClickListener {
                             onItemClickCallback.onItemClick(jobId)

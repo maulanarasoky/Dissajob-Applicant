@@ -16,6 +16,12 @@ class ApplicationViewModel(private val applicationRepository: ApplicationReposit
     fun getApplicationById(applicationId: String): LiveData<Resource<ApplicationEntity>> =
         applicationRepository.getApplicationById(applicationId)
 
+    fun getApplicationByJob(
+        jobId: String,
+        applicantId: String
+    ): LiveData<Resource<ApplicationEntity>> =
+        applicationRepository.getApplicationByJob(jobId, applicantId)
+
     fun getAcceptedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>> =
         applicationRepository.getAcceptedApplications()
 

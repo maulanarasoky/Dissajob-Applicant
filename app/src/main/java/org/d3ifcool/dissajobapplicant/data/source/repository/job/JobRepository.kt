@@ -14,6 +14,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.Job
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteJobSource
 import org.d3ifcool.dissajobapplicant.ui.job.callback.*
+import org.d3ifcool.dissajobapplicant.ui.job.savedjob.LoadSavedJobDataCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
 import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
@@ -122,6 +123,43 @@ class JobRepository private constructor(
                 }
 
                 localJobSource.insertSavedJobs(jobList)
+            }
+        }.asLiveData()
+    }
+
+    override fun getSavedJobByJob(
+        jobId: String,
+        applicantId: String
+    ): LiveData<Resource<SavedJobEntity>> {
+        return object :
+            NetworkBoundResource<SavedJobEntity, SavedJobResponseEntity>(
+                appExecutors
+            ) {
+            public override fun loadFromDB(): LiveData<SavedJobEntity> =
+                localJobSource.getSavedJobByJob(jobId, applicantId)
+
+            override fun shouldFetch(data: SavedJobEntity?): Boolean =
+                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+
+            public override fun createCall(): LiveData<ApiResponse<SavedJobResponseEntity>> =
+                remoteJobSource.getSavedJobByJob(
+                    jobId,
+                    applicantId,
+                    object : LoadSavedJobDataCallback {
+                        override fun onSavedJobDataCallback(savedJobResponse: SavedJobResponseEntity): SavedJobResponseEntity {
+                            return savedJobResponse
+                        }
+                    })
+
+            public override fun saveCallResult(data: SavedJobResponseEntity) {
+                val savedJobList = ArrayList<SavedJobEntity>()
+                val savedJob = SavedJobEntity(
+                    data.id,
+                    data.jobId,
+                    data.applicantId
+                )
+                savedJobList.add(savedJob)
+                localJobSource.insertSavedJobs(savedJobList)
             }
         }.asLiveData()
     }

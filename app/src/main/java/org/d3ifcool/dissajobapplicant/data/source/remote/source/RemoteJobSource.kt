@@ -7,6 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.Job
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.JobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.ui.job.callback.*
+import org.d3ifcool.dissajobapplicant.ui.job.savedjob.LoadSavedJobDataCallback
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
 import org.d3ifcool.dissajobapplicant.utils.database.JobHelper
 
@@ -52,6 +53,26 @@ class RemoteJobSource private constructor(
                     EspressoIdlingResource.decrement()
                 }
                 return jobResponse
+            }
+        })
+        return resultJob
+    }
+
+    fun getSavedJobByJob(
+        jobId: String,
+        applicantId: String,
+        callback: LoadSavedJobDataCallback
+    ): LiveData<ApiResponse<SavedJobResponseEntity>> {
+        EspressoIdlingResource.increment()
+        val resultJob = MutableLiveData<ApiResponse<SavedJobResponseEntity>>()
+        jobHelper.getSavedJobByJob(jobId, applicantId, object : LoadSavedJobDataCallback {
+            override fun onSavedJobDataCallback(savedJobResponse: SavedJobResponseEntity): SavedJobResponseEntity {
+                resultJob.value =
+                    ApiResponse.success(callback.onSavedJobDataCallback(savedJobResponse))
+                if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
+                    EspressoIdlingResource.decrement()
+                }
+                return savedJobResponse
             }
         })
         return resultJob

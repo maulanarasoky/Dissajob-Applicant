@@ -128,6 +128,47 @@ class ApplicationRepository private constructor(
         }.asLiveData()
     }
 
+    override fun getApplicationByJob(
+        jobId: String,
+        applicantId: String
+    ): LiveData<Resource<ApplicationEntity>> {
+        return object :
+            NetworkBoundResource<ApplicationEntity, ApplicationResponseEntity>(
+                appExecutors
+            ) {
+            public override fun loadFromDB(): LiveData<ApplicationEntity> =
+                localApplicationSource.getApplicationByJob(jobId, applicantId)
+
+            override fun shouldFetch(data: ApplicationEntity?): Boolean =
+                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+
+            public override fun createCall(): LiveData<ApiResponse<ApplicationResponseEntity>> =
+                remoteApplicationSource.getApplicationByJob(
+                    jobId,
+                    applicantId,
+                    object : LoadApplicationDataCallback {
+                        override fun onApplicationDataReceived(applicationResponse: ApplicationResponseEntity): ApplicationResponseEntity {
+                            return applicationResponse
+                        }
+                    })
+
+            public override fun saveCallResult(data: ApplicationResponseEntity) {
+                val applicationList = ArrayList<ApplicationEntity>()
+                val application = ApplicationEntity(
+                    data.id,
+                    data.applicantId,
+                    data.jobId,
+                    data.applyDate,
+                    data.updatedDate,
+                    data.status,
+                    data.isMarked
+                )
+                applicationList.add(application)
+                localApplicationSource.insertApplication(applicationList)
+            }
+        }.asLiveData()
+    }
+
     override fun getAcceptedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>> {
         return object :
             NetworkBoundResource<PagedList<ApplicationEntity>, List<ApplicationResponseEntity>>(

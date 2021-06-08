@@ -22,6 +22,9 @@ class LocalApplicationSource private constructor(
     fun getApplicationById(applicationId: String): LiveData<ApplicationEntity> =
         mApplicationDao.getApplicationById(applicationId)
 
+    fun getApplicationByJob(jobId: String, applicantId: String): LiveData<ApplicationEntity> =
+        mApplicationDao.getApplicationByJob(jobId, applicantId)
+
     fun getAcceptedApplications(): DataSource.Factory<Int, ApplicationEntity> =
         mApplicationDao.getApplicationsByStatus("accepted")
 

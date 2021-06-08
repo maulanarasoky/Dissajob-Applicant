@@ -7,6 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.Job
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.job.SavedJobResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteJobSource
 import org.d3ifcool.dissajobapplicant.ui.job.callback.*
+import org.d3ifcool.dissajobapplicant.ui.job.savedjob.LoadSavedJobDataCallback
 import java.util.*
 
 object JobHelper {
@@ -64,6 +65,31 @@ object JobHelper {
                         }
                     }
                     callback.onAllJobsReceived(arrSavedJob)
+                }
+
+            })
+    }
+
+    fun getSavedJobByJob(jobId: String, applicantId: String, callback: LoadSavedJobDataCallback) {
+        savedJobDatabase.orderByChild("applicantId").equalTo(applicantId)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(dataSnapshot: DatabaseError) {
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (data in dataSnapshot.children.reversed()) {
+                            if (data.child("jobId").value.toString() == jobId) {
+                                val job = SavedJobResponseEntity(
+                                    data.key.toString(),
+                                    data.child("jobId").value.toString(),
+                                    data.child("applicantId").value.toString()
+                                )
+                                callback.onSavedJobDataCallback(job)
+                                break
+                            }
+                        }
+                    }
                 }
 
             })

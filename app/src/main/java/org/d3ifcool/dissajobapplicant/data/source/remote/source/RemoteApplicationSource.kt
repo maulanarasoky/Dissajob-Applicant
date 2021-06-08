@@ -58,6 +58,29 @@ class RemoteApplicationSource private constructor(
         return resultApplication
     }
 
+    fun getApplicationByJob(
+        jobId: String,
+        applicantId: String,
+        callback: LoadApplicationDataCallback
+    ): LiveData<ApiResponse<ApplicationResponseEntity>> {
+        EspressoIdlingResource.increment()
+        val resultApplication = MutableLiveData<ApiResponse<ApplicationResponseEntity>>()
+        applicationHelper.getApplicationByJob(
+            jobId,
+            applicantId,
+            object : LoadApplicationDataCallback {
+                override fun onApplicationDataReceived(applicationResponse: ApplicationResponseEntity): ApplicationResponseEntity {
+                    resultApplication.value =
+                        ApiResponse.success(callback.onApplicationDataReceived(applicationResponse))
+                    if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
+                        EspressoIdlingResource.decrement()
+                    }
+                    return applicationResponse
+                }
+            })
+        return resultApplication
+    }
+
     fun getAcceptedApplications(callback: LoadAllApplicationsCallback): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultApplication = MutableLiveData<ApiResponse<List<ApplicationResponseEntity>>>()
@@ -116,8 +139,8 @@ class RemoteApplicationSource private constructor(
     ) {
         EspressoIdlingResource.increment()
         applicationHelper.insertApplication(application, object : ApplyJobCallback {
-            override fun onSuccessApply() {
-                callback.onSuccessApply()
+            override fun onSuccessApply(applicationId: String) {
+                callback.onSuccessApply(applicationId)
                 EspressoIdlingResource.decrement()
             }
 

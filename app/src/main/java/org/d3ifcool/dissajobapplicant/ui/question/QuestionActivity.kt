@@ -1,5 +1,6 @@
 package org.d3ifcool.dissajobapplicant.ui.question
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem
@@ -21,8 +22,9 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
 
     companion object {
         const val JOB_ID = "job_id"
-        const val REQUEST_ADD = 100
-        const val RESULT_ADD = 101
+        const val APPLICATION_ID = "application_id"
+        const val REQUEST_APPLY = 100
+        const val RESULT_APPLY = 101
     }
 
     private lateinit var activityQuestionBinding: ActivityQuestionBinding
@@ -34,6 +36,8 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
     private lateinit var dialog: SweetAlertDialog
 
     private lateinit var jobId: String
+
+    private lateinit var applicationId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,16 +64,17 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
         activityQuestionBinding.btnSubmit.setOnClickListener(this)
     }
 
-    private fun storeToDatabase(firstAnswer: String, secondAnswer: String, thirdAnswer: String) {
-        val interviewAnswer = InterviewResponseEntity(
+    private fun storeToDatabase() {
+        val application = ApplicationResponseEntity(
             "",
             "",
             jobId,
-            firstAnswer,
-            secondAnswer,
-            thirdAnswer
+            DateUtils.getCurrentDate(),
+            "-",
+            "Waiting",
+            false
         )
-        interviewViewModel.insertApplication(interviewAnswer, this)
+        applicationViewModel.insertApplication(application, this)
     }
 
     private fun formValidation() {
@@ -106,24 +111,57 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
             dialog.titleText = resources.getString(R.string.txt_loading)
             dialog.setCancelable(false)
             dialog.showCancelButton(false)
-            storeToDatabase(firstAnswer, secondAnswer, thirdAnswer)
+            storeToDatabase()
         }.setCancelClickListener {
             it.dismissWithAnimation()
         }
         dialog.show()
     }
 
-    override fun onSuccessAdding() {
-        val application = ApplicationResponseEntity(
+    override fun onSuccessApply(applicationId: String) {
+        this.applicationId = applicationId
+
+        val firstAnswer = activityQuestionBinding.etFirstQuestion.text.toString().trim()
+        val secondAnswer = activityQuestionBinding.etSecondQuestion.text.toString().trim()
+        val thirdAnswer = activityQuestionBinding.etThirdQuestion.text.toString().trim()
+
+        val interviewAnswer = InterviewResponseEntity(
             "",
+            applicationId,
             "",
-            jobId,
-            DateUtils.getCurrentDate(),
-            "-",
-            "Waiting",
-            false
+            firstAnswer,
+            secondAnswer,
+            thirdAnswer
         )
-        applicationViewModel.insertApplication(application, this)
+        interviewViewModel.insertInterviewAnswers(interviewAnswer, this)
+    }
+
+    override fun onFailureApply(messageId: Int) {
+        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(messageId)
+        dialog.confirmText = resources.getString(R.string.dialog_ok)
+        dialog.setCancelable(false)
+        dialog.showCancelButton(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+        }
+        dialog.show()
+    }
+
+    override fun onSuccessAdding() {
+        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_success_apply)
+        dialog.confirmText = resources.getString(R.string.dialog_ok)
+        dialog.setCancelable(false)
+        dialog.showCancelButton(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+            val intent = Intent()
+            intent.putExtra(APPLICATION_ID, applicationId)
+            setResult(RESULT_APPLY, intent)
+            finish()
+        }
+        dialog.show()
     }
 
     override fun onFailureAdding(messageId: Int) {
@@ -150,31 +188,5 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
         when (v?.id) {
             R.id.btnSubmit -> formValidation()
         }
-    }
-
-    override fun onSuccessApply() {
-        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
-        dialog.titleText = resources.getString(R.string.txt_success_apply)
-        dialog.confirmText = resources.getString(R.string.dialog_ok)
-        dialog.setCancelable(false)
-        dialog.showCancelButton(false)
-        dialog.setConfirmClickListener {
-            it.dismissWithAnimation()
-            setResult(RESULT_ADD)
-            finish()
-        }
-        dialog.show()
-    }
-
-    override fun onFailureApply(messageId: Int) {
-        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
-        dialog.titleText = resources.getString(messageId)
-        dialog.confirmText = resources.getString(R.string.dialog_ok)
-        dialog.setCancelable(false)
-        dialog.showCancelButton(false)
-        dialog.setConfirmClickListener {
-            it.dismissWithAnimation()
-        }
-        dialog.show()
     }
 }

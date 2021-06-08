@@ -43,7 +43,7 @@ class InterviewRepository private constructor(
             }
     }
 
-    override fun getInterviewAnswers(jobId: String): LiveData<Resource<PagedList<InterviewEntity>>> {
+    override fun getInterviewAnswers(applicationId: String): LiveData<Resource<PagedList<InterviewEntity>>> {
         return object :
             NetworkBoundResource<PagedList<InterviewEntity>, List<InterviewResponseEntity>>(
                 appExecutors
@@ -55,7 +55,7 @@ class InterviewRepository private constructor(
                     .setPageSize(4)
                     .build()
                 return LivePagedListBuilder(
-                    localInterviewSource.getInterviewAnswers(jobId),
+                    localInterviewSource.getInterviewAnswers(applicationId),
                     config
                 ).build()
             }
@@ -65,7 +65,7 @@ class InterviewRepository private constructor(
 
             public override fun createCall(): LiveData<ApiResponse<List<InterviewResponseEntity>>> =
                 remoteInterviewSource.getInterviewAnswers(
-                    jobId,
+                    applicationId,
                     object : LoadInterviewAnswersCallback {
                         override fun onAllInterviewAnswersReceived(interviewAnswers: List<InterviewResponseEntity>): List<InterviewResponseEntity> {
                             return interviewAnswers
@@ -77,8 +77,8 @@ class InterviewRepository private constructor(
                 for (response in data) {
                     val interviewAnswer = InterviewEntity(
                         response.id,
+                        response.applicationId,
                         response.applicantId,
-                        response.jobId,
                         response.firstAnswer,
                         response.secondAnswer,
                         response.thirdAnswer

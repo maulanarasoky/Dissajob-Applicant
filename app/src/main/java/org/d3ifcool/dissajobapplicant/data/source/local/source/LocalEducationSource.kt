@@ -21,5 +21,8 @@ class LocalEducationSource private constructor(
     fun insertApplicantEducations(educations: List<EducationEntity>) =
         mEducationDao.insertApplicantEducations(educations)
 
-    fun deleteApplicantEducation(id: String) = mEducationDao.deleteApplicantEducation(id)
+    fun deleteEducationById(id: String) = mEducationDao.deleteEducationById(id)
+
+    fun deleteAllApplicantEducations(applicantId: String) =
+        mEducationDao.deleteAllApplicantEducations(applicantId)
 }

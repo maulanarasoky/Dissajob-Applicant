@@ -12,9 +12,12 @@ interface EducationDao {
     @Query("SELECT * FROM educations WHERE applicant_id = :applicantId")
     fun getApplicantEducations(applicantId: String): DataSource.Factory<Int, EducationEntity>
 
+    @Query("DELETE FROM educations WHERE id = :id")
+    fun deleteEducationById(id: String)
+
+    @Query("DELETE FROM educations WHERE applicant_id = :applicantId")
+    fun deleteAllApplicantEducations(applicantId: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertApplicantEducations(educations: List<EducationEntity>)
-
-    @Query("DELETE FROM educations WHERE id = :id")
-    fun deleteApplicantEducation(id: String)
 }

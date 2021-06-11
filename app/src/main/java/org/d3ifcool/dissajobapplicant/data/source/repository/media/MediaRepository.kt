@@ -82,7 +82,7 @@ class MediaRepository private constructor(
                     )
                     mediaList.add(media)
                 }
-
+                localMediaSource.deleteAllApplicantMedia(applicantId)
                 localMediaSource.insertMedia(mediaList)
             }
         }.asLiveData()
@@ -123,7 +123,7 @@ class MediaRepository private constructor(
     override fun deleteMedia(id: String, fileId: String, callback: DeleteMediaCallback) =
         appExecutors.diskIO()
             .execute {
-                localMediaSource.deleteMedia(id)
+                localMediaSource.deleteMediaById(id)
                 remoteMediaSource.deleteMedia(id, fileId, callback)
             }
 

@@ -86,7 +86,7 @@ class SearchHistoryRepository private constructor(
                     )
                     searchHistoryList.add(searchHistory)
                 }
-
+                localSearchHistorySource.deleteAllSearchHistories(applicantId)
                 localSearchHistorySource.insertSearchHistories(searchHistoryList)
             }
         }.asLiveData()

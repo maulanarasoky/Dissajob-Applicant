@@ -8,7 +8,7 @@ import org.d3ifcool.dissajobapplicant.ui.question.InsertInterviewAnswersCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 interface InterviewDataSource {
-    fun getInterviewAnswers(applicationId: String): LiveData<Resource<PagedList<InterviewEntity>>>
+    fun getInterviewAnswers(applicationId: String): LiveData<Resource<InterviewEntity>>
     fun insertInterviewAnswers(
         interviewAnswer: InterviewResponseEntity,
         callback: InsertInterviewAnswersCallback

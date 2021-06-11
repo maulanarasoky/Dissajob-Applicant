@@ -62,6 +62,7 @@ class ApplicationActivity : AppCompatActivity(), OnJobClickListener, LoadJobById
                         if (jobs.data.isNotEmpty()) {
                             applicationAdapter.submitList(jobs.data)
                             applicationAdapter.notifyDataSetChanged()
+                            activityApplicationBinding.tvNoData.visibility = View.GONE
                         } else {
                             activityApplicationBinding.tvNoData.visibility = View.VISIBLE
                         }

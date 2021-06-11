@@ -15,22 +15,18 @@ object InterviewHelper {
     fun getInterviewAnswers(applicationId: String, callback: LoadInterviewAnswersCallback) {
         database.orderByChild("applicationId").equalTo(applicationId)
             .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    arr_interview.clear()
-                    if (snapshot.exists()) {
-                        for (data in snapshot.children.reversed()) {
-                            val interviewAnswer = InterviewResponseEntity(
-                                data.key.toString(),
-                                data.child("applicationId").value.toString(),
-                                data.child("applicantId").value.toString(),
-                                data.child("firstAnswer").value.toString(),
-                                data.child("secondAnswer").value.toString(),
-                                data.child("thirdAnswer").value.toString()
-                            )
-                            arr_interview.add(interviewAnswer)
-                        }
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        val interviewAnswer = InterviewResponseEntity(
+                            dataSnapshot.key.toString(),
+                            dataSnapshot.child("applicationId").value.toString(),
+                            dataSnapshot.child("applicantId").value.toString(),
+                            dataSnapshot.child("firstAnswer").value.toString(),
+                            dataSnapshot.child("secondAnswer").value.toString(),
+                            dataSnapshot.child("thirdAnswer").value.toString()
+                        )
+                        callback.onAllInterviewAnswersReceived(interviewAnswer)
                     }
-                    callback.onAllInterviewAnswersReceived(arr_interview)
                 }
 
                 override fun onCancelled(dataSnapshot: DatabaseError) {

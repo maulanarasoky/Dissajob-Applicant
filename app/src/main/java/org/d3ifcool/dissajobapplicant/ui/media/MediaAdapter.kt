@@ -62,7 +62,7 @@ class MediaAdapter(
 
                     override fun onPdfDataReceived(mediaFile: ByteArray) {
                         progressBar.visibility = View.GONE
-                        imgDeleteHistory.visibility = View.VISIBLE
+                        imgDeleteMedia.visibility = View.VISIBLE
 
                         pdfViewer.fromBytes(mediaFile)
                             .enableSwipe(true)
@@ -73,13 +73,13 @@ class MediaAdapter(
                     }
                 })
 
-                tvMediaName.text = items.mediaName.toString()
+                tvMediaName.text = items.mediaName
                 if (items.mediaDescription.toString() != "-") {
                     tvMediaDescription.visibility = View.VISIBLE
                     tvMediaDescription.text = items.mediaDescription.toString()
                 }
 
-                imgDeleteHistory.setOnClickListener {
+                imgDeleteMedia.setOnClickListener {
                     onDeleteBtnClickCallback.onDeleteBtnClick(
                         items.id,
                         items.mediaName,

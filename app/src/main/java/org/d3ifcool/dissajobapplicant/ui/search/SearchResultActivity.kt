@@ -89,6 +89,10 @@ class SearchResultActivity : AppCompatActivity(), OnJobClickListener, LoadRecrui
                                 searchedJobs = jobs.data
                                 jobAdapter.submitList(jobs.data)
                                 jobAdapter.notifyDataSetChanged()
+
+                                activitySearchResultBinding.linearSearchResult.visibility =
+                                    View.VISIBLE
+                                activitySearchResultBinding.tvNoData.visibility = View.GONE
                             } else {
                                 activitySearchResultBinding.linearSearchResult.visibility =
                                     View.GONE

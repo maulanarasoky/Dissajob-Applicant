@@ -60,6 +60,7 @@ class HomeFragment : Fragment(), OnJobClickListener, LoadRecruiterDataCallback,
                             if (jobs.data?.isNotEmpty() == true) {
                                 jobAdapter.submitList(jobs.data)
                                 jobAdapter.notifyDataSetChanged()
+                                fragmentHomeBinding.tvNoData.visibility = View.GONE
                             } else {
                                 fragmentHomeBinding.tvNoData.visibility = View.VISIBLE
                             }

@@ -11,6 +11,5 @@ data class RecruiterResponseEntity(
     var email: String? = "-",
     var address: String? = "-",
     var phoneNumber: String? = "-",
-    var role: String? = "-",
     var imagePath: String? = "-"
 )

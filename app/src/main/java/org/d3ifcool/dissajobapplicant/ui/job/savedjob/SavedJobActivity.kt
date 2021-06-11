@@ -58,6 +58,7 @@ class SavedJobActivity : AppCompatActivity(), OnJobClickListener, LoadJobByIdCal
                         if (jobs.data.isNotEmpty()) {
                             jobAdapter.submitList(jobs.data)
                             jobAdapter.notifyDataSetChanged()
+                            activitySavedJobBinding.tvNoData.visibility = View.GONE
                         } else {
                             activitySavedJobBinding.tvNoData.visibility = View.VISIBLE
                         }

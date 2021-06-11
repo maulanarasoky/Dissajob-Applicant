@@ -21,6 +21,9 @@ class LocalExperienceSource private constructor(
     fun insertApplicantExperiences(experiences: List<ExperienceEntity>) =
         mExperienceDao.insertApplicantExperiences(experiences)
 
-    fun deleteApplicantExperience(id: String) = mExperienceDao.deleteApplicantExperience(id)
+    fun deleteExperienceById(id: String) = mExperienceDao.deleteExperienceById(id)
+
+    fun deleteAllApplicantExperiences(applicantId: String) =
+        mExperienceDao.deleteAllApplicantExperiences(applicantId)
 
 }

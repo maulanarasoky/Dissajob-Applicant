@@ -30,9 +30,6 @@ data class RecruiterEntity(
     @ColumnInfo(name = "phone_number")
     val phoneNumber: String? = "-",
 
-    @ColumnInfo(name = "role")
-    val role: String? = "-",
-
     @ColumnInfo(name = "image_path")
     val imagePath: String? = "-"
 )

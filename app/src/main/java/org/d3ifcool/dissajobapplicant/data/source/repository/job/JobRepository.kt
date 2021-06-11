@@ -240,6 +240,7 @@ class JobRepository private constructor(
                     jobList.add(job)
                 }
 
+                localJobSource.deleteAllJobs()
                 localJobSource.insertJobs(jobList)
             }
         }.asLiveData()

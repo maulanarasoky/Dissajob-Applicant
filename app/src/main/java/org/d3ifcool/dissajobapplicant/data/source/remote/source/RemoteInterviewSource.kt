@@ -25,11 +25,11 @@ class RemoteInterviewSource private constructor(
     fun getInterviewAnswers(
         applicationId: String,
         callback: LoadInterviewAnswersCallback
-    ): LiveData<ApiResponse<List<InterviewResponseEntity>>> {
+    ): LiveData<ApiResponse<InterviewResponseEntity>> {
         EspressoIdlingResource.increment()
-        val resultAnswer = MutableLiveData<ApiResponse<List<InterviewResponseEntity>>>()
+        val resultAnswer = MutableLiveData<ApiResponse<InterviewResponseEntity>>()
         mInterviewHelper.getInterviewAnswers(applicationId, object : LoadInterviewAnswersCallback {
-            override fun onAllInterviewAnswersReceived(interviewAnswers: List<InterviewResponseEntity>): List<InterviewResponseEntity> {
+            override fun onAllInterviewAnswersReceived(interviewAnswers: InterviewResponseEntity): InterviewResponseEntity {
                 resultAnswer.value =
                     ApiResponse.success(callback.onAllInterviewAnswersReceived(interviewAnswers))
                 if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {

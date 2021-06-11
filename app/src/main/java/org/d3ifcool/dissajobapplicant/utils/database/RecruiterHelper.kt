@@ -11,7 +11,10 @@ object RecruiterHelper {
 
     private val database = FirebaseDatabase.getInstance().getReference("users").child("recruiters")
 
-    fun getRecruiterData(recruiterId: String, callback: RemoteRecruiterSource.LoadRecruiterDataCallback) {
+    fun getRecruiterData(
+        recruiterId: String,
+        callback: RemoteRecruiterSource.LoadRecruiterDataCallback
+    ) {
         database.child(recruiterId).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
@@ -26,7 +29,6 @@ object RecruiterHelper {
                         dataSnapshot.child("email").value.toString(),
                         dataSnapshot.child("address").value.toString(),
                         dataSnapshot.child("phoneNumber").value.toString(),
-                        dataSnapshot.child("role").value.toString(),
                         dataSnapshot.child("imagePath").value.toString()
                     )
                     callback.onRecruiterDataReceived(recruiter)

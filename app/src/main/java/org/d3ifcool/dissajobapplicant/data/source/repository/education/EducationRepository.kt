@@ -92,7 +92,7 @@ class EducationRepository private constructor(
                     )
                     educationList.add(education)
                 }
-
+                localEducationSource.deleteAllApplicantEducations(applicantId)
                 localEducationSource.insertApplicantEducations(educationList)
             }
         }.asLiveData()
@@ -119,7 +119,7 @@ class EducationRepository private constructor(
     override fun deleteApplicantEducation(id: String, callback: DeleteEducationCallback) =
         appExecutors.diskIO()
             .execute {
-                localEducationSource.deleteApplicantEducation(id)
+                localEducationSource.deleteEducationById(id)
                 remoteEducationSource.deleteApplicantEducation(id, callback)
             }
 }

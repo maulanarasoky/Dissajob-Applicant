@@ -97,6 +97,8 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
                                 if (experiences.data?.isNotEmpty() == true) {
                                     experienceAdapter.submitList(experiences.data)
                                     experienceAdapter.notifyDataSetChanged()
+                                    fragmentProfileBinding.workExperienceSection.tvNoData.visibility =
+                                        View.GONE
                                 } else {
                                     fragmentProfileBinding.workExperienceSection.tvNoData.visibility =
                                         View.VISIBLE
@@ -138,6 +140,8 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
                                 if (educations.data?.isNotEmpty() == true) {
                                     educationAdapter.submitList(educations.data)
                                     educationAdapter.notifyDataSetChanged()
+                                    fragmentProfileBinding.educationalBackgroundSection.tvNoData.visibility =
+                                        View.GONE
                                 } else {
                                     fragmentProfileBinding.educationalBackgroundSection.tvNoData.visibility =
                                         View.VISIBLE

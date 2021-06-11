@@ -95,7 +95,7 @@ class ExperienceRepository private constructor(
                     )
                     experienceList.add(experience)
                 }
-
+                localExperienceSource.deleteAllApplicantExperiences(applicantId)
                 localExperienceSource.insertApplicantExperiences(experienceList)
             }
         }.asLiveData()
@@ -118,7 +118,7 @@ class ExperienceRepository private constructor(
     override fun deleteApplicantExperience(id: String, callback: DeleteExperienceCallback) =
         appExecutors.diskIO()
             .execute {
-                localExperienceSource.deleteApplicantExperience(id)
+                localExperienceSource.deleteExperienceById(id)
                 remoteExperienceSource.deleteApplicantExperience(id, callback)
             }
 }

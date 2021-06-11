@@ -15,6 +15,10 @@ import org.d3ifcool.dissajobapplicant.ui.signin.SignInActivity
 
 class HomeActivity : AppCompatActivity() {
 
+    companion object {
+        private const val STATE_RESULT = "state_result"
+    }
+
     private lateinit var activityHomeBinding: ActivityHomeBinding
 
     private var bottomNavState = 0
@@ -38,6 +42,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun updateUI(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            bottomNavState = savedInstanceState.getInt(STATE_RESULT, 0)
+        }
+
         activityHomeBinding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             if (bottomNavState != item.itemId) {
                 bottomNavState = item.itemId
@@ -87,5 +95,10 @@ class HomeActivity : AppCompatActivity() {
                 ProfileFragment::class.java.simpleName
             )
             .commit()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(STATE_RESULT, bottomNavState)
     }
 }

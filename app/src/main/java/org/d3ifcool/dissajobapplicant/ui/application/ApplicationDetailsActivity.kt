@@ -17,8 +17,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.application.ApplicationEntity
-import org.d3ifcool.dissajobapplicant.data.source.local.entity.interview.InterviewEntity
-import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityApplicationDetailsBinding
 import org.d3ifcool.dissajobapplicant.ui.job.JobDetailsActivity
@@ -116,7 +114,10 @@ class ApplicationDetailsActivity : AppCompatActivity(), View.OnClickListener {
                     Status.LOADING -> {
                     }
                     Status.SUCCESS -> {
-                        populateJobData(jobDetails.data)
+                        populateJobData(
+                            jobDetails.data.title.toString(),
+                            jobDetails.data.description.toString()
+                        )
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
@@ -131,18 +132,11 @@ class ApplicationDetailsActivity : AppCompatActivity(), View.OnClickListener {
                     when (interview.status) {
                         Status.LOADING -> {
                         }
-                        Status.SUCCESS -> {
-                            val interviewData = InterviewEntity(
-                                interview.data[0]?.id.toString(),
-                                interview.data[0]?.applicationId.toString(),
-                                interview.data[0]?.applicantId.toString(),
-                                interview.data[0]?.firstAnswer.toString(),
-                                interview.data[0]?.secondAnswer.toString(),
-                                interview.data[0]?.thirdAnswer.toString()
-                            )
-
-                            populateInterviewData(interviewData)
-                        }
+                        Status.SUCCESS -> populateInterviewData(
+                            interview.data.firstAnswer.toString(),
+                            interview.data.secondAnswer.toString(),
+                            interview.data.thirdAnswer.toString()
+                        )
                         Status.ERROR -> {
                             Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
                         }
@@ -205,22 +199,25 @@ class ApplicationDetailsActivity : AppCompatActivity(), View.OnClickListener {
             applicationData.status.toString()
     }
 
-    private fun populateJobData(jobData: JobDetailsEntity) {
-        activityApplicationDetailsBinding.applicationDetailsSection.tvJobTitle.text =
-            jobData.title.toString()
+    private fun populateJobData(jobTitle: String, jobDescription: String) {
+        activityApplicationDetailsBinding.applicationDetailsSection.tvJobTitle.text = jobTitle
         activityApplicationDetailsBinding.applicationDetailsSection.tvJobDescription.text =
-            jobData.description.toString()
+            jobDescription
     }
 
-    private fun populateInterviewData(interviewData: InterviewEntity) {
+    private fun populateInterviewData(
+        firstAnswer: String,
+        secondAnswer: String,
+        thirdAnswer: String
+    ) {
         activityApplicationDetailsBinding.additionalInformationSection.etFirstQuestion.setText(
-            interviewData.firstAnswer.toString()
+            firstAnswer
         )
         activityApplicationDetailsBinding.additionalInformationSection.etSecondQuestion.setText(
-            interviewData.secondAnswer.toString()
+            secondAnswer
         )
         activityApplicationDetailsBinding.additionalInformationSection.etThirdQuestion.setText(
-            interviewData.thirdAnswer.toString()
+            thirdAnswer
         )
     }
 

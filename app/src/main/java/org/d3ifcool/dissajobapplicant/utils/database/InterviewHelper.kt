@@ -10,22 +10,24 @@ object InterviewHelper {
 
     private val database: DatabaseReference =
         FirebaseDatabase.getInstance().getReference("interview")
-    private val arr_interview: MutableList<InterviewResponseEntity> = mutableListOf()
 
     fun getInterviewAnswers(applicationId: String, callback: LoadInterviewAnswersCallback) {
-        database.orderByChild("applicationId").equalTo(applicationId)
+        database.orderByChild("applicationId").equalTo(applicationId).limitToFirst(1)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        val interviewAnswer = InterviewResponseEntity(
-                            dataSnapshot.key.toString(),
-                            dataSnapshot.child("applicationId").value.toString(),
-                            dataSnapshot.child("applicantId").value.toString(),
-                            dataSnapshot.child("firstAnswer").value.toString(),
-                            dataSnapshot.child("secondAnswer").value.toString(),
-                            dataSnapshot.child("thirdAnswer").value.toString()
-                        )
-                        callback.onAllInterviewAnswersReceived(interviewAnswer)
+                        for (data in dataSnapshot.children.reversed()) {
+                            val interviewAnswer = InterviewResponseEntity(
+                                data.key.toString(),
+                                data.child("applicationId").value.toString(),
+                                data.child("applicantId").value.toString(),
+                                data.child("firstAnswer").value.toString(),
+                                data.child("secondAnswer").value.toString(),
+                                data.child("thirdAnswer").value.toString()
+                            )
+                            callback.onAllInterviewAnswersReceived(interviewAnswer)
+                            break
+                        }
                     }
                 }
 

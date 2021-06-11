@@ -67,7 +67,6 @@ class RecruiterRepository private constructor(
                     data.email,
                     data.address,
                     data.phoneNumber,
-                    data.role,
                     data.imagePath,
                 )
                 localRecruiterSource.insertRecruiterData(userProfile)

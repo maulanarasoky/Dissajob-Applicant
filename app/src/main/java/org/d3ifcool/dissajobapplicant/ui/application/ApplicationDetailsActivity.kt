@@ -126,8 +126,7 @@ class ApplicationDetailsActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        interviewViewModel.getInterviewAnswers(applicationId.toString())
-            .observe(this) { interview ->
+        interviewViewModel.getInterviewAnswers(applicationId.toString()).observe(this) { interview ->
                 if (interview.data != null) {
                     when (interview.status) {
                         Status.LOADING -> {

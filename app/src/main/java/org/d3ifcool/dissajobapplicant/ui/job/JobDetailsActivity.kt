@@ -98,9 +98,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
                             isJobApplied = false
                         }
                     }
-                    Status.ERROR -> {
-                        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
-                    }
+                    Status.ERROR -> showToast(resources.getString(R.string.txt_error_occurred))
                 }
             }
     }
@@ -123,9 +121,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
                             isJobSaved = false
                         }
                     }
-                    Status.ERROR -> {
-                        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
-                    }
+                    Status.ERROR -> showToast(resources.getString(R.string.txt_error_occurred))
                 }
             }
     }
@@ -140,9 +136,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
                         jobData = jobDetails.data
                         populateJobData(jobDetails.data)
                     }
-                    Status.ERROR -> {
-                        Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
-                    }
+                    Status.ERROR -> showToast(resources.getString(R.string.txt_error_occurred))
                 }
             }
         }
@@ -169,6 +163,17 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
         if (jobDetails.isOpenForDisability) {
             activityJobDetailsBinding.jobDetailsTitleSection.tvOpenForDisability.visibility =
                 View.VISIBLE
+        } else {
+            activityJobDetailsBinding.jobDetailsTitleSection.tvOpenForDisability.visibility =
+                View.GONE
+        }
+
+        if (!jobDetails.isOpen) {
+            activityJobDetailsBinding.jobDetailsTitleSection.tvCloseRecruitment.visibility =
+                View.VISIBLE
+        } else {
+            activityJobDetailsBinding.jobDetailsTitleSection.tvCloseRecruitment.visibility =
+                View.GONE
         }
 
         //Description section
@@ -216,6 +221,13 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
     }
 
     private fun checkApplyCondition() {
+        if (!jobData.isOpen) {
+            if (!isJobApplied) {
+                showToast(resources.getString(R.string.txt_close_recruitment))
+                return
+            }
+        }
+
         if (isJobApplied) {
             val intent = Intent(this, ApplicationDetailsActivity::class.java)
             intent.putExtra(ApplicationDetailsActivity.APPLICATION_ID, applicationId)
@@ -249,6 +261,10 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
 
     private fun unSaveJob() {
         jobViewModel.unSaveJob(saveJobId, this)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

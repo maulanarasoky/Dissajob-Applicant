@@ -84,8 +84,7 @@ object ApplicantHelper {
         applicantId: String,
         callback: LoadApplicantDetailsCallback
     ) {
-        database.child(applicantId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+        database.child(applicantId).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
                         val applicantDetails = ApplicantResponseEntity(

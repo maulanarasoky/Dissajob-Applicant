@@ -78,15 +78,32 @@
         android:id="@+id/tvOpenForDisability"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_4dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         android:fontFamily="@font/roboto"
         android:text="@string/txt_open_for_disability"
         android:textColor="@color/colorPrimary"
         android:textSize="13sp"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/tvCloseRecruitment"
         app:layout_constraintEnd_toStartOf="@id/imgRecruiterPicture"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvJobPostedDate" />
+
+    <TextView
+        android:id="@+id/tvCloseRecruitment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_close_recruitment"
+        android:textColor="@color/red"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imgRecruiterPicture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvOpenForDisability" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,14 +20,14 @@ object JobHelper {
 
     fun getJobs(callback: LoadJobsCallback) {
         jobDatabase.orderByChild("open").equalTo(true)
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     arrJob.clear()
                     if (dataSnapshot.exists()) {
-                        for (data in dataSnapshot.children.reversed()) {
+                        for (data in dataSnapshot.children) {
                             val job = JobResponseEntity(
                                 data.key.toString(),
                                 data.child("title").value.toString(),
@@ -48,7 +48,7 @@ object JobHelper {
 
     fun getSavedJobs(applicantId: String, callback: LoadSavedJobsCallback) {
         savedJobDatabase.orderByChild("applicantId").equalTo(applicantId)
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
                 }
 
@@ -120,7 +120,7 @@ object JobHelper {
 
     fun getJobsByRecruiter(recruiterId: String, callback: LoadJobsCallback) {
         jobDatabase.orderByChild("postedBy").equalTo(recruiterId)
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
                 }
 

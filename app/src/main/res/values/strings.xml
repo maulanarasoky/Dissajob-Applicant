@@ -200,4 +200,6 @@
     <string name="txt_my_application">Lamaran saya</string>
     <string name="txt_submit">Submit</string>
     <string name="txt_apply_at">Dilamar pada</string>
+    <string name="txt_close_recruitment">Tidak lagi menerima lamaran kerja</string>
+    <string name="txt_error_occurred">Terjadi kesalahan</string>
 </resources>

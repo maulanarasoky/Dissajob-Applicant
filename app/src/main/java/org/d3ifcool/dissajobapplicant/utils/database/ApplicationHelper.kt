@@ -15,7 +15,7 @@ object ApplicationHelper {
 
     fun getAllApplications(callback: LoadAllApplicationsCallback) {
         database.orderByChild("applyDate")
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     arr_application.clear()
                     if (snapshot.exists()) {
@@ -99,7 +99,7 @@ object ApplicationHelper {
 
     fun getAllApplicationsByStatus(status: String, callback: LoadAllApplicationsCallback) {
         database.orderByChild("status").equalTo(status)
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     arr_application.clear()
                     if (snapshot.exists()) {
@@ -127,7 +127,7 @@ object ApplicationHelper {
 
     fun getMarkedApplications(callback: LoadAllApplicationsCallback) {
         database.orderByChild("is_marked").equalTo(true)
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     arr_application.clear()
                     if (snapshot.exists()) {

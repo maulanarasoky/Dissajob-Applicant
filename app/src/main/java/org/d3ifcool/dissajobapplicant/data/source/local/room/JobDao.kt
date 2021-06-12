@@ -12,7 +12,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntit
 
 @Dao
 interface JobDao {
-    @Query("SELECT * FROM jobs")
+    @Query("SELECT * FROM jobs WHERE is_open = 1")
     fun getJobs(): DataSource.Factory<Int, JobEntity>
 
     @Query("SELECT * FROM saved_jobs WHERE applicant_id = :applicantId")

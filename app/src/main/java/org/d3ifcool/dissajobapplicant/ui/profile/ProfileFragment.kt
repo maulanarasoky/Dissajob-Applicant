@@ -118,12 +118,12 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
             with(fragmentProfileBinding.workExperienceSection.rvWorkExperience) {
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
-                addItemDecoration(
-                    DividerItemDecoration(
-                        requireContext(),
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
+//                addItemDecoration(
+//                    DividerItemDecoration(
+//                        requireContext(),
+//                        DividerItemDecoration.VERTICAL
+//                    )
+//                )
                 adapter = experienceAdapter
             }
 
@@ -161,12 +161,12 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
             with(fragmentProfileBinding.educationalBackgroundSection.rvEducationalBackground) {
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
-                addItemDecoration(
-                    DividerItemDecoration(
-                        requireContext(),
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
+//                addItemDecoration(
+//                    DividerItemDecoration(
+//                        requireContext(),
+//                        DividerItemDecoration.VERTICAL
+//                    )
+//                )
                 adapter = educationAdapter
             }
 

@@ -1,7 +1,7 @@
 package org.d3ifcool.dissajobapplicant.ui.job.savedjob
 
-import android.text.format.DateUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -20,9 +20,7 @@ import org.d3ifcool.dissajobapplicant.databinding.JobItemBinding
 import org.d3ifcool.dissajobapplicant.ui.job.callback.LoadJobByIdCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.OnJobClickListener
 import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
+import org.d3ifcool.dissajobapplicant.utils.DateUtils
 
 class SavedJobAdapter(
     private val onItemClickCallback: OnJobClickListener,
@@ -65,7 +63,7 @@ class SavedJobAdapter(
     inner class JobViewHolder(private val binding: JobItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindItem(items: SavedJobEntity) {
-            loadJobData(items.jobId.toString())
+            loadJobData(items.jobId)
         }
 
         private fun loadJobData(jobId: String) {
@@ -77,23 +75,22 @@ class SavedJobAdapter(
                     with(binding) {
                         tvJobTitle.text = jobEntity.title.toString()
                         tvJobAddress.text = jobEntity.address.toString()
-                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                        sdf.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
-                        try {
-                            val time: Long = sdf.parse(jobEntity.postedDate).time
-                            val now = System.currentTimeMillis()
-                            val ago =
-                                DateUtils.getRelativeTimeSpanString(
-                                    time,
-                                    now,
-                                    DateUtils.MINUTE_IN_MILLIS
-                                )
-                            tvJobPostedDate.text = ago
-                        } catch (e: ParseException) {
-                            e.printStackTrace()
+                        tvJobPostedDate.text =
+                            DateUtils.getPostedDate(jobEntity.postedDate.toString())
+
+                        if (jobEntity.isOpenForDisability) {
+                            tvOpenForDisability.visibility = View.VISIBLE
+                        } else {
+                            tvOpenForDisability.visibility = View.GONE
                         }
 
-                        loadRecruiterData(jobEntity.postedBy.toString())
+                        if (!jobEntity.isOpen) {
+                            tvCloseRecruitment.visibility = View.VISIBLE
+                        } else {
+                            tvCloseRecruitment.visibility = View.GONE
+                        }
+
+                        loadRecruiterData(jobEntity.postedBy)
 
                         itemView.setOnClickListener {
                             onItemClickCallback.onItemClick(jobId)

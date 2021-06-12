@@ -18,8 +18,7 @@ object MediaHelper {
     private val ARR_MEDIA: MutableList<MediaResponseEntity> = mutableListOf()
 
     fun getMediaId(applicantId: String, callback: LoadMediaDataCallback) {
-        database.orderByChild("applicantId").equalTo(applicantId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+        database.orderByChild("applicantId").equalTo(applicantId).addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                 }
 

@@ -1,6 +1,5 @@
 package org.d3ifcool.dissajobapplicant.ui.job
 
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +18,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.Recruit
 import org.d3ifcool.dissajobapplicant.databinding.JobItemBinding
 import org.d3ifcool.dissajobapplicant.ui.job.callback.OnJobClickListener
 import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
+import org.d3ifcool.dissajobapplicant.utils.DateUtils
 
 class JobAdapter(
     private val onItemClickCallback: OnJobClickListener,
@@ -60,7 +57,7 @@ class JobAdapter(
             with(binding) {
 
                 loadCallback.onLoadRecruiterData(
-                    items.postedBy.toString(),
+                    items.postedBy,
                     object : LoadRecruiterDataCallback {
                         override fun onLoadRecruiterData(
                             recruiterId: String,
@@ -73,24 +70,19 @@ class JobAdapter(
                             tvJobTitle.text = items.title.toString()
                             tvJobRecruiterName.text = recruiterData.fullName.toString()
                             tvJobAddress.text = items.address.toString()
-                            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                            sdf.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
-                            try {
-                                val time: Long = sdf.parse(items.postedDate).time
-                                val now = System.currentTimeMillis()
-                                val ago =
-                                    DateUtils.getRelativeTimeSpanString(
-                                        time,
-                                        now,
-                                        DateUtils.MINUTE_IN_MILLIS
-                                    )
-                                tvJobPostedDate.text = ago
-                            } catch (e: ParseException) {
-                                e.printStackTrace()
-                            }
+                            tvJobPostedDate.text =
+                                DateUtils.getPostedDate(items.postedDate.toString())
 
                             if (items.isOpenForDisability) {
                                 tvOpenForDisability.visibility = View.VISIBLE
+                            } else {
+                                tvOpenForDisability.visibility = View.GONE
+                            }
+
+                            if (!items.isOpen) {
+                                tvCloseRecruitment.visibility = View.VISIBLE
+                            } else {
+                                tvCloseRecruitment.visibility = View.GONE
                             }
 
                             if (recruiterData.imagePath != "-") {

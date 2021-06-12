@@ -15,8 +15,7 @@ object SearchHelper {
     private val arrSearchHistory: MutableList<SearchHistoryResponseEntity> = mutableListOf()
 
     fun getSearchHistories(applicantId: String, callback: LoadSearchHistoryCallback) {
-        database.orderByChild("applicantId").equalTo(applicantId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+        database.orderByChild("applicantId").equalTo(applicantId).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     arrSearchHistory.clear()
                     if (dataSnapshot.exists()) {

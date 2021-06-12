@@ -40,6 +40,12 @@
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/recruiterAboutMeSection"
+                layout="@layout/recruiter_profile_about_me_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
                 android:id="@+id/recruiterPostedJobSection"
                 layout="@layout/recruiter_profile_job_section"
                 android:layout_width="match_parent"

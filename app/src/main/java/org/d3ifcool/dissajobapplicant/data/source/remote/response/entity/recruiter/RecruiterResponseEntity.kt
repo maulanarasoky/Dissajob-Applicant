@@ -9,7 +9,8 @@ data class RecruiterResponseEntity(
     var lastName: String? = "-",
     var fullName: String? = "-",
     var email: String? = "-",
-    var address: String? = "-",
     var phoneNumber: String? = "-",
+    var address: String? = "-",
+    var aboutMe: String? = "-",
     var imagePath: String? = "-"
 )

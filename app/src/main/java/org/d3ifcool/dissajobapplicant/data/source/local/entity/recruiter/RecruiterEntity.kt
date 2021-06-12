@@ -24,11 +24,14 @@ data class RecruiterEntity(
     @ColumnInfo(name = "email")
     val email: String? = "-",
 
+    @ColumnInfo(name = "phone_number")
+    val phoneNumber: String? = "-",
+
     @ColumnInfo(name = "address")
     val address: String? = "-",
 
-    @ColumnInfo(name = "phone_number")
-    val phoneNumber: String? = "-",
+    @ColumnInfo(name = "about_me")
+    val aboutMe: String? = "-",
 
     @ColumnInfo(name = "image_path")
     val imagePath: String? = "-"

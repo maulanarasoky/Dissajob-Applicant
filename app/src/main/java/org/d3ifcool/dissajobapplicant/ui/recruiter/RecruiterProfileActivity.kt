@@ -105,7 +105,6 @@ class RecruiterProfileActivity : AppCompatActivity(), OnJobClickListener,
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-
         activityRecruiterProfileBinding.recruiterProfileSection.tvRecruiterName.text =
             recruiterProfile.fullName.toString()
         activityRecruiterProfileBinding.recruiterProfileSection.tvEmail.text =
@@ -114,6 +113,8 @@ class RecruiterProfileActivity : AppCompatActivity(), OnJobClickListener,
             recruiterProfile.phoneNumber.toString()
         activityRecruiterProfileBinding.recruiterProfileSection.tvRecruiterAddress.text =
             recruiterProfile.address.toString()
+        activityRecruiterProfileBinding.recruiterAboutMeSection.tvAboutMe.text =
+            recruiterProfile.aboutMe.toString()
 
         if (recruiterProfile.imagePath != "-") {
             val storageRef = Firebase.storage.reference

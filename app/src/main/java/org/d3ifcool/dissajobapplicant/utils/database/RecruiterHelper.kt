@@ -27,8 +27,9 @@ object RecruiterHelper {
                         dataSnapshot.child("lastName").value.toString(),
                         dataSnapshot.child("fullName").value.toString(),
                         dataSnapshot.child("email").value.toString(),
-                        dataSnapshot.child("address").value.toString(),
                         dataSnapshot.child("phoneNumber").value.toString(),
+                        dataSnapshot.child("address").value.toString(),
+                        dataSnapshot.child("aboutMe").value.toString(),
                         dataSnapshot.child("imagePath").value.toString()
                     )
                     callback.onRecruiterDataReceived(recruiter)

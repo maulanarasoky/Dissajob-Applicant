@@ -21,20 +21,16 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var activityHomeBinding: ActivityHomeBinding
 
-    private var bottomNavState = 0
-
     private lateinit var mUserObserver: Observer<FirebaseUser?>
+
+    private var bottomNavState = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(activityHomeBinding.root)
 
-        if (FirebaseAuth.getInstance().currentUser == null) {
-            startActivity(Intent(this, SignInActivity::class.java))
-            this.finish()
-            return
-        }
+        checkLogin()
 
         val viewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
         mUserObserver = Observer { updateUI(savedInstanceState) }
@@ -95,6 +91,19 @@ class HomeActivity : AppCompatActivity() {
                 ProfileFragment::class.java.simpleName
             )
             .commit()
+    }
+
+    private fun checkLogin() {
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            startActivity(Intent(this, SignInActivity::class.java))
+            this.finish()
+            return
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkLogin()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

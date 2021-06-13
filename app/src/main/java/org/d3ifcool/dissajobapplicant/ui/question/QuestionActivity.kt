@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -14,11 +15,16 @@ import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.intervi
 import org.d3ifcool.dissajobapplicant.databinding.ActivityQuestionBinding
 import org.d3ifcool.dissajobapplicant.ui.application.ApplicationViewModel
 import org.d3ifcool.dissajobapplicant.ui.job.callback.ApplyJobCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.CheckApplicantDataCallback
+import org.d3ifcool.dissajobapplicant.ui.settings.ChangePhoneNumberActivity
+import org.d3ifcool.dissajobapplicant.ui.settings.ChangeProfileActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.DateUtils
+import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 
 class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, View.OnClickListener,
-    ApplyJobCallback {
+    ApplyJobCallback, CheckApplicantDataCallback {
 
     companion object {
         const val JOB_ID = "job_id"
@@ -33,11 +39,15 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
 
     private lateinit var applicationViewModel: ApplicationViewModel
 
+    private lateinit var applicantViewModel: ApplicantViewModel
+
     private lateinit var dialog: SweetAlertDialog
 
     private lateinit var jobId: String
 
     private lateinit var applicationId: String
+
+    private var isBtnClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +70,7 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
         val factory = ViewModelFactory.getInstance(this)
         interviewViewModel = ViewModelProvider(this, factory)[InterviewViewModel::class.java]
         applicationViewModel = ViewModelProvider(this, factory)[ApplicationViewModel::class.java]
+        applicantViewModel = ViewModelProvider(this, factory)[ApplicantViewModel::class.java]
 
         activityQuestionBinding.btnSubmit.setOnClickListener(this)
     }
@@ -117,6 +128,12 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
         }
         dialog.show()
     }
+
+    private fun showToast() = Toast.makeText(
+        this,
+        resources.getString(R.string.txt_fill_all_data_alert),
+        Toast.LENGTH_SHORT
+    ).show()
 
     override fun onSuccessApply(applicationId: String) {
         this.applicationId = applicationId
@@ -186,7 +203,33 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btnSubmit -> formValidation()
+            R.id.btnSubmit -> {
+                isBtnClicked = true
+                applicantViewModel.checkApplicantData(AuthHelper.currentUser?.uid.toString(), this)
+            }
+        }
+    }
+
+    override fun allDataAvailable() {
+        if (isBtnClicked) {
+            isBtnClicked = false
+            formValidation()
+        }
+    }
+
+    override fun profileDataNotAvailable() {
+        if (isBtnClicked) {
+            isBtnClicked = false
+            showToast()
+            startActivity(Intent(this, ChangeProfileActivity::class.java))
+        }
+    }
+
+    override fun phoneNumberNotAvailable() {
+        if (isBtnClicked) {
+            isBtnClicked = false
+            showToast()
+            startActivity(Intent(this, ChangePhoneNumberActivity::class.java))
         }
     }
 }

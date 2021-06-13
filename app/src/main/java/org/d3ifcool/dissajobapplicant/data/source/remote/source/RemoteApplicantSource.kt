@@ -5,14 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.CheckApplicantDataCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInCallback
 import org.d3ifcool.dissajobapplicant.ui.signup.SignUpCallback
-import org.d3ifcool.dissajobapplicant.utils.database.ApplicantHelper
 import org.d3ifcool.dissajobapplicant.utils.EspressoIdlingResource
+import org.d3ifcool.dissajobapplicant.utils.database.ApplicantHelper
 
 class RemoteApplicantSource private constructor(
     private val applicantHelper: ApplicantHelper
@@ -86,7 +87,33 @@ class RemoteApplicantSource private constructor(
         return resultApplicantData
     }
 
-    fun updateApplicantData(applicantProfile: ApplicantResponseEntity, callback: UpdateProfileCallback) {
+    fun checkApplicantData(
+        applicantId: String,
+        callback: CheckApplicantDataCallback
+    ) {
+        EspressoIdlingResource.increment()
+        applicantHelper.checkApplicantData(applicantId, object : CheckApplicantDataCallback {
+            override fun allDataAvailable() {
+                callback.allDataAvailable()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun profileDataNotAvailable() {
+                callback.profileDataNotAvailable()
+                EspressoIdlingResource.decrement()
+            }
+
+            override fun phoneNumberNotAvailable() {
+                callback.phoneNumberNotAvailable()
+                EspressoIdlingResource.decrement()
+            }
+        })
+    }
+
+    fun updateApplicantData(
+        applicantProfile: ApplicantResponseEntity,
+        callback: UpdateProfileCallback
+    ) {
         EspressoIdlingResource.increment()
         applicantHelper.updateApplicantData(applicantProfile, object : UpdateProfileCallback {
             override fun onSuccess() {
@@ -123,17 +150,21 @@ class RemoteApplicantSource private constructor(
         callback: UpdateProfileCallback
     ) {
         EspressoIdlingResource.increment()
-        applicantHelper.updateApplicantEmail(userId, newEmail, password, object : UpdateProfileCallback {
-            override fun onSuccess() {
-                callback.onSuccess()
-                EspressoIdlingResource.decrement()
-            }
+        applicantHelper.updateApplicantEmail(
+            userId,
+            newEmail,
+            password,
+            object : UpdateProfileCallback {
+                override fun onSuccess() {
+                    callback.onSuccess()
+                    EspressoIdlingResource.decrement()
+                }
 
-            override fun onFailure(messageId: Int) {
-                callback.onFailure(messageId)
-                EspressoIdlingResource.decrement()
-            }
-        })
+                override fun onFailure(messageId: Int) {
+                    callback.onFailure(messageId)
+                    EspressoIdlingResource.decrement()
+                }
+            })
     }
 
     fun updateApplicantPhoneNumber(

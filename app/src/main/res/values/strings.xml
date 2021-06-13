@@ -17,6 +17,8 @@
     <string name="txt_success_update">%1$s berhasil diubah</string>
     <string name="txt_success_delete">%1$s berhasil dihapus</string>
     <string name="txt_failure_update">%1$s gagal diubah</string>
+    <string name="txt_failure_update_email">Email gagal diubah</string>
+    <string name="txt_failure_update_phone_number">Nomor telepon gagal diubah</string>
     <string name="txt_failure_upload_profile_picture">Gagal upload foto profil</string>
     <string name="txt_wrong_password">Password salah</string>
 
@@ -202,4 +204,6 @@
     <string name="txt_apply_at">Dilamar pada</string>
     <string name="txt_close_recruitment">Tidak lagi menerima lamaran kerja</string>
     <string name="txt_error_occurred">Terjadi kesalahan</string>
+
+    <string name="txt_fill_all_data_alert">Silahkan untuk melengkapi data terlebih dahulu</string>
 </resources>

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.ApplicantEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.repository.applicant.ApplicantRepository
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.CheckApplicantDataCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
 import org.d3ifcool.dissajobapplicant.ui.resetpassword.ResetPasswordCallback
@@ -14,6 +15,9 @@ import org.d3ifcool.dissajobapplicant.vo.Resource
 class ApplicantViewModel(private val applicantRepository: ApplicantRepository) : ViewModel() {
     fun getApplicantDetails(applicantId: String): LiveData<Resource<ApplicantEntity>> =
         applicantRepository.getApplicantData(applicantId)
+
+    fun checkApplicantData(applicantId: String, callback: CheckApplicantDataCallback) =
+        applicantRepository.checkApplicantData(applicantId, callback)
 
     fun updateApplicantData(
         applicantProfile: ApplicantResponseEntity,

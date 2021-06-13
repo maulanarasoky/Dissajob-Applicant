@@ -21,16 +21,20 @@ import org.d3ifcool.dissajobapplicant.ui.application.ApplicationDetailsActivity
 import org.d3ifcool.dissajobapplicant.ui.application.ApplicationViewModel
 import org.d3ifcool.dissajobapplicant.ui.job.callback.SaveJobCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.UnSaveJobCallback
+import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.CheckApplicantDataCallback
 import org.d3ifcool.dissajobapplicant.ui.question.QuestionActivity
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterProfileActivity
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
+import org.d3ifcool.dissajobapplicant.ui.settings.ChangePhoneNumberActivity
+import org.d3ifcool.dissajobapplicant.ui.settings.ChangeProfileActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.DateUtils
 import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCallback,
-    UnSaveJobCallback {
+    UnSaveJobCallback, CheckApplicantDataCallback {
 
     companion object {
         const val EXTRA_ID = "extra_id"
@@ -44,6 +48,8 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
 
     private lateinit var recruiterViewModel: RecruiterViewModel
 
+    private lateinit var applicantViewModel: ApplicantViewModel
+
     private lateinit var jobData: JobDetailsEntity
 
     private var isJobApplied = false
@@ -52,6 +58,8 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
     private lateinit var jobId: String
     private lateinit var applicationId: String
     private lateinit var saveJobId: String
+
+    private var isBtnClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +75,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
         if (intent != null) {
             val factory = ViewModelFactory.getInstance(this)
             recruiterViewModel = ViewModelProvider(this, factory)[RecruiterViewModel::class.java]
+            applicantViewModel = ViewModelProvider(this, factory)[ApplicantViewModel::class.java]
             jobViewModel = ViewModelProvider(this, factory)[JobViewModel::class.java]
             applicationViewModel =
                 ViewModelProvider(this, factory)[ApplicationViewModel::class.java]
@@ -235,9 +244,8 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
             intent.putExtra(ApplicationDetailsActivity.RECRUITER_ID, jobData.postedBy)
             startActivity(intent)
         } else {
-            val intent = Intent(this, QuestionActivity::class.java)
-            intent.putExtra(QuestionActivity.JOB_ID, jobData.id)
-            startActivityForResult(intent, QuestionActivity.REQUEST_APPLY)
+            isBtnClicked = true
+            applicantViewModel.checkApplicantData(AuthHelper.currentUser?.uid.toString(), this)
         }
     }
 
@@ -263,9 +271,8 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
         jobViewModel.unSaveJob(saveJobId, this)
     }
 
-    private fun showToast(message: String) {
+    private fun showToast(message: String) =
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -303,40 +310,55 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
 
     override fun onSuccessSave(saveJobId: String) {
         this.saveJobId = saveJobId
-
         activityJobDetailsBinding.jobDetailsFooterSection.btnSave.text =
             resources.getString(R.string.txt_saved)
-
         activityJobDetailsBinding.jobDetailsFooterSection.btnSave.isEnabled = true
-
         Toast.makeText(this, resources.getString(R.string.txt_success_save_job), Toast.LENGTH_SHORT)
             .show()
-
         isJobSaved = true
     }
 
     override fun onFailureSave(messageId: Int) {
         activityJobDetailsBinding.jobDetailsFooterSection.btnSave.isEnabled = true
-
         Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
-
         isJobSaved = false
     }
 
     override fun onSuccessUnSave() {
         activityJobDetailsBinding.jobDetailsFooterSection.btnSave.text =
             resources.getString(R.string.txt_save)
-
         activityJobDetailsBinding.jobDetailsFooterSection.btnSave.isEnabled = true
-
         isJobSaved = false
     }
 
     override fun onFailureUnSave(messageId: Int) {
         activityJobDetailsBinding.jobDetailsFooterSection.btnSave.isEnabled = true
-
         Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
-
         isJobSaved = true
+    }
+
+    override fun allDataAvailable() {
+        if (isBtnClicked) {
+            isBtnClicked = false
+            val intent = Intent(this, QuestionActivity::class.java)
+            intent.putExtra(QuestionActivity.JOB_ID, jobData.id)
+            startActivityForResult(intent, QuestionActivity.REQUEST_APPLY)
+        }
+    }
+
+    override fun profileDataNotAvailable() {
+        if (isBtnClicked) {
+            isBtnClicked = false
+            showToast(resources.getString(R.string.txt_fill_all_data_alert))
+            startActivity(Intent(this, ChangeProfileActivity::class.java))
+        }
+    }
+
+    override fun phoneNumberNotAvailable() {
+        if (isBtnClicked) {
+            isBtnClicked = false
+            showToast(resources.getString(R.string.txt_fill_all_data_alert))
+            startActivity(Intent(this, ChangePhoneNumberActivity::class.java))
+        }
     }
 }

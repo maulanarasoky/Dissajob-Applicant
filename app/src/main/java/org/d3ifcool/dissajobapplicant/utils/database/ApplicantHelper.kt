@@ -8,6 +8,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.CheckApplicantDataCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
@@ -106,6 +107,31 @@ object ApplicantHelper {
             })
     }
 
+    fun checkApplicantData(
+        applicantId: String,
+        callback: CheckApplicantDataCallback
+    ) {
+        database.child(applicantId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    if (dataSnapshot.child("imagePath").value.toString() == "-" || dataSnapshot.child(
+                            "address"
+                        ).value.toString() == "-" || dataSnapshot.child("aboutMe").value.toString() == "-"
+                    ) {
+                        callback.profileDataNotAvailable()
+                    } else if (dataSnapshot.child("phoneNumber").value.toString() == "-") {
+                        callback.phoneNumberNotAvailable()
+                    } else {
+                        callback.allDataAvailable()
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
     fun updateApplicantData(applicant: ApplicantResponseEntity, callback: UpdateProfileCallback) {
         database.child(applicant.id).setValue(applicant).addOnSuccessListener {
             callback.onSuccess()
@@ -164,7 +190,7 @@ object ApplicantHelper {
         database.child(userId).child("email").setValue(newEmail).addOnSuccessListener {
             callback.onSuccess()
         }.addOnFailureListener {
-            callback.onFailure(R.string.txt_failure_update)
+            callback.onFailure(R.string.txt_failure_update_email)
         }
     }
 
@@ -191,7 +217,7 @@ object ApplicantHelper {
         database.child(userId).child("phoneNumber").setValue(newPhoneNumber).addOnSuccessListener {
             callback.onSuccess()
         }.addOnFailureListener {
-            callback.onFailure(R.string.txt_failure_update)
+            callback.onFailure(R.string.txt_failure_update_phone_number)
         }
     }
 

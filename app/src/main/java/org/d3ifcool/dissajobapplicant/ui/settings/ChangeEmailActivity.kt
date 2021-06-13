@@ -1,12 +1,12 @@
 package org.d3ifcool.dissajobapplicant.ui.settings
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import cn.pedant.SweetAlert.SweetAlertDialog
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivityChangeEmailBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
@@ -20,6 +20,8 @@ class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnC
     private lateinit var activityChangeEmailBinding: ActivityChangeEmailBinding
 
     private lateinit var viewModel: ApplicantViewModel
+
+    private lateinit var dialog: SweetAlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +81,12 @@ class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnC
 
     private fun storeToDatabase(newEmail: String, password: String) {
         isEnable(false)
+
+        dialog = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_loading)
+        dialog.setCancelable(false)
+        dialog.show()
+
         viewModel.updateApplicantEmail(
             AuthHelper.currentUser?.uid.toString(),
             newEmail,
@@ -104,17 +112,23 @@ class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnC
     }
 
     override fun onSuccess() {
-        Toast.makeText(
-            this,
-            resources.getString(R.string.txt_success_update, "Email"),
-            Toast.LENGTH_SHORT
-        ).show()
-        finish()
+        isEnable(true)
+        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
+        dialog.titleText = resources.getString(R.string.txt_success_update, "Email")
+        dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+            finish()
+        }
+        dialog.show()
     }
 
     override fun onFailure(messageId: Int) {
-        Toast.makeText(this, resources.getString(messageId, "Email"), Toast.LENGTH_SHORT).show()
         isEnable(true)
+        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(messageId)
+        dialog.setCancelable(false)
+        dialog.show()
     }
 
     override fun onClick(v: View?) {

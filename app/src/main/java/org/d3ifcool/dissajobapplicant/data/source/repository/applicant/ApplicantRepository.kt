@@ -8,6 +8,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.source.LocalApplicantSou
 import org.d3ifcool.dissajobapplicant.data.source.remote.ApiResponse
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.applicant.ApplicantResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.source.RemoteApplicantSource
+import org.d3ifcool.dissajobapplicant.ui.profile.callback.CheckApplicantDataCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.LoadApplicantDetailsCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UploadFileCallback
@@ -93,6 +94,10 @@ class ApplicantRepository private constructor(
             }
         }.asLiveData()
     }
+
+    override fun checkApplicantData(applicantId: String, callback: CheckApplicantDataCallback) =
+        appExecutors.diskIO()
+            .execute { remoteApplicantSource.checkApplicantData(applicantId, callback) }
 
     override fun uploadApplicantProfilePicture(image: Uri, callback: UploadFileCallback) =
         appExecutors.diskIO()

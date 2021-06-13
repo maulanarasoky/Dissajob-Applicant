@@ -174,14 +174,12 @@ class ChangeProfileActivity : AppCompatActivity(), View.OnClickListener, UpdateP
                 getString(R.string.edit_text_error_alert, "Nama depan")
             return
         }
-        if (TextUtils.isEmpty(activityChangeProfileBinding.etLastName.text.toString().trim())) {
-            activityChangeProfileBinding.etLastName.error =
-                getString(R.string.edit_text_error_alert, "Nama belakang")
-            return
-        }
-        if (TextUtils.isEmpty(activityChangeProfileBinding.etAboutMe.text.toString().trim())) {
+        if (TextUtils.isEmpty(
+                activityChangeProfileBinding.etAboutMe.text.toString().trim()
+            ) || activityChangeProfileBinding.etAboutMe.text.toString().trim() == "-"
+        ) {
             activityChangeProfileBinding.etAboutMe.error =
-                getString(R.string.edit_text_error_alert, "Tentang saya")
+                getString(R.string.edit_text_error_alert, "Kolom")
             return
         }
 
@@ -250,7 +248,7 @@ class ChangeProfileActivity : AppCompatActivity(), View.OnClickListener, UpdateP
 
     override fun onFailure(messageId: Int) {
         dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
-        dialog.titleText = resources.getString(messageId)
+        dialog.titleText = resources.getString(messageId, "Profil")
         dialog.setCancelable(false)
         dialog.show()
     }

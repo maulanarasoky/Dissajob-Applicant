@@ -189,12 +189,16 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
         activityJobDetailsBinding.jobDetailsDescriptionSection.tvJobDescription.text =
             jobDetails.description.toString()
 
-        if (jobDetails.additionalInformation.toString() != "-") {
-            activityJobDetailsBinding.jobDetailsDescriptionSection.tvAdditionalInformation.text =
-                resources.getString(
-                    R.string.job_details_additional_information,
-                    jobData.additionalInformation
-                )
+        if (jobDetails.isOpenForDisability) {
+            if (jobDetails.additionalInformation.toString() != "-") {
+                activityJobDetailsBinding.jobDetailsDescriptionSection.tvAdditionalInformation.visibility =
+                    View.VISIBLE
+                activityJobDetailsBinding.jobDetailsDescriptionSection.tvAdditionalInformation.text =
+                    resources.getString(
+                        R.string.job_details_additional_information,
+                        jobData.additionalInformation
+                    )
+            }
         }
 
         //Details section

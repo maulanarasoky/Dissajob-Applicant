@@ -30,5 +30,9 @@ data class ApplicationEntity(
     var status: String? = "-",
 
     @ColumnInfo(name = "is_marked")
-    var isMarked: Boolean? = false
+    var isMarked: Boolean? = false,
+
+    @NonNull
+    @ColumnInfo(name = "recruiter_id")
+    var recruiterId: String,
 )

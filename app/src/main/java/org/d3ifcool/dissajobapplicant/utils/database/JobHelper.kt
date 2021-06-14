@@ -27,7 +27,7 @@ object JobHelper {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     arrJob.clear()
                     if (dataSnapshot.exists()) {
-                        for (data in dataSnapshot.children) {
+                        for (data in dataSnapshot.children.reversed()) {
                             val job = JobResponseEntity(
                                 data.key.toString(),
                                 data.child("title").value.toString(),

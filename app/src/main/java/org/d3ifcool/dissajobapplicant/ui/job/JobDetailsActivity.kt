@@ -189,6 +189,14 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
         activityJobDetailsBinding.jobDetailsDescriptionSection.tvJobDescription.text =
             jobDetails.description.toString()
 
+        if (jobDetails.additionalInformation.toString() != "-") {
+            activityJobDetailsBinding.jobDetailsDescriptionSection.tvAdditionalInformation.text =
+                resources.getString(
+                    R.string.job_details_additional_information,
+                    jobData.additionalInformation
+                )
+        }
+
         //Details section
         activityJobDetailsBinding.jobDetailsDetailsSection.tvJobQualification.text =
             jobDetails.qualification.toString()
@@ -342,6 +350,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
             isBtnClicked = false
             val intent = Intent(this, QuestionActivity::class.java)
             intent.putExtra(QuestionActivity.JOB_ID, jobData.id)
+            intent.putExtra(QuestionActivity.RECRUITER_ID, jobData.postedBy)
             startActivityForResult(intent, QuestionActivity.REQUEST_APPLY)
         }
     }

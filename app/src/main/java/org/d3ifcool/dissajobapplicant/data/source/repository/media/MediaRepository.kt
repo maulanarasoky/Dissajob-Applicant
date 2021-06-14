@@ -60,8 +60,7 @@ class MediaRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<MediaEntity>?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
-//                data == null || data.isEmpty()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<List<MediaResponseEntity>>> =
                 remoteMediaSource.getMediaId(applicantId, object : LoadMediaDataCallback {

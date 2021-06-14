@@ -13,8 +13,8 @@ object ApplicationHelper {
         FirebaseDatabase.getInstance().getReference("applications")
     private val arr_application: MutableList<ApplicationResponseEntity> = mutableListOf()
 
-    fun getAllApplications(callback: LoadAllApplicationsCallback) {
-        database.orderByChild("applyDate")
+    fun getApplications(applicantId: String, callback: LoadAllApplicationsCallback) {
+        database.orderByChild("applicantId").equalTo(applicantId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     arr_application.clear()
@@ -27,7 +27,8 @@ object ApplicationHelper {
                                 data.child("applyDate").value.toString(),
                                 data.child("updatedDate").value.toString(),
                                 data.child("status").value.toString(),
-                                data.child("marked").value.toString().toBoolean()
+                                data.child("marked").value.toString().toBoolean(),
+                                data.child("recruiterId").value.toString()
                             )
                             arr_application.add(application)
                         }
@@ -55,7 +56,8 @@ object ApplicationHelper {
                         dataSnapshot.child("applyDate").value.toString(),
                         dataSnapshot.child("updatedDate").value.toString(),
                         dataSnapshot.child("status").value.toString(),
-                        dataSnapshot.child("marked").value.toString().toBoolean()
+                        dataSnapshot.child("marked").value.toString().toBoolean(),
+                        dataSnapshot.child("recruiterId").value.toString()
                     )
                     callback.onApplicationDataReceived(application)
                 }
@@ -85,7 +87,8 @@ object ApplicationHelper {
                                     data.child("applyDate").value.toString(),
                                     data.child("updatedDate").value.toString(),
                                     data.child("status").value.toString(),
-                                    data.child("marked").value.toString().toBoolean()
+                                    data.child("marked").value.toString().toBoolean(),
+                                    data.child("recruiterId").value.toString()
                                 )
                                 callback.onApplicationDataReceived(application)
                                 return
@@ -97,23 +100,30 @@ object ApplicationHelper {
             })
     }
 
-    fun getAllApplicationsByStatus(status: String, callback: LoadAllApplicationsCallback) {
-        database.orderByChild("status").equalTo(status)
+    fun getApplicationsByStatus(
+        applicantId: String,
+        status: String,
+        callback: LoadAllApplicationsCallback
+    ) {
+        database.orderByChild("applicantId").equalTo(applicantId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     arr_application.clear()
                     if (snapshot.exists()) {
                         for (data in snapshot.children.reversed()) {
-                            val application = ApplicationResponseEntity(
-                                data.key.toString(),
-                                data.child("applicantId").value.toString(),
-                                data.child("jobId").value.toString(),
-                                data.child("applyDate").value.toString(),
-                                data.child("updatedDate").value.toString(),
-                                data.child("status").value.toString(),
-                                data.child("marked").value.toString().toBoolean()
-                            )
-                            arr_application.add(application)
+                            if (data.child("status").value.toString() == status) {
+                                val application = ApplicationResponseEntity(
+                                    data.key.toString(),
+                                    data.child("applicantId").value.toString(),
+                                    data.child("jobId").value.toString(),
+                                    data.child("applyDate").value.toString(),
+                                    data.child("updatedDate").value.toString(),
+                                    data.child("status").value.toString(),
+                                    data.child("marked").value.toString().toBoolean(),
+                                    data.child("recruiterId").value.toString()
+                                )
+                                arr_application.add(application)
+                            }
                         }
                     }
                     callback.onAllApplicationsReceived(arr_application)
@@ -125,23 +135,26 @@ object ApplicationHelper {
             })
     }
 
-    fun getMarkedApplications(callback: LoadAllApplicationsCallback) {
-        database.orderByChild("is_marked").equalTo(true)
+    fun getMarkedApplications(applicantId: String, callback: LoadAllApplicationsCallback) {
+        database.orderByChild("applicantId").equalTo(applicantId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     arr_application.clear()
                     if (snapshot.exists()) {
                         for (data in snapshot.children.reversed()) {
-                            val application = ApplicationResponseEntity(
-                                data.key.toString(),
-                                data.child("applicantId").value.toString(),
-                                data.child("jobId").value.toString(),
-                                data.child("applyDate").value.toString(),
-                                data.child("updatedDate").value.toString(),
-                                data.child("status").value.toString(),
-                                data.child("marked").value.toString().toBoolean()
-                            )
-                            arr_application.add(application)
+                            if (data.child("marked").value.toString().toBoolean()) {
+                                val application = ApplicationResponseEntity(
+                                    data.key.toString(),
+                                    data.child("applicantId").value.toString(),
+                                    data.child("jobId").value.toString(),
+                                    data.child("applyDate").value.toString(),
+                                    data.child("updatedDate").value.toString(),
+                                    data.child("status").value.toString(),
+                                    data.child("marked").value.toString().toBoolean(),
+                                    data.child("recruiterId").value.toString()
+                                )
+                                arr_application.add(application)
+                            }
                         }
                     }
                     callback.onAllApplicationsReceived(arr_application)

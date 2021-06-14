@@ -53,8 +53,7 @@ class JobRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<JobEntity>?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
-//                data == null || data.isEmpty()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<List<JobResponseEntity>>> =
                 remoteJobSource.getJobs(object : LoadJobsCallback {
@@ -77,7 +76,7 @@ class JobRepository private constructor(
                     )
                     jobList.add(job)
                 }
-
+                localJobSource.deleteAllJobs()
                 localJobSource.insertJobs(jobList)
             }
         }.asLiveData()
@@ -101,8 +100,7 @@ class JobRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<SavedJobEntity>?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
-//                data == null || data.isEmpty()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<List<SavedJobResponseEntity>>> =
                 remoteJobSource.getSavedJobs(applicantId, object : LoadSavedJobsCallback {
@@ -139,7 +137,7 @@ class JobRepository private constructor(
                 localJobSource.getSavedJobByJob(jobId, applicantId)
 
             override fun shouldFetch(data: SavedJobEntity?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<SavedJobResponseEntity>> =
                 remoteJobSource.getSavedJobByJob(
@@ -173,7 +171,7 @@ class JobRepository private constructor(
                 localJobSource.getJobById(jobId)
 
             override fun shouldFetch(data: JobEntity?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<JobResponseEntity>> =
                 remoteJobSource.getJobById(jobId, object : RemoteJobSource.LoadJobDataCallback {
@@ -215,8 +213,7 @@ class JobRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<JobEntity>?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
-//                data == null || data.isEmpty()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<List<JobResponseEntity>>> =
                 remoteJobSource.getJobsByRecruiter(recruiterId, object : LoadJobsCallback {
@@ -255,7 +252,7 @@ class JobRepository private constructor(
                 localJobSource.getJobDetails(jobId)
 
             override fun shouldFetch(data: JobDetailsEntity?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<JobDetailsResponseEntity>> =
                 remoteJobSource.getJobDetails(
@@ -314,8 +311,7 @@ class JobRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<JobEntity>?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
-//                data == null || data.isEmpty()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<List<JobResponseEntity>>> =
                 remoteJobSource.searchJob(searchText, object : LoadJobsCallback {

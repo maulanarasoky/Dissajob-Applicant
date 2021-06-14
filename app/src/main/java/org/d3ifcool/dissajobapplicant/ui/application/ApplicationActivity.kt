@@ -20,6 +20,7 @@ import org.d3ifcool.dissajobapplicant.ui.job.callback.OnJobClickListener
 import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
+import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class ApplicationActivity : AppCompatActivity(), OnJobClickListener, LoadJobByIdCallback,
@@ -53,7 +54,7 @@ class ApplicationActivity : AppCompatActivity(), OnJobClickListener, LoadJobById
 
         applicationAdapter = ApplicationAdapter(this, this, this)
 
-        applicationViewModel.getApplications().observe(this) { jobs ->
+        applicationViewModel.getApplications(AuthHelper.currentUser?.uid.toString()).observe(this) { jobs ->
             if (jobs.data != null) {
                 when (jobs.status) {
                     Status.LOADING -> showLoading(true)

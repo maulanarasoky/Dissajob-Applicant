@@ -63,8 +63,7 @@ class SearchHistoryRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<SearchHistoryEntity>?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
-//                data == null || data.isEmpty()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<List<SearchHistoryResponseEntity>>> =
                 remoteSearchHistorySource.getSearchHistories(

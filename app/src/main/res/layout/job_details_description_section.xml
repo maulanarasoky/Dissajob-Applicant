@@ -34,4 +34,18 @@
         app:layout_constraintTop_toBottomOf="@id/tvJobDescriptionTitle"
         tools:text="@string/txt_lorem_ipsum" />
 
+    <TextView
+        android:id="@+id/tvAdditionalInformation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/black"
+        android:textSize="13.5sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJobDescription"
+        tools:text="Keterangan tambahan : -" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

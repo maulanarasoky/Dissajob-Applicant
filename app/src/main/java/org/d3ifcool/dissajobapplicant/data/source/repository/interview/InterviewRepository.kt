@@ -50,7 +50,7 @@ class InterviewRepository private constructor(
                 localInterviewSource.getInterviewAnswers(applicationId)
 
             override fun shouldFetch(data: InterviewEntity?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<InterviewResponseEntity>> =
                 remoteInterviewSource.getInterviewAnswers(

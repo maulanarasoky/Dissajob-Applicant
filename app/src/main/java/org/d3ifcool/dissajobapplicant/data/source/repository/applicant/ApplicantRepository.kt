@@ -68,7 +68,7 @@ class ApplicantRepository private constructor(
                 localApplicantSource.getApplicantData(applicantId)
 
             override fun shouldFetch(data: ApplicantEntity?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<ApplicantResponseEntity>> =
                 remoteApplicantSource.getApplicantData(

@@ -11,4 +11,5 @@ data class ApplicationResponseEntity(
     var updatedDate: String? = "-",
     var status: String? = "-",
     var isMarked: Boolean? = false,
+    var recruiterId: String
 )

@@ -16,8 +16,8 @@ class LocalApplicationSource private constructor(
             INSTANCE ?: LocalApplicationSource(applicationDao)
     }
 
-    fun getApplications(): DataSource.Factory<Int, ApplicationEntity> =
-        mApplicationDao.getApplications()
+    fun getApplications(applicantId: String): DataSource.Factory<Int, ApplicationEntity> =
+        mApplicationDao.getApplications(applicantId)
 
     fun getApplicationById(applicationId: String): LiveData<ApplicationEntity> =
         mApplicationDao.getApplicationById(applicationId)
@@ -25,14 +25,17 @@ class LocalApplicationSource private constructor(
     fun getApplicationByJob(jobId: String, applicantId: String): LiveData<ApplicationEntity> =
         mApplicationDao.getApplicationByJob(jobId, applicantId)
 
-    fun getAcceptedApplications(): DataSource.Factory<Int, ApplicationEntity> =
-        mApplicationDao.getApplicationsByStatus("accepted")
+    fun getAcceptedApplications(applicantId: String): DataSource.Factory<Int, ApplicationEntity> =
+        mApplicationDao.getApplicationsByStatus(applicantId, "accepted")
 
-    fun getRejectedApplications(): DataSource.Factory<Int, ApplicationEntity> =
-        mApplicationDao.getApplicationsByStatus("rejected")
+    fun getRejectedApplications(applicantId: String): DataSource.Factory<Int, ApplicationEntity> =
+        mApplicationDao.getApplicationsByStatus(applicantId, "rejected")
 
-    fun getMarkedApplications(): DataSource.Factory<Int, ApplicationEntity> =
-        mApplicationDao.getMarkedApplications()
+    fun getMarkedApplications(applicantId: String): DataSource.Factory<Int, ApplicationEntity> =
+        mApplicationDao.getMarkedApplications(applicantId)
+
+    fun deleteAllApplications(applicantId: String) =
+        mApplicationDao.deleteAllApplications(applicantId)
 
     fun insertApplication(applications: List<ApplicationEntity>) =
         mApplicationDao.insertApplication(applications)

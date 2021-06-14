@@ -98,6 +98,7 @@ class ApplicationDetailsActivity : AppCompatActivity(), View.OnClickListener {
                                 application.data.updatedDate.toString(),
                                 application.data.status.toString(),
                                 application.data.isMarked.toString().toBoolean(),
+                                application.data.recruiterId
                             )
                             populateApplicationData(applicationData)
                         }
@@ -126,7 +127,8 @@ class ApplicationDetailsActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        interviewViewModel.getInterviewAnswers(applicationId.toString()).observe(this) { interview ->
+        interviewViewModel.getInterviewAnswers(applicationId.toString())
+            .observe(this) { interview ->
                 if (interview.data != null) {
                     when (interview.status) {
                         Status.LOADING -> {

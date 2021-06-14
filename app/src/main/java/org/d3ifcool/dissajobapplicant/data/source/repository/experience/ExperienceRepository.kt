@@ -64,8 +64,7 @@ class ExperienceRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<ExperienceEntity>?): Boolean =
-                networkCallback.hasConnectivity() && loadFromDB() != createCall()
-//                data == null || data.isEmpty()
+                networkCallback.hasConnectivity()
 
             public override fun createCall(): LiveData<ApiResponse<List<ExperienceResponseEntity>>> =
                 remoteExperienceSource.getApplicantExperiences(

@@ -29,6 +29,7 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
     companion object {
         const val JOB_ID = "job_id"
         const val APPLICATION_ID = "application_id"
+        const val RECRUITER_ID = "recruiter_id"
         const val REQUEST_APPLY = 100
         const val RESULT_APPLY = 101
     }
@@ -44,6 +45,8 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
     private lateinit var dialog: SweetAlertDialog
 
     private lateinit var jobId: String
+
+    private lateinit var recruiterId: String
 
     private lateinit var applicationId: String
 
@@ -66,6 +69,7 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
         }
 
         jobId = intent.getStringExtra(JOB_ID).toString()
+        recruiterId = intent.getStringExtra(RECRUITER_ID).toString()
 
         val factory = ViewModelFactory.getInstance(this)
         interviewViewModel = ViewModelProvider(this, factory)[InterviewViewModel::class.java]
@@ -83,7 +87,9 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
             DateUtils.getCurrentDate(),
             "-",
             "Waiting",
-            false
+            false,
+            recruiterId
+
         )
         applicationViewModel.insertApplication(application, this)
     }

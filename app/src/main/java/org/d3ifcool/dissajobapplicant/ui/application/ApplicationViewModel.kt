@@ -10,8 +10,8 @@ import org.d3ifcool.dissajobapplicant.ui.job.callback.ApplyJobCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 class ApplicationViewModel(private val applicationRepository: ApplicationRepository) : ViewModel() {
-    fun getApplications(): LiveData<Resource<PagedList<ApplicationEntity>>> =
-        applicationRepository.getApplications()
+    fun getApplications(applicantId: String): LiveData<Resource<PagedList<ApplicationEntity>>> =
+        applicationRepository.getApplications(applicantId)
 
     fun getApplicationById(applicationId: String): LiveData<Resource<ApplicationEntity>> =
         applicationRepository.getApplicationById(applicationId)
@@ -22,14 +22,14 @@ class ApplicationViewModel(private val applicationRepository: ApplicationReposit
     ): LiveData<Resource<ApplicationEntity>> =
         applicationRepository.getApplicationByJob(jobId, applicantId)
 
-    fun getAcceptedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>> =
-        applicationRepository.getAcceptedApplications()
+    fun getAcceptedApplications(applicantId: String): LiveData<Resource<PagedList<ApplicationEntity>>> =
+        applicationRepository.getAcceptedApplications(applicantId)
 
-    fun getRejectedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>> =
-        applicationRepository.getRejectedApplications()
+    fun getRejectedApplications(applicantId: String): LiveData<Resource<PagedList<ApplicationEntity>>> =
+        applicationRepository.getRejectedApplications(applicantId)
 
-    fun getMarkedApplications(): LiveData<Resource<PagedList<ApplicationEntity>>> =
-        applicationRepository.getMarkedApplications()
+    fun getMarkedApplications(applicantId: String): LiveData<Resource<PagedList<ApplicationEntity>>> =
+        applicationRepository.getMarkedApplications(applicantId)
 
     fun insertApplication(application: ApplicationResponseEntity, callback: ApplyJobCallback) =
         applicationRepository.insertApplication(application, callback)

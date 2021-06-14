@@ -23,10 +23,13 @@ class RemoteApplicationSource private constructor(
             }
     }
 
-    fun getApplications(callback: LoadAllApplicationsCallback): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
+    fun getApplications(
+        applicantId: String,
+        callback: LoadAllApplicationsCallback
+    ): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultApplication = MutableLiveData<ApiResponse<List<ApplicationResponseEntity>>>()
-        applicationHelper.getAllApplications(object : LoadAllApplicationsCallback {
+        applicationHelper.getApplications(applicantId, object : LoadAllApplicationsCallback {
             override fun onAllApplicationsReceived(applicationsResponse: List<ApplicationResponseEntity>): List<ApplicationResponseEntity> {
                 resultApplication.value =
                     ApiResponse.success(callback.onAllApplicationsReceived(applicationsResponse))
@@ -81,10 +84,14 @@ class RemoteApplicationSource private constructor(
         return resultApplication
     }
 
-    fun getAcceptedApplications(callback: LoadAllApplicationsCallback): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
+    fun getAcceptedApplications(
+        applicantId: String,
+        callback: LoadAllApplicationsCallback
+    ): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultApplication = MutableLiveData<ApiResponse<List<ApplicationResponseEntity>>>()
-        applicationHelper.getAllApplicationsByStatus(
+        applicationHelper.getApplicationsByStatus(
+            applicantId,
             "accepted",
             object : LoadAllApplicationsCallback {
                 override fun onAllApplicationsReceived(applicationsResponse: List<ApplicationResponseEntity>): List<ApplicationResponseEntity> {
@@ -99,10 +106,14 @@ class RemoteApplicationSource private constructor(
         return resultApplication
     }
 
-    fun getRejectedApplications(callback: LoadAllApplicationsCallback): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
+    fun getRejectedApplications(
+        applicantId: String,
+        callback: LoadAllApplicationsCallback
+    ): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultApplication = MutableLiveData<ApiResponse<List<ApplicationResponseEntity>>>()
-        applicationHelper.getAllApplicationsByStatus(
+        applicationHelper.getApplicationsByStatus(
+            applicantId,
             "rejected",
             object : LoadAllApplicationsCallback {
                 override fun onAllApplicationsReceived(applicationsResponse: List<ApplicationResponseEntity>): List<ApplicationResponseEntity> {
@@ -117,10 +128,13 @@ class RemoteApplicationSource private constructor(
         return resultApplication
     }
 
-    fun getMarkedApplications(callback: LoadAllApplicationsCallback): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
+    fun getMarkedApplications(
+        applicantId: String,
+        callback: LoadAllApplicationsCallback
+    ): LiveData<ApiResponse<List<ApplicationResponseEntity>>> {
         EspressoIdlingResource.increment()
         val resultApplication = MutableLiveData<ApiResponse<List<ApplicationResponseEntity>>>()
-        applicationHelper.getMarkedApplications(object : LoadAllApplicationsCallback {
+        applicationHelper.getMarkedApplications(applicantId, object : LoadAllApplicationsCallback {
             override fun onAllApplicationsReceived(applicationsResponse: List<ApplicationResponseEntity>): List<ApplicationResponseEntity> {
                 resultApplication.value =
                     ApiResponse.success(callback.onAllApplicationsReceived(applicationsResponse))

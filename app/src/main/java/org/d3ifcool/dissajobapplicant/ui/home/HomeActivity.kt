@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseUser
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivityHomeBinding
 import org.d3ifcool.dissajobapplicant.ui.auth.AuthViewModel
+import org.d3ifcool.dissajobapplicant.ui.notification.NotificationFragment
 import org.d3ifcool.dissajobapplicant.ui.profile.ProfileFragment
 import org.d3ifcool.dissajobapplicant.ui.signin.SignInActivity
 
@@ -46,19 +47,14 @@ class HomeActivity : AppCompatActivity() {
             if (bottomNavState != item.itemId) {
                 bottomNavState = item.itemId
                 when (item.itemId) {
-                    R.id.home -> {
-                        loadHomeFragment()
-                    }
-                    R.id.notification -> {
-                    }
-                    R.id.profile -> {
-                        loadProfileFragment()
-                    }
+                    R.id.home -> loadHomeFragment()
+                    R.id.notification -> loadNotificationFragment()
+                    R.id.profile -> loadProfileFragment()
                 }
             }
             true
         }
-        if (savedInstanceState == null || bottomNavState == 0) {
+        if (savedInstanceState == null && bottomNavState == 0) {
             activityHomeBinding.bottomNavigation.selectedItemId = R.id.home
         }
     }
@@ -71,17 +67,17 @@ class HomeActivity : AppCompatActivity() {
     }
 
     //
-//    private fun loadNotificationFragment() {
-//        supportFragmentManager
-//            .beginTransaction()
-//            .replace(
-//                R.id.container_layout,
-//                NotificationFragment(),
-//                NotificationFragment::class.java.simpleName
-//            )
-//            .commit()
-//    }
-//
+    private fun loadNotificationFragment() {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.container_layout,
+                NotificationFragment(),
+                NotificationFragment::class.java.simpleName
+            )
+            .commit()
+    }
+
     private fun loadProfileFragment() {
         supportFragmentManager
             .beginTransaction()

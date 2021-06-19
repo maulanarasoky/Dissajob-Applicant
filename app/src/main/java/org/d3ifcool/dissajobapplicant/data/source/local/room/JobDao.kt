@@ -48,6 +48,15 @@ interface JobDao {
     @Query("DELETE FROM jobs")
     fun deleteAllJobs()
 
+    @Query("DELETE FROM jobs WHERE posted_by = :recruiterId")
+    fun deleteAllJobsByRecruiter(recruiterId: String)
+
+    @Query("DELETE FROM saved_jobs WHERE applicant_id = :applicantId")
+    fun deleteAllSavedJobs(applicantId: String)
+
+    @Query("DELETE FROM saved_jobs WHERE job_id = :jobId AND applicant_id = :applicantId")
+    fun deleteCurrentSavedJob(jobId: String, applicantId: String)
+
     @Query("DELETE FROM saved_jobs WHERE id = :id")
     fun unSaveJob(id: String)
 }

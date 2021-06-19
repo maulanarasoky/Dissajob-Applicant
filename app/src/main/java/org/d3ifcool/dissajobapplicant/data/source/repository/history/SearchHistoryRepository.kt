@@ -75,6 +75,7 @@ class SearchHistoryRepository private constructor(
                     })
 
             public override fun saveCallResult(data: List<SearchHistoryResponseEntity>) {
+                localSearchHistorySource.deleteAllSearchHistories(applicantId)
                 val searchHistoryList = ArrayList<SearchHistoryEntity>()
                 for (response in data) {
                     val searchHistory = SearchHistoryEntity(
@@ -85,7 +86,6 @@ class SearchHistoryRepository private constructor(
                     )
                     searchHistoryList.add(searchHistory)
                 }
-                localSearchHistorySource.deleteAllSearchHistories(applicantId)
                 localSearchHistorySource.insertSearchHistories(searchHistoryList)
             }
         }.asLiveData()

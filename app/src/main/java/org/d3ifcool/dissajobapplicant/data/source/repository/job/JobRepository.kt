@@ -63,6 +63,7 @@ class JobRepository private constructor(
                 })
 
             public override fun saveCallResult(data: List<JobResponseEntity>) {
+                localJobSource.deleteAllJobs()
                 val jobList = ArrayList<JobEntity>()
                 for (response in data) {
                     val job = JobEntity(
@@ -76,7 +77,6 @@ class JobRepository private constructor(
                     )
                     jobList.add(job)
                 }
-                localJobSource.deleteAllJobs()
                 localJobSource.insertJobs(jobList)
             }
         }.asLiveData()
@@ -110,6 +110,7 @@ class JobRepository private constructor(
                 })
 
             public override fun saveCallResult(data: List<SavedJobResponseEntity>) {
+                localJobSource.deleteAllSavedJobs(applicantId)
                 val jobList = ArrayList<SavedJobEntity>()
                 for (response in data) {
                     val job = SavedJobEntity(
@@ -119,7 +120,6 @@ class JobRepository private constructor(
                     )
                     jobList.add(job)
                 }
-
                 localJobSource.insertSavedJobs(jobList)
             }
         }.asLiveData()
@@ -150,6 +150,7 @@ class JobRepository private constructor(
                     })
 
             public override fun saveCallResult(data: SavedJobResponseEntity) {
+                localJobSource.deleteCurrentSavedJob(jobId, applicantId)
                 val savedJobList = ArrayList<SavedJobEntity>()
                 val savedJob = SavedJobEntity(
                     data.id,
@@ -223,6 +224,7 @@ class JobRepository private constructor(
                 })
 
             public override fun saveCallResult(data: List<JobResponseEntity>) {
+                localJobSource.deleteAllJobsByRecruiter(recruiterId)
                 val jobList = ArrayList<JobEntity>()
                 for (response in data) {
                     val job = JobEntity(
@@ -236,8 +238,6 @@ class JobRepository private constructor(
                     )
                     jobList.add(job)
                 }
-
-                localJobSource.deleteAllJobs()
                 localJobSource.insertJobs(jobList)
             }
         }.asLiveData()
@@ -334,8 +334,6 @@ class JobRepository private constructor(
                     )
                     jobList.add(job)
                 }
-
-                localJobSource.deleteAllJobs()
                 localJobSource.insertJobs(jobList)
             }
         }.asLiveData()

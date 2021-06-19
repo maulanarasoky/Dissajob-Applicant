@@ -47,5 +47,13 @@ class LocalJobSource private constructor(
 
     fun deleteAllJobs() = mJobDao.deleteAllJobs()
 
+    fun deleteAllJobsByRecruiter(recruiterId: String) =
+        mJobDao.deleteAllJobsByRecruiter(recruiterId)
+
+    fun deleteAllSavedJobs(applicantId: String) = mJobDao.deleteAllSavedJobs(applicantId)
+
+    fun deleteCurrentSavedJob(jobId: String, applicantId: String) =
+        mJobDao.deleteCurrentSavedJob(jobId, applicantId)
+
     fun unSaveJob(id: String) = mJobDao.unSaveJob(id)
 }

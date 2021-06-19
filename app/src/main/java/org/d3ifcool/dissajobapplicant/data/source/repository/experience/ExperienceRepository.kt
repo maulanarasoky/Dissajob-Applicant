@@ -76,6 +76,7 @@ class ExperienceRepository private constructor(
                     })
 
             public override fun saveCallResult(data: List<ExperienceResponseEntity>) {
+                localExperienceSource.deleteAllApplicantExperiences(applicantId)
                 val experienceList = ArrayList<ExperienceEntity>()
                 for (response in data) {
                     val experience = ExperienceEntity(
@@ -94,7 +95,6 @@ class ExperienceRepository private constructor(
                     )
                     experienceList.add(experience)
                 }
-                localExperienceSource.deleteAllApplicantExperiences(applicantId)
                 localExperienceSource.insertApplicantExperiences(experienceList)
             }
         }.asLiveData()

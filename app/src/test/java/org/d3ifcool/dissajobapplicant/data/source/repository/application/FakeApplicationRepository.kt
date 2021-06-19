@@ -13,36 +13,14 @@ import org.d3ifcool.dissajobapplicant.ui.application.callback.LoadAllApplication
 import org.d3ifcool.dissajobapplicant.ui.application.callback.LoadApplicationDataCallback
 import org.d3ifcool.dissajobapplicant.ui.job.callback.ApplyJobCallback
 import org.d3ifcool.dissajobapplicant.utils.AppExecutors
-import org.d3ifcool.dissajobapplicant.utils.NetworkStateCallback
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
-class ApplicationRepository private constructor(
+class FakeApplicationRepository(
     private val remoteApplicationSource: RemoteApplicationSource,
     private val localApplicationSource: LocalApplicationSource,
-    private val appExecutors: AppExecutors,
-    private val networkCallback: NetworkStateCallback
+    private val appExecutors: AppExecutors
 ) :
     ApplicationDataSource {
-
-    companion object {
-        @Volatile
-        private var instance: ApplicationRepository? = null
-
-        fun getInstance(
-            remoteApplication: RemoteApplicationSource,
-            localApplication: LocalApplicationSource,
-            appExecutors: AppExecutors,
-            networkCallback: NetworkStateCallback
-        ): ApplicationRepository =
-            instance ?: synchronized(this) {
-                instance ?: ApplicationRepository(
-                    remoteApplication,
-                    localApplication,
-                    appExecutors,
-                    networkCallback
-                )
-            }
-    }
 
     override fun getApplications(applicantId: String): LiveData<Resource<PagedList<ApplicationEntity>>> {
         return object :
@@ -62,7 +40,7 @@ class ApplicationRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<ApplicationEntity>?): Boolean =
-                networkCallback.hasConnectivity()
+                data == null
 
             public override fun createCall(): LiveData<ApiResponse<List<ApplicationResponseEntity>>> =
                 remoteApplicationSource.getApplications(
@@ -103,7 +81,7 @@ class ApplicationRepository private constructor(
                 localApplicationSource.getApplicationById(applicationId)
 
             override fun shouldFetch(data: ApplicationEntity?): Boolean =
-                networkCallback.hasConnectivity()
+                data == null
 
             public override fun createCall(): LiveData<ApiResponse<ApplicationResponseEntity>> =
                 remoteApplicationSource.getApplicationById(
@@ -144,7 +122,7 @@ class ApplicationRepository private constructor(
                 localApplicationSource.getApplicationByJob(jobId, applicantId)
 
             override fun shouldFetch(data: ApplicationEntity?): Boolean =
-                networkCallback.hasConnectivity()
+                data == null
 
             public override fun createCall(): LiveData<ApiResponse<ApplicationResponseEntity>> =
                 remoteApplicationSource.getApplicationByJob(
@@ -193,7 +171,7 @@ class ApplicationRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<ApplicationEntity>?): Boolean =
-                networkCallback.hasConnectivity()
+                data == null
 
             public override fun createCall(): LiveData<ApiResponse<List<ApplicationResponseEntity>>> =
                 remoteApplicationSource.getAcceptedApplications(applicantId, object :
@@ -241,7 +219,7 @@ class ApplicationRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<ApplicationEntity>?): Boolean =
-                networkCallback.hasConnectivity()
+                data == null
 
             public override fun createCall(): LiveData<ApiResponse<List<ApplicationResponseEntity>>> =
                 remoteApplicationSource.getRejectedApplications(applicantId, object :
@@ -289,7 +267,7 @@ class ApplicationRepository private constructor(
             }
 
             override fun shouldFetch(data: PagedList<ApplicationEntity>?): Boolean =
-                networkCallback.hasConnectivity()
+                data == null
 
             public override fun createCall(): LiveData<ApiResponse<List<ApplicationResponseEntity>>> =
                 remoteApplicationSource.getMarkedApplications(

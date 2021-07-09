@@ -34,7 +34,8 @@ class LocalApplicationSource private constructor(
     fun getMarkedApplications(applicantId: String): DataSource.Factory<Int, ApplicationEntity> =
         mApplicationDao.getMarkedApplications(applicantId)
 
-    fun deleteApplicationByJob(jobId: String) = mApplicationDao.deleteApplicationByJob(jobId)
+    fun deleteApplicationByJob(jobId: String, applicantId: String) =
+        mApplicationDao.deleteApplicationByJob(jobId, applicantId)
 
     fun deleteAllApplications(applicantId: String) =
         mApplicationDao.deleteAllApplications(applicantId)

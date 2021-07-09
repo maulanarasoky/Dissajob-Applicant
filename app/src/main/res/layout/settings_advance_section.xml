@@ -24,68 +24,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btnShowSavedJob"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/margin_16dp"
-        android:paddingBottom="@dimen/margin_16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/txt_saved_job"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imgSavedJobArrow"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginEnd="@dimen/margin_16dp"
-            android:src="@drawable/ic_arrow_next_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btnShowApplication"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/margin_16dp"
-        android:paddingBottom="@dimen/margin_16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/txt_list_application"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imgApplicationArrow"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginEnd="@dimen/margin_16dp"
-            android:src="@drawable/ic_arrow_next_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btnSignOut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

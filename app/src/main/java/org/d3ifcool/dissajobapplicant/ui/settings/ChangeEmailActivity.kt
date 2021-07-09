@@ -7,12 +7,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivityChangeEmailBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import java.util.regex.Pattern
 
 class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnClickListener {
@@ -22,6 +22,10 @@ class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnC
     private lateinit var viewModel: ApplicantViewModel
 
     private lateinit var dialog: SweetAlertDialog
+
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+    private val applicantEmail: String = FirebaseAuth.getInstance().currentUser?.email.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +47,7 @@ class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnC
     }
 
     private fun showCurrentEmail() {
-        activityChangeEmailBinding.etOldEmail.setText(AuthHelper.currentUser?.email.toString())
+        activityChangeEmailBinding.etOldEmail.setText(applicantEmail)
     }
 
     private fun formValidation() {
@@ -63,7 +67,7 @@ class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnC
                 return
             }
 
-            if (newEmail == AuthHelper.currentUser?.email.toString()) {
+            if (newEmail == applicantEmail) {
                 activityChangeEmailBinding.etNewEmail.error =
                     getString(R.string.txt_same_email)
                 return
@@ -88,7 +92,7 @@ class ChangeEmailActivity : AppCompatActivity(), UpdateProfileCallback, View.OnC
         dialog.show()
 
         viewModel.updateApplicantEmail(
-            AuthHelper.currentUser?.uid.toString(),
+            applicantId,
             newEmail,
             password,
             this

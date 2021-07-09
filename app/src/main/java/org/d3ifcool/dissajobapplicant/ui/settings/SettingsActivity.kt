@@ -1,19 +1,17 @@
 package org.d3ifcool.dissajobapplicant.ui.settings
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySettingsBinding
-import org.d3ifcool.dissajobapplicant.ui.application.ApplicationActivity
-import org.d3ifcool.dissajobapplicant.ui.job.savedjob.SavedJobActivity
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.utils.SignOutDialog
 import org.d3ifcool.dissajobapplicant.vo.Status
 
@@ -22,6 +20,8 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var activitySettingsBinding: ActivitySettingsBinding
 
     private lateinit var viewModel: ApplicantViewModel
+
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,21 +46,21 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
         activitySettingsBinding.securitySection.btnChangePassword.setOnClickListener(this)
 
         //Advance section
-        activitySettingsBinding.advanceSection.btnShowSavedJob.setOnClickListener(this)
-        activitySettingsBinding.advanceSection.btnShowApplication.setOnClickListener(this)
         activitySettingsBinding.advanceSection.btnSignOut.setOnClickListener(this)
     }
 
     private fun showCurrentProfileData() {
-        viewModel.getApplicantDetails(AuthHelper.currentUser?.uid.toString())
+        viewModel.getApplicantDetails(applicantId)
             .observe(this) { profileData ->
                 if (profileData.data != null) {
                     when (profileData.status) {
                         Status.LOADING -> {
                         }
                         Status.SUCCESS -> {
-                            activitySettingsBinding.profileSection.tvPhoneNumber.text = profileData.data.phoneNumber.toString()
-                            activitySettingsBinding.profileSection.tvEmail.text = profileData.data.email.toString()
+                            activitySettingsBinding.profileSection.tvPhoneNumber.text =
+                                profileData.data.phoneNumber.toString()
+                            activitySettingsBinding.profileSection.tvEmail.text =
+                                profileData.data.email.toString()
                         }
                         Status.ERROR -> {
                             Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
@@ -93,12 +93,6 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btnChangePassword -> {
                 startActivity(Intent(this, ChangePasswordActivity::class.java))
-            }
-            R.id.btnShowSavedJob -> {
-                startActivity(Intent(this, SavedJobActivity::class.java))
-            }
-            R.id.btnShowApplication -> {
-                startActivity(Intent(this, ApplicationActivity::class.java))
             }
             R.id.btnSignOut -> {
                 SignOutDialog().show(supportFragmentManager, SignOutDialog::class.java.simpleName)

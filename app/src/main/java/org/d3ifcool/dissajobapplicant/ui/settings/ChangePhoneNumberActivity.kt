@@ -1,19 +1,19 @@
 package org.d3ifcool.dissajobapplicant.ui.settings
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivityChangePhoneNumberBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 import java.util.regex.Pattern
 
@@ -24,6 +24,8 @@ class ChangePhoneNumberActivity : AppCompatActivity(), View.OnClickListener, Upd
     private lateinit var viewModel: ApplicantViewModel
 
     private lateinit var dialog: SweetAlertDialog
+
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +47,7 @@ class ChangePhoneNumberActivity : AppCompatActivity(), View.OnClickListener, Upd
     }
 
     private fun showCurrentPhoneNumber() {
-        viewModel.getApplicantDetails(AuthHelper.currentUser?.uid.toString())
+        viewModel.getApplicantDetails(applicantId)
             .observe(this@ChangePhoneNumberActivity) { profileData ->
                 if (profileData.data != null) {
                     when (profileData.status) {
@@ -123,7 +125,7 @@ class ChangePhoneNumberActivity : AppCompatActivity(), View.OnClickListener, Upd
         dialog.show()
 
         viewModel.updateApplicantPhoneNumber(
-            AuthHelper.currentUser?.uid.toString(),
+            applicantId,
             newPhoneNumber,
             password,
             this

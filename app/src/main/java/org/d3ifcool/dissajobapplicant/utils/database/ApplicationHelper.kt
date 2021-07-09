@@ -168,7 +168,6 @@ object ApplicationHelper {
 
     fun insertApplication(application: ApplicationResponseEntity, callback: ApplyJobCallback) {
         application.id = database.push().key.toString()
-        application.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(application.id)
             .setValue(application).addOnSuccessListener {
                 callback.onSuccessApply(application.id)

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.github.dewinjm.monthyearpicker.MonthYearPickerDialogFragment
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.experience.ExperienceResponseEntity
@@ -44,6 +45,8 @@ class AddEditExperienceActivity : AppCompatActivity(), AddExperienceCallback, Vi
     private var isEdit = false
 
     private lateinit var experienceId: String
+
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,7 +135,7 @@ class AddEditExperienceActivity : AppCompatActivity(), AddExperienceCallback, Vi
             endYear,
             experienceDescription,
             isCurrentlyWorking,
-            ""
+            applicantId
         )
 
         if (!isEdit) {

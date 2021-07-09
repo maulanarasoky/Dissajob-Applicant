@@ -52,7 +52,6 @@ object ExperienceHelper {
     ) {
         val id = database.push().key
         experience.id = id.toString()
-        experience.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(experience.id).setValue(experience).addOnSuccessListener {
             callback.onSuccessAdding()
         }.addOnFailureListener {

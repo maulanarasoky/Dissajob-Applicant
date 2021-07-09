@@ -7,8 +7,7 @@ import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.Recruiter
 import org.d3ifcool.dissajobapplicant.vo.Resource
 
 class RecruiterViewModel(private val recruiterRepository: RecruiterRepository) : ViewModel() {
-
-    fun getRecruiterData(userId: String): LiveData<Resource<RecruiterEntity>> =
-        recruiterRepository.getRecruiterData(userId)
+    fun getRecruiterData(recruiterId: String): LiveData<Resource<RecruiterEntity>> =
+        recruiterRepository.getRecruiterData(recruiterId)
 
 }

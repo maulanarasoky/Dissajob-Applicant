@@ -9,12 +9,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivityChangePasswordBinding
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.UpdateProfileCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import java.util.regex.Pattern
 
 class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, UpdateProfileCallback {
@@ -27,6 +27,8 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Update
 
     private var isFirstRuleValid = false
     private var isSecondRuleValid = false
+
+    private val applicantEmail: String = FirebaseAuth.getInstance().currentUser?.email.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,8 +93,7 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Update
 
     private fun updatePassword(oldPassword: String, newPassword: String) {
         isEnable(false)
-        val email = AuthHelper.currentUser?.email.toString()
-        viewModel.updateApplicantPassword(email, oldPassword, newPassword, this)
+        viewModel.updateApplicantPassword(applicantEmail, oldPassword, newPassword, this)
     }
 
     private fun isEnable(state: Boolean) {

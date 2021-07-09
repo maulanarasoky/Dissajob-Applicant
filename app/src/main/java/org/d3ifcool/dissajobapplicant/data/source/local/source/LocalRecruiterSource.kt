@@ -15,8 +15,8 @@ class LocalRecruiterSource private constructor(
             INSTANCE ?: LocalRecruiterSource(recruiterDao)
     }
 
-    fun getRecruiterData(userId: String): LiveData<RecruiterEntity> =
-        mRecruiterDao.getRecruiterData(userId)
+    fun getRecruiterData(recruiterId: String): LiveData<RecruiterEntity> =
+        mRecruiterDao.getRecruiterData(recruiterId)
 
     fun insertRecruiterData(recruiterProfile: RecruiterEntity) =
         mRecruiterDao.insertRecruiterData(recruiterProfile)

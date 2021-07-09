@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
@@ -20,7 +21,6 @@ import org.d3ifcool.dissajobapplicant.ui.job.callback.OnJobClickListener
 import org.d3ifcool.dissajobapplicant.ui.recruiter.LoadRecruiterDataCallback
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class SavedJobActivity : AppCompatActivity(), OnJobClickListener, LoadJobByIdCallback,
@@ -33,6 +33,8 @@ class SavedJobActivity : AppCompatActivity(), OnJobClickListener, LoadJobByIdCal
     private lateinit var jobViewModel: JobViewModel
 
     private lateinit var recruiterViewModel: RecruiterViewModel
+
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +51,7 @@ class SavedJobActivity : AppCompatActivity(), OnJobClickListener, LoadJobByIdCal
         jobViewModel = ViewModelProvider(this, factory)[JobViewModel::class.java]
         recruiterViewModel = ViewModelProvider(this, factory)[RecruiterViewModel::class.java]
         jobAdapter = SavedJobAdapter(this, this, this)
-        jobViewModel.getSavedJobs(AuthHelper.currentUser?.uid.toString()).observe(this) { jobs ->
+        jobViewModel.getSavedJobs(applicantId).observe(this) { jobs ->
             if (jobs.data != null) {
                 when (jobs.status) {
                     Status.LOADING -> showLoading(true)

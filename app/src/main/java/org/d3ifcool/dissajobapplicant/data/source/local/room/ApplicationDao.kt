@@ -28,8 +28,8 @@ interface ApplicationDao {
     @Query("SELECT * FROM applications WHERE applicant_id = :applicantId AND is_marked = 1")
     fun getMarkedApplications(applicantId: String): DataSource.Factory<Int, ApplicationEntity>
 
-    @Query("DELETE FROM applications WHERE job_id = :jobId")
-    fun deleteApplicationByJob(jobId: String)
+    @Query("DELETE FROM applications WHERE job_id = :jobId AND applicant_id = :applicantId")
+    fun deleteApplicationByJob(jobId: String, applicantId: String)
 
     @Query("DELETE FROM applications WHERE applicant_id = :applicantId")
     fun deleteAllApplications(applicantId: String)

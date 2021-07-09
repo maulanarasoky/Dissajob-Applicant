@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityMediaBinding
@@ -25,7 +26,6 @@ import org.d3ifcool.dissajobapplicant.ui.media.callback.LoadPdfCallback
 import org.d3ifcool.dissajobapplicant.ui.media.callback.OnDeleteBtnClickListener
 import org.d3ifcool.dissajobapplicant.ui.media.callback.OnMediaClickListener
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback,
@@ -49,6 +49,8 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
 
     private lateinit var dialog: SweetAlertDialog
 
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMediaBinding = ActivityMediaBinding.inflate(layoutInflater)
@@ -59,7 +61,6 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val applicantId = AuthHelper.currentUser?.uid.toString()
         val factory = ViewModelFactory.getInstance(this)
         mediaViewModel = ViewModelProvider(this, factory)[MediaViewModel::class.java]
 
@@ -207,15 +208,15 @@ class MediaActivity : AppCompatActivity(), View.OnClickListener, LoadPdfCallback
         } else if (requestCode == AddEditMediaActivity.REQUEST_ADD) {
             if (resultCode == AddEditMediaActivity.RESULT_ADD) {
                 showRecyclerViewMedia(true)
-                showMedia(AuthHelper.currentUser?.uid.toString())
+                showMedia(applicantId)
             }
         } else if (requestCode == AddEditMediaActivity.REQUEST_UPDATE) {
             if (resultCode == AddEditMediaActivity.RESULT_UPDATE) {
-                showMedia(AuthHelper.currentUser?.uid.toString())
+                showMedia(applicantId)
             }
         } else if (requestCode == AddEditMediaActivity.REQUEST_DELETE) {
             if (resultCode == AddEditMediaActivity.RESULT_DELETE) {
-                showMedia(AuthHelper.currentUser?.uid.toString())
+                showMedia(applicantId)
             }
         }
     }

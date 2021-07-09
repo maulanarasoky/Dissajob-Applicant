@@ -22,12 +22,12 @@ class RemoteRecruiterSource private constructor(
     }
 
     fun getRecruiterData(
-        userId: String,
+        recruiterId: String,
         callback: LoadRecruiterDataCallback
     ): LiveData<ApiResponse<RecruiterResponseEntity>> {
         EspressoIdlingResource.increment()
         val resultUser = MutableLiveData<ApiResponse<RecruiterResponseEntity>>()
-        recruiterHelper.getRecruiterData(userId, object : LoadRecruiterDataCallback {
+        recruiterHelper.getRecruiterData(recruiterId, object : LoadRecruiterDataCallback {
             override fun onRecruiterDataReceived(recruiterResponse: RecruiterResponseEntity): RecruiterResponseEntity {
                 resultUser.value = ApiResponse.success(callback.onRecruiterDataReceived(recruiterResponse))
                 if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {

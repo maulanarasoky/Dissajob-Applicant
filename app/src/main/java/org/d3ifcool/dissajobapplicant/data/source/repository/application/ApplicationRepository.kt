@@ -157,7 +157,7 @@ class ApplicationRepository private constructor(
                     })
 
             public override fun saveCallResult(data: ApplicationResponseEntity) {
-                localApplicationSource.deleteApplicationByJob(jobId)
+                localApplicationSource.deleteApplicationByJob(jobId, applicantId)
                 val applicationList = ArrayList<ApplicationEntity>()
                 val application = ApplicationEntity(
                     data.id,

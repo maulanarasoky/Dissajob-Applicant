@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.databinding.ActivitySearchBinding
 import org.d3ifcool.dissajobapplicant.ui.search.callback.*
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class SearchActivity : AppCompatActivity(),
@@ -28,6 +28,8 @@ class SearchActivity : AppCompatActivity(),
 
     private lateinit var searchAdapter: SearchAdapter
 
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activitySearchBinding = ActivitySearchBinding.inflate(layoutInflater)
@@ -36,7 +38,7 @@ class SearchActivity : AppCompatActivity(),
         val factory = ViewModelFactory.getInstance(this)
         searchAdapter = SearchAdapter(this, this)
         searchViewModel = ViewModelProvider(this, factory)[SearchViewModel::class.java]
-        searchViewModel.getSearchHistories(AuthHelper.currentUser?.uid.toString())
+        searchViewModel.getSearchHistories(applicantId)
             .observe(this) { searchHistory ->
                 if (searchHistory.data != null) {
                     when (searchHistory.status) {
@@ -142,7 +144,7 @@ class SearchActivity : AppCompatActivity(),
         when (v?.id) {
             R.id.imgBackBtn -> finish()
             R.id.tvDeleteHistory -> searchViewModel.deleteAllSearchHistories(
-                AuthHelper.currentUser?.uid.toString(),
+                applicantId,
                 this
             )
         }

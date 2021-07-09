@@ -42,7 +42,6 @@ object InterviewHelper {
         callback: InsertInterviewAnswersCallback
     ) {
         interviewAnswers.id = database.push().key.toString()
-        interviewAnswers.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(interviewAnswers.id)
             .setValue(interviewAnswers).addOnSuccessListener {
                 callback.onSuccessAdding()

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.github.dewinjm.monthyearpicker.MonthYearPickerDialogFragment
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.education.EducationResponseEntity
@@ -44,6 +45,8 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
     private var isEdit = false
 
     private lateinit var educationId: String
+
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,7 +121,7 @@ class AddEditEducationActivity : AppCompatActivity(), View.OnClickListener, AddE
             endMonth,
             endYear,
             educationDescription,
-            ""
+            applicantId
         )
 
         if (!isEdit) {

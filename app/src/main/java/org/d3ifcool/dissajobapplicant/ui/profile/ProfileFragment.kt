@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
@@ -21,6 +21,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.applicant.Applica
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.education.EducationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.experience.ExperienceEntity
 import org.d3ifcool.dissajobapplicant.databinding.FragmentProfileBinding
+import org.d3ifcool.dissajobapplicant.ui.application.ApplicationActivity
 import org.d3ifcool.dissajobapplicant.ui.education.AddEditEducationActivity
 import org.d3ifcool.dissajobapplicant.ui.education.EducationAdapter
 import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
@@ -29,10 +30,10 @@ import org.d3ifcool.dissajobapplicant.ui.experience.AddEditExperienceActivity
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceAdapter
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
 import org.d3ifcool.dissajobapplicant.ui.experience.callback.OnExperienceItemClickListener
+import org.d3ifcool.dissajobapplicant.ui.job.savedjob.SavedJobActivity
 import org.d3ifcool.dissajobapplicant.ui.media.MediaActivity
 import org.d3ifcool.dissajobapplicant.ui.settings.SettingsActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickListener,
@@ -52,6 +53,8 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
 
     private var isAboutMeExpanded = false
 
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,7 +68,6 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val applicantId = AuthHelper.currentUser?.uid.toString()
             val factory = ViewModelFactory.getInstance(requireContext())
             experienceViewModel = ViewModelProvider(this, factory)[ExperienceViewModel::class.java]
             educationViewModel = ViewModelProvider(this, factory)[EducationViewModel::class.java]
@@ -174,7 +176,13 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
             fragmentProfileBinding.header.imgSettings.setOnClickListener(this)
 
             //Upload media section
-            fragmentProfileBinding.uploadMediaSection.root.setOnClickListener(this)
+            fragmentProfileBinding.menuSection.mediaSection.root.setOnClickListener(this)
+
+            //My applications section
+            fragmentProfileBinding.menuSection.applicationSection.root.setOnClickListener(this)
+
+            //Saved job section
+            fragmentProfileBinding.menuSection.savedJobSection.root.setOnClickListener(this)
 
             //Experience section
             fragmentProfileBinding.workExperienceSection.imgAddExperience.setOnClickListener(
@@ -227,7 +235,14 @@ class ProfileFragment : Fragment(), View.OnClickListener, OnEducationItemClickLi
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgSettings -> startActivity(Intent(activity, SettingsActivity::class.java))
-            R.id.uploadMediaSection -> startActivity(Intent(activity, MediaActivity::class.java))
+            R.id.mediaSection -> startActivity(Intent(activity, MediaActivity::class.java))
+            R.id.applicationSection -> startActivity(
+                Intent(
+                    activity,
+                    ApplicationActivity::class.java
+                )
+            )
+            R.id.savedJobSection -> startActivity(Intent(activity, SavedJobActivity::class.java))
             R.id.imgAddExperience -> startActivity(
                 Intent(
                     activity,

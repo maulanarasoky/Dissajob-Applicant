@@ -9,22 +9,25 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.application.ApplicationResponseEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.interview.InterviewResponseEntity
+import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.notification.NotificationResponseEntity
 import org.d3ifcool.dissajobapplicant.databinding.ActivityQuestionBinding
 import org.d3ifcool.dissajobapplicant.ui.application.ApplicationViewModel
 import org.d3ifcool.dissajobapplicant.ui.job.callback.ApplyJobCallback
+import org.d3ifcool.dissajobapplicant.ui.notification.AddNotificationCallback
+import org.d3ifcool.dissajobapplicant.ui.notification.NotificationViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.callback.CheckApplicantDataCallback
 import org.d3ifcool.dissajobapplicant.ui.settings.ChangePhoneNumberActivity
 import org.d3ifcool.dissajobapplicant.ui.settings.ChangeProfileActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.DateUtils
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 
 class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, View.OnClickListener,
-    ApplyJobCallback, CheckApplicantDataCallback {
+    ApplyJobCallback, CheckApplicantDataCallback, AddNotificationCallback {
 
     companion object {
         const val JOB_ID = "job_id"
@@ -42,6 +45,8 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
 
     private lateinit var applicantViewModel: ApplicantViewModel
 
+    private lateinit var notificationViewModel: NotificationViewModel
+
     private lateinit var dialog: SweetAlertDialog
 
     private lateinit var jobId: String
@@ -51,6 +56,8 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
     private lateinit var applicationId: String
 
     private var isBtnClicked = false
+
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +82,7 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
         interviewViewModel = ViewModelProvider(this, factory)[InterviewViewModel::class.java]
         applicationViewModel = ViewModelProvider(this, factory)[ApplicationViewModel::class.java]
         applicantViewModel = ViewModelProvider(this, factory)[ApplicantViewModel::class.java]
+        notificationViewModel = ViewModelProvider(this, factory)[NotificationViewModel::class.java]
 
         activityQuestionBinding.btnSubmit.setOnClickListener(this)
     }
@@ -82,7 +90,7 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
     private fun storeToDatabase() {
         val application = ApplicationResponseEntity(
             "",
-            "",
+            applicantId,
             jobId,
             DateUtils.getCurrentDate(),
             "-",
@@ -151,7 +159,7 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
         val interviewAnswer = InterviewResponseEntity(
             "",
             applicationId,
-            "",
+            applicantId,
             firstAnswer,
             secondAnswer,
             thirdAnswer
@@ -172,6 +180,28 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
     }
 
     override fun onSuccessAdding() {
+        val notificationData = NotificationResponseEntity(
+            "",
+            jobId,
+            applicationId,
+            applicantId,
+            recruiterId,
+            DateUtils.getCurrentDate()
+        )
+        notificationViewModel.addNotification(notificationData, this)
+    }
+
+    override fun onFailureAdding(messageId: Int) {
+        dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
+        dialog.titleText = resources.getString(messageId)
+        dialog.setCancelable(false)
+        dialog.setConfirmClickListener {
+            it.dismissWithAnimation()
+        }
+        dialog.show()
+    }
+
+    override fun onSuccessAddingNotification() {
         dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE)
         dialog.titleText = resources.getString(R.string.txt_success_apply)
         dialog.confirmText = resources.getString(R.string.dialog_ok)
@@ -187,7 +217,7 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
         dialog.show()
     }
 
-    override fun onFailureAdding(messageId: Int) {
+    override fun onFailureAddingNotification(messageId: Int) {
         dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE)
         dialog.titleText = resources.getString(messageId)
         dialog.setCancelable(false)
@@ -211,7 +241,7 @@ class QuestionActivity : AppCompatActivity(), InsertInterviewAnswersCallback, Vi
         when (v?.id) {
             R.id.btnSubmit -> {
                 isBtnClicked = true
-                applicantViewModel.checkApplicantData(AuthHelper.currentUser?.uid.toString(), this)
+                applicantViewModel.checkApplicantData(applicantId, this)
             }
         }
     }

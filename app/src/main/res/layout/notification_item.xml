@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_16dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgApplicantPicture"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNotificationTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgApplicantPicture"
+        app:layout_constraintTop_toTopOf="@id/imgApplicantPicture"
+        tools:text="Notification title" />
+
+    <TextView
+        android:id="@+id/tvNotificationBody"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_4dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:text="@string/txt_notification_body"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/btnViewApplication"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgApplicantPicture"
+        app:layout_constraintTop_toBottomOf="@id/tvNotificationTitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewApplication"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:background="@drawable/bg_color_primary_radius_5dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/txt_view_application"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvNotificationDate"
+        app:layout_constraintStart_toEndOf="@id/imgApplicantPicture"
+        app:layout_constraintTop_toBottomOf="@id/tvNotificationBody" />
+
+    <TextView
+        android:id="@+id/tvNotificationDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:fontFamily="@font/roboto"
+        android:gravity="end"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/btnViewApplication"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnViewApplication"
+        app:layout_constraintTop_toTopOf="@id/btnViewApplication"
+        tools:text="3 days ago" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

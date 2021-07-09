@@ -180,7 +180,6 @@ object JobHelper {
 
     fun saveJob(savedJob: SavedJobResponseEntity, callback: SaveJobCallback) {
         savedJob.id = savedJobDatabase.push().key.toString()
-        savedJob.applicantId = AuthHelper.currentUser?.uid.toString()
         savedJobDatabase.child(savedJob.id).setValue(savedJob).addOnSuccessListener {
             callback.onSuccessSave(savedJob.id)
         }.addOnFailureListener {

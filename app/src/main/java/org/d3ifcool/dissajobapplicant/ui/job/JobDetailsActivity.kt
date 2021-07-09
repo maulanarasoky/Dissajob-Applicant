@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import org.d3ifcool.dissajobapplicant.R
@@ -30,7 +31,6 @@ import org.d3ifcool.dissajobapplicant.ui.settings.ChangePhoneNumberActivity
 import org.d3ifcool.dissajobapplicant.ui.settings.ChangeProfileActivity
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.DateUtils
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCallback,
@@ -61,6 +61,8 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
 
     private var isBtnClicked = false
 
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityJobDetailsBinding = ActivityJobDetailsBinding.inflate(layoutInflater)
@@ -90,7 +92,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
     }
 
     private fun isJobApplied() {
-        applicationViewModel.getApplicationByJob(jobId, AuthHelper.currentUser?.uid.toString())
+        applicationViewModel.getApplicationByJob(jobId, applicantId)
             .observe(this) { application ->
                 when (application.status) {
                     Status.LOADING -> {
@@ -113,7 +115,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
     }
 
     private fun isJobSaved() {
-        jobViewModel.getSavedJobByJob(jobId, AuthHelper.currentUser?.uid.toString())
+        jobViewModel.getSavedJobByJob(jobId, applicantId)
             .observe(this) { saveJob ->
                 when (saveJob.status) {
                     Status.LOADING -> {
@@ -257,7 +259,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
             startActivity(intent)
         } else {
             isBtnClicked = true
-            applicantViewModel.checkApplicantData(AuthHelper.currentUser?.uid.toString(), this)
+            applicantViewModel.checkApplicantData(applicantId, this)
         }
     }
 
@@ -274,7 +276,7 @@ class JobDetailsActivity : AppCompatActivity(), View.OnClickListener, SaveJobCal
         val jobData = SavedJobResponseEntity(
             "",
             jobData.id,
-            ""
+            applicantId
         )
         jobViewModel.saveJob(jobData, this)
     }

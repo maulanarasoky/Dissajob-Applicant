@@ -11,6 +11,7 @@ import org.d3ifcool.dissajobapplicant.data.source.repository.history.SearchHisto
 import org.d3ifcool.dissajobapplicant.data.source.repository.interview.InterviewRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.job.JobRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.media.MediaRepository
+import org.d3ifcool.dissajobapplicant.data.source.repository.notification.NotificationRepository
 import org.d3ifcool.dissajobapplicant.data.source.repository.recruiter.RecruiterRepository
 import org.d3ifcool.dissajobapplicant.ui.application.ApplicationViewModel
 import org.d3ifcool.dissajobapplicant.ui.di.Injection
@@ -18,6 +19,7 @@ import org.d3ifcool.dissajobapplicant.ui.education.EducationViewModel
 import org.d3ifcool.dissajobapplicant.ui.experience.ExperienceViewModel
 import org.d3ifcool.dissajobapplicant.ui.job.JobViewModel
 import org.d3ifcool.dissajobapplicant.ui.media.MediaViewModel
+import org.d3ifcool.dissajobapplicant.ui.notification.NotificationViewModel
 import org.d3ifcool.dissajobapplicant.ui.profile.ApplicantViewModel
 import org.d3ifcool.dissajobapplicant.ui.question.InterviewViewModel
 import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
@@ -34,7 +36,8 @@ class ViewModelFactory private constructor(
     private val searchHistoryRepository: SearchHistoryRepository,
     private val mediaRepository: MediaRepository,
     private val experienceRepository: ExperienceRepository,
-    private val educationRepository: EducationRepository
+    private val educationRepository: EducationRepository,
+    private val notificationRepository: NotificationRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -51,7 +54,8 @@ class ViewModelFactory private constructor(
                 Injection.provideSearchHistoryRepository(context),
                 Injection.provideMediaRepository(context),
                 Injection.provideExperienceRepository(context),
-                Injection.provideEducationRepository(context)
+                Injection.provideEducationRepository(context),
+                Injection.provideNotificationRepository(context)
             )
         }
     }
@@ -91,6 +95,9 @@ class ViewModelFactory private constructor(
             }
             modelClass.isAssignableFrom(EducationViewModel::class.java) -> {
                 EducationViewModel(educationRepository) as T
+            }
+            modelClass.isAssignableFrom(NotificationViewModel::class.java) -> {
+                NotificationViewModel(notificationRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

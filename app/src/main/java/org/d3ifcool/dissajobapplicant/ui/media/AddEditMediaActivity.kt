@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
 import org.d3ifcool.dissajobapplicant.data.source.remote.response.entity.media.MediaResponseEntity
@@ -45,6 +46,8 @@ class AddEditMediaActivity : AppCompatActivity(), View.OnClickListener, UploadFi
 
     private lateinit var mediaId: String
     private lateinit var fileId: String
+
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,7 +115,7 @@ class AddEditMediaActivity : AppCompatActivity(), View.OnClickListener, UploadFi
             id = "",
             mediaName = mediaName,
             mediaDescription = mediaDescription,
-            applicantId = "",
+            applicantId = applicantId,
             fileId = fileId
         )
         val oldMediaData = intent.getParcelableExtra<MediaEntity>(MEDIA_DATA)

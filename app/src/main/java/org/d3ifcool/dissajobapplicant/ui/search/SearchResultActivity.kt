@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import org.d3ifcool.dissajobapplicant.R
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
@@ -27,7 +28,6 @@ import org.d3ifcool.dissajobapplicant.ui.recruiter.RecruiterViewModel
 import org.d3ifcool.dissajobapplicant.ui.search.callback.AddSearchHistoryCallback
 import org.d3ifcool.dissajobapplicant.ui.viewmodel.ViewModelFactory
 import org.d3ifcool.dissajobapplicant.utils.DateUtils
-import org.d3ifcool.dissajobapplicant.utils.database.AuthHelper
 import org.d3ifcool.dissajobapplicant.vo.Status
 
 class SearchResultActivity : AppCompatActivity(), OnJobClickListener, LoadRecruiterDataCallback,
@@ -50,6 +50,8 @@ class SearchResultActivity : AppCompatActivity(), OnJobClickListener, LoadRecrui
     private lateinit var searchText: String
 
     private lateinit var searchedJobs: PagedList<JobEntity>
+
+    private val applicantId: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,7 +137,6 @@ class SearchResultActivity : AppCompatActivity(), OnJobClickListener, LoadRecrui
 
     private fun addSearchHistory(searchText: String) {
         val searchDate = DateUtils.getCurrentDate()
-        val applicantId = AuthHelper.currentUser?.uid.toString()
         val searchHistory = SearchHistoryResponseEntity(
             "",
             searchText,

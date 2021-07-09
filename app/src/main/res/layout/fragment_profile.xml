@@ -45,8 +45,8 @@
                 android:layout_height="wrap_content" />
 
             <include
-                android:id="@+id/uploadMediaSection"
-                layout="@layout/profile_fragment_media_section"
+                android:id="@+id/menuSection"
+                layout="@layout/profile_fragment_menu_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

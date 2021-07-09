@@ -14,6 +14,7 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobDetailsEnt
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.JobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.job.SavedJobEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.media.MediaEntity
+import org.d3ifcool.dissajobapplicant.data.source.local.entity.notification.NotificationEntity
 import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.RecruiterEntity
 
 @Database(
@@ -28,7 +29,9 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.Recruit
         MediaEntity::class,
         SavedJobEntity::class,
         RecruiterEntity::class,
-        SearchHistoryEntity::class],
+        SearchHistoryEntity::class,
+        NotificationEntity::class
+    ],
     version = 1,
     exportSchema = false
 )
@@ -43,6 +46,7 @@ abstract class DissajobApplicantDatabase : RoomDatabase() {
     abstract fun jobDao(): JobDao
     abstract fun recruiterDao(): RecruiterDao
     abstract fun searchHistoryDao(): SearchHistoryDao
+    abstract fun notificationDao(): NotificationDao
 
     companion object {
 

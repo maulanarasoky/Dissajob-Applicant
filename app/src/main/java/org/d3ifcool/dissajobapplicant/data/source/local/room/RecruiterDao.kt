@@ -9,8 +9,8 @@ import org.d3ifcool.dissajobapplicant.data.source.local.entity.recruiter.Recruit
 
 @Dao
 interface RecruiterDao {
-    @Query("SELECT * FROM recruiters WHERE id = :userId")
-    fun getRecruiterData(userId: String): LiveData<RecruiterEntity>
+    @Query("SELECT * FROM recruiters WHERE id = :recruiterId")
+    fun getRecruiterData(recruiterId: String): LiveData<RecruiterEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRecruiterData(recruiterProfile: RecruiterEntity)

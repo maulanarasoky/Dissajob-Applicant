@@ -50,7 +50,6 @@ object EducationHelper {
     ) {
         val id = database.push().key
         education.id = id.toString()
-        education.applicantId = AuthHelper.currentUser?.uid.toString()
         database.child(education.id).setValue(education).addOnSuccessListener {
             callback.onSuccessAdding()
         }.addOnFailureListener {
